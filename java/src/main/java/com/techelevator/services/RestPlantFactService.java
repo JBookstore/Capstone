@@ -1,6 +1,7 @@
 package com.techelevator.services;
 
 
+import com.techelevator.model.PlantDescriptionResponse;
 import com.techelevator.model.PlantFact;
 import com.techelevator.model.PlantFactsResponse;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import java.util.List;
 public class RestPlantFactService implements PlantFactService {
 
     private RestTemplate restTemplate = new RestTemplate();
+    private PlantFactsResponse response;
     public List<PlantFact> getPlantFactByName(String name) {
         String apiKey = "sk-H0RV656a8958725bb3267"; // API key
         String baseUrl = "https://perenual.com/api/species-list"; // URL of the API
@@ -24,11 +26,26 @@ public class RestPlantFactService implements PlantFactService {
                 .queryParam("q", name)
                 .build();
 
-        PlantFactsResponse response = restTemplate.getForObject(uriComponents.toUriString(), PlantFactsResponse.class);
+        response = restTemplate.getForObject(uriComponents.toUriString(), PlantFactsResponse.class);
+
         if (response != null && response.getData() != null) {
-            return response.getData();
+            PlantFactsResponse results = getPlantDescription(response);
+            return results.getData();
         } else {
             return Collections.emptyList();
         }
+    }
+
+    public PlantFactsResponse getPlantDescription(PlantFactsResponse response) {
+        String apiKey = "sk-H0RV656a8958725bb3267"; // API key
+        //TODO: make url key static
+        String baseUrl = "https://perenual.com/api/species/details"; // URL of the API
+
+        for (int i = 0; i < response.getData().size(); i++) {
+            int id = response.getData().get(i).getId();
+            PlantDescriptionResponse descriptionResponse = restTemplate.getForObject(baseUrl + "/" + id + "?key=" + apiKey, PlantDescriptionResponse.class);
+            response.getData().get(i).setDescription(descriptionResponse.getDescription());
+        }
+        return response;
     }
 }

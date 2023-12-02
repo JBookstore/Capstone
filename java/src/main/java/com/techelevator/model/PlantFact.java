@@ -18,10 +18,12 @@ public class PlantFact {
     private List<String> otherName;
     private String cycle;
     private String watering;
-    private String sunlight;
+    private List<String> sunlight;
 
     @JsonProperty("default_image")
     private ImageData defaultImage;
+
+    private String description;
 
     //Setters and Getters
 
@@ -73,11 +75,11 @@ public class PlantFact {
         this.watering = watering;
     }
 
-    public String getSunlight() {
+    public List<String> getSunlight() {
         return sunlight;
     }
 
-    public void setSunlight(String sunlight) {
+    public void setSunlight(List<String> sunlight) {
         this.sunlight = sunlight;
     }
 
@@ -87,6 +89,13 @@ public class PlantFact {
 
     public void setDefaultImage(ImageData defaultImage) {
         this.defaultImage = defaultImage;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 

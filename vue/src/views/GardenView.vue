@@ -1,5 +1,7 @@
 <template>
+    <div id="gardenDisplay" v-for="i in 3" v-bind:userId="id">
      <plant-card v-bind:userId="id"/>
+    </div>
 </template>
 
 <script>
@@ -16,3 +18,6 @@
         }
     };
 </script>
+
+<style scoped>
+</style>

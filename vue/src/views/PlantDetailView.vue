@@ -1,20 +1,30 @@
 <template>
-    <h2>Test 1</h2>
-    <plant-detail v-bind:id="plantId" />
-    <h2>Test 2</h2>
+    <plant-detail v-bind:plant="plant" />
 </template>
 
 <script>
     import plantDetail from "../components/PlantDetail.vue";
+    import plantService from "../services/PlantService.js";
 
     export default { 
         data() {
             return { 
-                plantId: this.$route.params.id
+                plant: {}
             }
         },
         components: {
-            plantDetail
+            plantDetail,
+        },
+        methods: {
+            getPlantById(id) {
+                plantService.getPlantById(id).then( (response) => {
+                    this.plant = response.data;
+                })
+            }
         }
     };
 </script>
+
+<style scoped>
+
+</style>

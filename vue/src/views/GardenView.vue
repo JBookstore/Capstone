@@ -1,5 +1,5 @@
 <template>
-    <div id="gardenDisplay" v-for="i in 3" v-bind:userId="id">
+    <div id="gardenDisplay" v-for="i in 3" v-bind:key="i">
      <plant-card v-bind:userId="id"/>
     </div>
 </template>
@@ -10,7 +10,7 @@
     export default { 
         data() {
             return { 
-                id: this.$route.params.userId
+                id: 1
             }
         },
         components: {
@@ -20,4 +20,5 @@
 </script>
 
 <style scoped>
+
 </style>

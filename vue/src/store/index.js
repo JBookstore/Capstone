@@ -29,6 +29,7 @@ export function createStore(currentToken, currentUser) {
             small_url: "https://perenual.com/storage/species_image/1_abies_alba/small/1536px-Abies_alba_SkalitC3A9.jpg",
             thumbnail: "https://perenual.com/storage/species_image/1_abies_alba/thumbnail/1536px-Abies_alba_SkalitC3A9.jpg"
           }
+
         },
       ],
       // Ultimately this DOES need to be a two way binding

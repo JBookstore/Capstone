@@ -1,6 +1,6 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.Garden;
+import com.techelevator.model.Garden;
 import com.techelevator.dao.GardenDao;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -5,10 +5,12 @@ import com.techelevator.model.Plant;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcPlantDao implements PlantDao{
     private final JdbcTemplate jdbcTemplate;
 

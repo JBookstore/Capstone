@@ -11,7 +11,6 @@ public class Plant {
     private String plantName;
 
     //Setters and Getters
-
     public int getPlantId() {
         return plantId;
     }
@@ -29,8 +28,6 @@ public class Plant {
     }
 
     //Constructors
-
-
     public Plant() {
     }
 
@@ -40,7 +37,6 @@ public class Plant {
     }
 
     //ToString
-
     @Override
     public String toString() {
         return "Plant{" +

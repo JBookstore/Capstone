@@ -29,7 +29,6 @@ public class Event {
 
 
     //Constructors
-
     public Event() {
     }
 
@@ -39,7 +38,6 @@ public class Event {
     }
 
     //ToString
-
     @Override
     public String toString() {
         return "Event{" +

@@ -1,5 +1,7 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Garden;
+
 import java.util.List;
 
 public interface GardenDao {

@@ -16,74 +16,42 @@ CREATE TABLE plant (
 );
 
 CREATE TABLE garden (
-	garden_id SERIAL PRIMARY KEY
+    garden_id SERIAL PRIMARY KEY
 );
 
 CREATE TABLE garden_plant (
     plant_id INT,
     garden_id INT,
-    PRIMARY KEY (plant_id, garden_id),
-    FOREIGN KEY (plant_id) REFERENCES plant(plant_id),
-    FOREIGN KEY (garden_id) REFERENCES garden(garden_id)
+    PRIMARY KEY (plant_id, garden_id)
+
 );
 
 CREATE TABLE forum (
-	forum_id SERIAL PRIMARY KEY,
-	post_id INT,
-	FOREIGN KEY (post_id) REFERENCES post (post_id)
+    forum_id SERIAL PRIMARY KEY
+
 );
 
 CREATE TABLE post (
-	post_id SERIAL PRIMARY KEY,
-	plant_id INT,
-	users_id INT,
-	forum_id INT,
-	FOREIGN KEY (forum_id) REFERENCES forum (forum_id),
-	post_description TEXT,
-	price NUMERIC,
-	quantity INT,
-	title VARCHAR (200),
-	post_img BYTEA,
-	post_category VARCHAR (255) CHECK (type IN ('Marketplace', 'Community Help', 'Share'))
+    post_id SERIAL PRIMARY KEY,
+    plant_id INT,
+    users_id INT,
+    forum_id INT,
+    post_description TEXT,
+    price NUMERIC,
+    quantity INT,
+    title VARCHAR (200),
+    post_img BYTEA,
+    post_category VARCHAR (255) CHECK (post_category IN ('Marketplace', 'Community Help', 'Share'))
 );
 
-CREATE TABLE post_users (
-	post_id INT,
-	user_id INT,
-	PRIMARY KEY (post_id, user_id),
-	FOREIGN KEY (post_id) REFERENCES post (post_id),
-	FOREIGN KEY (user_id) REFERENCES users (user_id)
-);
+ALTER TABLE garden_plant ADD FOREIGN KEY (plant_id) REFERENCES plant(plant_id);
+ALTER TABLE garden_plant ADD FOREIGN KEY (garden_id) REFERENCES garden(garden_id);
 
-CREATE TABLE post_plant (
-	post_id INT,
-	pant_id INT,
-	PRIMARY KEY (post_id, plant_id),
-	FOREIGN KEY (post_id) REFERENCES post (post_id),
-	FOREIGN KEY (plant_id) REFERENCES plant (plant_id)
-);
+ALTER TABLE forum ADD COLUMN post_id INT;
+ALTER TABLE forum ADD FOREIGN KEY (post_id) REFERENCES post (post_id);
 
-CREATE TABLE garden_event ( 
-	event_id SERIAL PRIMARY KEY,
-	FOREIGN KEY (event_id) REFERENCES users (event_id),
-	garden_id INT,
-	FOREIGN KEY (garden_id) REFERENCES garden (garden_id),
-	event_description TEXT,
-	event_owner VARCHAR (200),
-	user_volunteer VARCHAR (200), -- Make volunteer be a registered user??
-	childcare_owner VARCHAR (200),
-	event_date TIMESTAMP,
-	event_category VARCHAR (255) CHECK (type IN ('Garden Event', 'Community Event', 'Marketplace Event'))
-);
+ALTER TABLE post ADD FOREIGN KEY (forum_id) REFERENCES forum (forum_id);
 
-ALTER TABLE users 
-ADD COLUMN is_event_owner BOOLEAN DEFAULT FALSE,
-ADD COLUMN first_name VARCHAR (100),
-ADD COLUMN last_name VARCHAR (100),
-ADD COLUMN event_id INT;
-
-ROLLBACK;
-
-SELECT * FROM users
+COMMIT;
 
 

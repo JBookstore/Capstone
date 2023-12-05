@@ -1,6 +1,6 @@
 START TRANSACTION;
 
-DROP TABLE IF EXISTS garden, plant, forum, post, garden_event CASCADE;
+DROP TABLE IF EXISTS garden, plant, forum, post, garden_plant, garden_event CASCADE;
 
 CREATE TABLE plant (
     plant_id SERIAL PRIMARY KEY,
@@ -16,7 +16,8 @@ CREATE TABLE plant (
 );
 
 CREATE TABLE garden (
-    garden_id SERIAL PRIMARY KEY
+    garden_id SERIAL PRIMARY KEY,
+	garden_name VARCHAR (100)
 );
 
 CREATE TABLE garden_plant (
@@ -27,14 +28,27 @@ CREATE TABLE garden_plant (
 );
 
 CREATE TABLE forum (
-    forum_id SERIAL PRIMARY KEY
+    forum_id SERIAL PRIMARY KEY,
+	forum_name VARCHAR (100),
+	post_id INT
+);
 
+CREATE TABLE garden_event (
+	event_id SERIAL PRIMARY KEY,
+	garden_id INT,
+	user_id INT,
+	event_description TEXT,
+	event_coordinator VARCHAR (200),
+	user_volunteer VARCHAR (200), -- Make volunteer be a registered user??
+	childcare_owner VARCHAR (200),
+	event_date TIMESTAMP,
+	event_category VARCHAR (255) CHECK (event_category IN ('Garden Event', 'Community Event', 'Marketplace Event'))
 );
 
 CREATE TABLE post (
     post_id SERIAL PRIMARY KEY,
     plant_id INT,
-    users_id INT,
+    user_id INT,
     forum_id INT,
     post_description TEXT,
     price NUMERIC,
@@ -44,14 +58,37 @@ CREATE TABLE post (
     post_category VARCHAR (255) CHECK (post_category IN ('Marketplace', 'Community Help', 'Share'))
 );
 
+CREATE TABLE plant_post (
+	post_id INT,
+	plant_id int,
+	PRIMARY KEY (post_id, plant_id)
+);
+
+ALTER TABLE plant_post ADD FOREIGN KEY (post_id) REFERENCES post (post_id);
+ALTER TABLE plant_post ADD FOREIGN KEY (plant_id) REFERENCES plant (plant_id);
+
+ALTER TABLE garden_event ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
+ALTER TABLE garden_event ADD FOREIGN KEY (garden_id) REFERENCES garden (garden_id);
+
 ALTER TABLE garden_plant ADD FOREIGN KEY (plant_id) REFERENCES plant(plant_id);
 ALTER TABLE garden_plant ADD FOREIGN KEY (garden_id) REFERENCES garden(garden_id);
 
-ALTER TABLE forum ADD COLUMN post_id INT;
 ALTER TABLE forum ADD FOREIGN KEY (post_id) REFERENCES post (post_id);
 
+ALTER TABLE post ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE post ADD FOREIGN KEY (forum_id) REFERENCES forum (forum_id);
 
+
 COMMIT;
+
+
+
+
+
+
+
+
+
+
 
 

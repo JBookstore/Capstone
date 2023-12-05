@@ -9,7 +9,7 @@ export function createStore(currentToken, currentUser) {
       plants: [ // Plant object array for testing
         {
           id: 1,
-          common_name: "European Silver Fir",
+          common_name: "Test European Silver Fir",
           scientific_name: [
             "Abies alba"
           ],

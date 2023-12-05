@@ -7,13 +7,15 @@
 
 <script>
     export default {
-        props: ["userId"],
+        props: {
+            plant: {type: Object, required: true}
+        },
 
         computed: {
-            plant() {
-                let plant = this.$store.state.plants.find( p => p.userID == this.id );
-                return plant;
-            }
+            // plant() {
+            //     let plant = this.$store.state.plants.find( p => p.userID == this.id );
+            //     return plant;
+            // }
         }
     }
 </script>

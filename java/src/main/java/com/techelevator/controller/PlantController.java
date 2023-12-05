@@ -1,18 +1,18 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.PlantDao;
+import com.techelevator.dao.JdbcPlantDao;
 import com.techelevator.model.Plant;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 public class PlantController {
-    private final PlantDao plantDao;
+    private final JdbcPlantDao plantDao;
 
-    public PlantController(PlantDao plantDao) {
+    public PlantController(JdbcPlantDao plantDao) {
         this.plantDao = plantDao;
     }
 

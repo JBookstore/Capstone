@@ -21,7 +21,8 @@ public class JdbcPlantDao implements PlantDao{
     @Override
     public Plant getPlantById(int plantId) {
         Plant plant = null;
-        String sql = "SELECT plant_id, plantname, password_hash, role FROM plants WHERE plant_id = ?";
+        String sql = "SELECT plant_id, common_name, scientific_name, other_name, watering, " +
+                " regular_img_url, plant_description, api_plant_id FROM plant WHERE plant_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, plantId);
             if (results.next()) {
@@ -36,7 +37,8 @@ public class JdbcPlantDao implements PlantDao{
     @Override
     public List<Plant> getPlants() {
         List<Plant> plants = new ArrayList<>();
-        String sql = "SELECT plant_id, plantname, password_hash, role FROM plants";
+        String sql = "SELECT plant_id, common_name, scientific_name, other_name, watering, " +
+                " regular_img_url, plant_description, api_plant_id FROM plant;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -51,8 +53,17 @@ public class JdbcPlantDao implements PlantDao{
 
     private Plant mapRowToPlant(SqlRowSet rs) {
         Plant plant = new Plant();
-        plant.setPlantId(rs.getInt("plant_id"));
-        plant.setPlantName(rs.getString("plant_name"));
+        plant.setId(rs.getInt("plant_id"));
+        //TODO how do we map and IMG byte[]
+        plant.setCommonName(rs.getString("common_name"));
+        plant.setScientificName(rs.getString("scientific_name"));
+        plant.setOtherName(rs.getString("other_name"));
+        plant.setWatering(rs.getString("watering"));
+        //plant.setSunlight(rs.getString("sunlight"));
+        plant.setImgUrl(rs.getString("regular_img_url"));
+        plant.setDescription(rs.getString("plant_description"));
+        plant.setApiPlantId(rs.getInt("api_plant_id"));
+
         return plant;
     }
 }

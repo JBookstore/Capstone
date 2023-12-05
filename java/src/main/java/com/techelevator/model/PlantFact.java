@@ -7,22 +7,17 @@ import java.util.List;
 public class PlantFact {
 
     private int id;
-
     @JsonProperty("common_name")
     private String commonName;
-
     @JsonProperty("scientific_name")
     private List<String> scientificName;
-
     @JsonProperty("other_name")
     private List<String> otherName;
     private String cycle;
     private String watering;
     private List<String> sunlight;
-
     @JsonProperty("default_image")
     private ImageData defaultImage;
-
     private String description;
 
     //Setters and Getters

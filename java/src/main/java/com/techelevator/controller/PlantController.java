@@ -16,13 +16,13 @@ public class PlantController {
         this.plantDao = plantDao;
     }
 
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/plants", method = RequestMethod.GET)
     public List<Plant> getAllPlants() {
         return plantDao.getPlants();
     }
 
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/plants/{id}", method = RequestMethod.GET)
     public Plant getPlantById(@PathVariable int id) {
         Plant plant = plantDao.getPlantById(id);

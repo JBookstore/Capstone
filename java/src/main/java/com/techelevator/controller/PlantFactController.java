@@ -18,7 +18,7 @@ public class PlantFactController {
     }
 
     //Methods
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "{name}", method = RequestMethod.GET)
     public List<PlantFact> getPlantFactByName(@PathVariable String name) {
         List<PlantFact> results = plantFactService.getPlantFactByName(name);

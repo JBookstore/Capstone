@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class JdbcPlantDao implements PlantDao{
     public List<Plant> getPlants() {
         List<Plant> plants = new ArrayList<>();
         String sql = "SELECT plant_id, common_name, scientific_name, other_name, watering, " +
-                " regular_img_url, plant_description, api_plant_id FROM plant;";
+                "sunlight, regular_img_url, plant_description, api_plant_id FROM plant;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -54,12 +55,22 @@ public class JdbcPlantDao implements PlantDao{
     private Plant mapRowToPlant(SqlRowSet rs) {
         Plant plant = new Plant();
         plant.setId(rs.getInt("plant_id"));
-        //TODO how do we map and IMG byte[]
+        //TODO how do we map an IMG byte[]
         plant.setCommonName(rs.getString("common_name"));
         plant.setScientificName(rs.getString("scientific_name"));
         plant.setOtherName(rs.getString("other_name"));
         plant.setWatering(rs.getString("watering"));
-        //plant.setSunlight(rs.getString("sunlight"));
+        String arrayAsString = rs.getString("sunlight");
+        //String[] sunlight = rs.getObject("sunlight", String[].class);
+        String sunny = "";
+        if (arrayAsString != null) {
+            String[] sunlight = arrayAsString.replace("{", "").replace("}", "").split(",");
+            for (int i = 0; i < sunlight.length; i++) {
+               sunny += sunlight[i] + " ";
+            }
+            plant.setSunlight(sunny);
+        }
+
         plant.setImgUrl(rs.getString("regular_img_url"));
         plant.setDescription(rs.getString("plant_description"));
         plant.setApiPlantId(rs.getInt("api_plant_id"));

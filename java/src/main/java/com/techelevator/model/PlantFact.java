@@ -15,7 +15,7 @@ public class PlantFact {
     private List<String> otherName;
     private String cycle;
     private String watering;
-    private List<String> sunlight;
+    private String[] sunlight;
     @JsonProperty("default_image")
     private ImageData defaultImage;
     private String description;
@@ -69,11 +69,11 @@ public class PlantFact {
         this.watering = watering;
     }
 
-    public List<String> getSunlight() {
+    public String[] getSunlight() {
         return sunlight;
     }
 
-    public void setSunlight(List<String> sunlight) {
+    public void setSunlight(String[] sunlight) {
         this.sunlight = sunlight;
     }
 

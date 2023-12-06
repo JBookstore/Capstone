@@ -1,6 +1,6 @@
 START TRANSACTION;
 
-DROP TABLE IF EXISTS garden, plant, forum, post, garden_plant, garden_event CASCADE;
+DROP TABLE IF EXISTS garden, plant, forum, post, garden_plant, garden_event, plant_post CASCADE;
 
 CREATE TABLE plant (
     plant_id SERIAL PRIMARY KEY,
@@ -9,7 +9,7 @@ CREATE TABLE plant (
     scientific_name VARCHAR(50),
     other_name VARCHAR(50),
     watering VARCHAR(30),
-    sunlight VARCHAR ARRAY,
+    sunlight VARCHAR (250),
     regular_img_url VARCHAR(150),
     plant_description TEXT,
     api_plant_id INT

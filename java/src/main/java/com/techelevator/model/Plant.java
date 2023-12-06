@@ -16,7 +16,7 @@ public class Plant {
     @JsonProperty("other_name")
     private String otherName;
     private String watering;
-    private String[] sunlight;
+    private String sunlight;
     @JsonProperty("regular_img_url")
     private String imgUrl;
     @JsonProperty("plant_description")
@@ -74,11 +74,11 @@ public class Plant {
         this.watering = watering;
     }
 
-    public String[] getSunlight() {
+    public String getSunlight() {
         return sunlight;
     }
 
-    public void setSunlight(String[] sunlight) {
+    public void setSunlight(String sunlight) {
         this.sunlight = sunlight;
     }
 

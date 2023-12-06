@@ -13,6 +13,7 @@
     </div>
 </template>
 
+<!-- Some kind of loading screen may be necessary, 3 to 6 second delay -->
 <script>
     import PlantCard from '../components/PlantCard.vue';
     import plantService from '../services/PlantService.js';
@@ -29,37 +30,22 @@
         },
         methods: {
             searchPlants(searchString) {
+                if(searchString == '') {
+                    alert("You're not searching for anything!");
+                } else {
+
                 plantService.getPlants(searchString)
                 .then( response => {
                     this.plants = response.data;
                 })
-            },
-
-            testAlertMethod() {
-                let testSearch = this.searchString;
-                if(testSearch == '') {
-                    alert('Empty query.');
-                } else {
-                    alert('Searching for: ' + testSearch);
                 }
             },
-            
-            testPopulateArrayMethod() {
-                this.plants.push('1', '2');
-            },
-
-            testPlantCall() {
-                let testSearch = this.searchString;
-                return plantService.getPlants(testSearch);
-            }
         }
     };
 </script>
 
 <style scoped>
-div {
-    background-color: aqua;
-}
+
 h2 {
     text-align: center;
 }

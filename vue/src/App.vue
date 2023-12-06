@@ -23,7 +23,6 @@
 
 <style scoped>
 #capstone-app {
-background-color: red;
 }
 #userNav {
   text-align: center;
@@ -35,7 +34,6 @@ h1 {
   text-align: center;
 }
 #view {
-  background-color: hotpink;
   display: flex;
   justify-content: center;
   align-content: center;

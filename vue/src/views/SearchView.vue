@@ -4,7 +4,7 @@
 
         <div class="searchForm">
             <input class="searchBar" type="text" v-model="searchString"/>
-            <button class="searchButton" v-on:click="testPopulateArrayMethod">Search</button>
+            <button class="searchButton" v-on:click="searchPlants(this.searchString)">Search</button>
         </div>
 
         <div class="searchResults" v-for="i in plants" v-bind:key="i">

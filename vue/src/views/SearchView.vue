@@ -1,14 +1,14 @@
 <template>
     <div>
-        <h2>Search for any plant by ID (as long as the ID is 1)</h2>
+        <h2>Plant Search</h2>
 
-        <form>
-            <input type="text" v-model="searchString"/>
-            <button v-bind:searchString="searchString" onclick="alert('!!!' + searchString + '111')">Search</button>
-        </form>
+        <div class="searchForm">
+            <input class="searchBar" type="text" v-model="searchString"/>
+            <button class="searchButton" v-on:click="testPopulateArrayMethod">Search</button>
+        </div>
 
-        <div class="searchResults" v-for="plant in searchPlants" v-bind:key="plant.id">
-            <plant-card v-bind:plant="plant"/>
+        <div class="searchResults" v-for="i in plants" v-bind:key="i">
+            <plant-card v-bind:plantId="plants[i]"/>
         </div>
     </div>
 </template>
@@ -29,11 +29,29 @@
         },
         methods: {
             searchPlants(searchString) {
-            plantService.getPlantByQuery(searchString)
-            .then( response => {
-                this.plants = response.data;
-            })
-        }
+                plantService.getPlants(searchString)
+                .then( response => {
+                    this.plants = response.data;
+                })
+            },
+
+            testAlertMethod() {
+                let testSearch = this.searchString;
+                if(testSearch == '') {
+                    alert('Empty query.');
+                } else {
+                    alert('Searching for: ' + testSearch);
+                }
+            },
+            
+            testPopulateArrayMethod() {
+                this.plants.push('1', '2');
+            },
+
+            testPlantCall() {
+                let testSearch = this.searchString;
+                return plantService.getPlants(testSearch);
+            }
         }
     };
 </script>
@@ -41,5 +59,8 @@
 <style scoped>
 div {
     background-color: aqua;
+}
+h2 {
+    text-align: center;
 }
 </style>

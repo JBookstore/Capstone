@@ -6,16 +6,18 @@
 </template>
 
 <script>
+    import plantService from '../services/PlantService.js';
+
     export default {
         props: {
-            plant: {type: Object, required: true}
+            // plant: {type: Object, required: true}
         },
 
         computed: {
-            // plant() {
-            //     let plant = this.$store.state.plants.find( p => p.userID == this.id );
-            //     return plant;
-            // }
+            plant() {
+                let plant = this.$store.state.plants.find( p => p.userID == this.id );
+                return plant;
+            }
         }
     }
 </script>

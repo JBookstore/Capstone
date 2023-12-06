@@ -1,12 +1,13 @@
 import axios from 'axios';
 
+const http = axios.create({
+    baseURL: "http://localhost:9000"
+});
+
 export default {
 
-    getPlantById(id) {
-        return axios.get(`/plants/${id}`)
-    },
-    
-    getPlantByQuery(searchQuery) {
-        return axios.get(`/${searchQuery}`)
+    // Consolidated
+    getPlants(search) {
+        return http.get(`/${search}`)
     }
 }

@@ -35,7 +35,7 @@ public class GardenController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/transactions", method = RequestMethod.POST)
+    @RequestMapping(path = "/gardens", method = RequestMethod.POST)
     public Garden create(@RequestBody @Valid Garden garden) {
         if (garden == null) {
             throw new ResponseStatusException(HttpStatus.CREATED, "Garden Created");

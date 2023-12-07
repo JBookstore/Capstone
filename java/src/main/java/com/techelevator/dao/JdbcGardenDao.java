@@ -22,7 +22,8 @@ public class JdbcGardenDao implements GardenDao {
     @Override
     public Garden getGardenById(int gardenId) {
         Garden garden = null;
-        String sql = "SELECT plant_id, plantname, password_hash, role FROM plants WHERE plant_id = ?";
+        String sql = "SELECT garden_id, garden_name, user_id, street_address, garden_city, garden_state, garden_zip," +
+                " phone_number, is_public, garden_type FROM garden WHERE garden_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, gardenId);
             if (results.next()) {
@@ -56,7 +57,8 @@ public class JdbcGardenDao implements GardenDao {
     @Override
     public List<Garden> getGarden() {
         List<Garden> gardens = new ArrayList<>();
-        String sql = "SELECT plant_id, plantname, password_hash, role FROM plants";
+        String sql = "SELECT garden_id, garden_name, user_id, street_address, garden_city, garden_state, garden_zip," +
+                " phone_number, is_public, garden_type FROM garden;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -74,6 +76,14 @@ public class JdbcGardenDao implements GardenDao {
         Garden garden = new Garden();
         garden.setGardenId(rs.getInt("garden_id"));
         garden.setGardenName(rs.getString("garden_name"));
+        garden.setUserId(rs.getInt("user_id"));
+        garden.setStreetAddress(rs.getString("street_address"));
+        garden.setGardenCity(rs.getString("garden_city"));
+        garden.setGardenState(rs.getString("garden_state"));
+        garden.setGardenZip(rs.getInt("garden_zip"));
+        garden.setPhoneNumber(rs.getString("phone_number"));
+        garden.setPublicGarden(rs.getBoolean("is_public"));
+        garden.setGardenType(rs.getString("garden_type"));
         return garden;
     }
 }

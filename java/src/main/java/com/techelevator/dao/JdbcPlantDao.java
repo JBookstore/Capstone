@@ -39,7 +39,7 @@ public class JdbcPlantDao implements PlantDao{
     public List<Plant> getPlants() {
         List<Plant> plants = new ArrayList<>();
         String sql = "SELECT plant_id, common_name, scientific_name, other_name, watering, " +
-                "sunlight, regular_img_url, plant_description, api_plant_id FROM plant;";
+                "regular_img_url, plant_description, sunshine_description, api_plant_id FROM plant_sunshine_view;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -55,26 +55,26 @@ public class JdbcPlantDao implements PlantDao{
     private Plant mapRowToPlant(SqlRowSet rs) {
         Plant plant = new Plant();
         plant.setId(rs.getInt("plant_id"));
-        //TODO how do we map an IMG byte[]
         plant.setCommonName(rs.getString("common_name"));
         plant.setScientificName(rs.getString("scientific_name"));
         plant.setOtherName(rs.getString("other_name"));
         plant.setWatering(rs.getString("watering"));
-        String arrayAsString = rs.getString("sunlight");
-        //String[] sunlight = rs.getObject("sunlight", String[].class);
-        String sunny = "";
-        if (arrayAsString != null) {
-            String[] sunlight = arrayAsString.replace("{", "").replace("}", "").split(",");
-            for (int i = 0; i < sunlight.length; i++) {
-               sunny += sunlight[i] + " ";
-            }
-            plant.setSunlight(sunny);
-        }
-
+        //plant.setSunlight(rs.getString("sunshine_description"));
         plant.setImgUrl(rs.getString("regular_img_url"));
         plant.setDescription(rs.getString("plant_description"));
         plant.setApiPlantId(rs.getInt("api_plant_id"));
 
         return plant;
     }
+
+//      String arrayAsString = rs.getString("sunlight");
+//        //String[] sunlight = rs.getObject("sunlight", String[].class);
+//        String sunny = "";
+//        if (arrayAsString != null) {
+//            String[] sunlight = arrayAsString.replace("{", "").replace("}", "").split(",");
+//            for (int i = 0; i < sunlight.length; i++) {
+//               sunny += sunlight[i] + " ";
+//            }
+//            plant.setSunlight(sunny);
+//        }
 }

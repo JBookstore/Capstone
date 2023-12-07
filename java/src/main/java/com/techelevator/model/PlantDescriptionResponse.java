@@ -1,6 +1,6 @@
 package com.techelevator.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-@JsonIgnoreProperties(ignoreUnknown = true) // This annotation tells Jackson to ignore fields not defined in the class
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PlantDescriptionResponse {
     private String description;
     // Getters and Setters

@@ -8,4 +8,7 @@ public interface GardenDao {
     List<Garden> getGarden();
 
     Garden getGardenById(int id);
+
+    Garden createGarden(Garden garden);
+
 }

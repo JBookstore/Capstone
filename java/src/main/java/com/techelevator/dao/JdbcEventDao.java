@@ -77,7 +77,7 @@ public class JdbcEventDao implements EventDao {
         event.setEventCoordinator(rs.getString("event_coordinator"));
         event.setUserVolunteer(rs.getString("user_volunteer"));
         event.setChildcareOwner(rs.getString("childcare_owner"));
-        event.setEventDate(rs.getString("event_date"));
+        event.setEventDate(rs.getTimestamp("event_date"));
         event.setEventCategory(rs.getString("event_category"));
         return event;
     }

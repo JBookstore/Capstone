@@ -11,5 +11,5 @@ public interface GardenDao {
 
     Garden createGarden(Garden garden);
 
-    Garden getGardenByUserId(int userId);
+    List<Garden> getGardenByUserId(int userId);
 }

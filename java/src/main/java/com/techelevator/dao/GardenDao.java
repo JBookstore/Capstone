@@ -7,8 +7,9 @@ import java.util.List;
 public interface GardenDao {
     List<Garden> getGarden();
 
-    Garden getGardenById(int id);
+    Garden getGardenById(int GardenId);
 
     Garden createGarden(Garden garden);
 
+    Garden getGardenByUserId(int userId);
 }

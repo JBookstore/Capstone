@@ -16,13 +16,13 @@ public class EventController {
         this.eventDao = eventDao;
     }
 
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/events", method = RequestMethod.GET)
     public List<Event> getAllEvents() {
         return eventDao.getEvent();
     }
 
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/events/{id}", method = RequestMethod.GET)
     public Event getEventById(@PathVariable int id) {
         Event event = eventDao.getEventById(id);

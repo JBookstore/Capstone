@@ -36,6 +36,22 @@ public class JdbcGardenDao implements GardenDao {
     }
 
     @Override
+    public Garden getGardenByUserId(int userId) {
+        Garden garden = null;
+        String sql = "SELECT * FROM garden g" +
+                " JOIN users u ON u.user_id = g.user_id" +
+                " WHERE u.user_id = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            if (results.next()) {
+                garden = mapRowToGarden(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return garden;
+    }
+    @Override
     public Garden createGarden(Garden garden) {
         Garden newGarden = null;
         String sql = "INSERT INTO garden (garden_name, user_id, street_address, garden_city, garden_state, garden_zip," +

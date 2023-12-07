@@ -4,45 +4,110 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Event {
     @JsonProperty("event_id")
-    private int EventId;
-
-    @JsonProperty("event_name")
-    private String EventName;
+    private int eventId;
+    @JsonProperty("garden_id")
+    private int gardenId;
+    @JsonProperty("user_id")
+    private int userId;
+    @JsonProperty("event_description")
+    private String eventDescription;
+    @JsonProperty("event_coordinator")
+    private String eventCoordinator;
+    @JsonProperty("user_volunteer")
+    private String userVolunteer;
+    @JsonProperty("childcare_owner")
+    private String childcareOwner;
+    @JsonProperty("event_date")
+    private String eventDate;
+    @JsonProperty("event_category")
+    private String eventCategory;
 
     //Setters and Getters
 
     public int getEventId() {
-        return EventId;
+        return eventId;
     }
 
     public void setEventId(int eventId) {
-        EventId = eventId;
+        this.eventId = eventId;
     }
 
-    public String getEventName() {
-        return EventName;
+    public int getGardenId() {
+        return gardenId;
     }
 
-    public void setEventName(String eventName) {
-        EventName = eventName;
+    public void setGardenId(int gardenId) {
+        this.gardenId = gardenId;
     }
 
-
-    //Constructors
-    public Event() {
+    public int getUserId() {
+        return userId;
     }
 
-    public Event(int eventId, String eventName) {
-        EventId = eventId;
-        EventName = eventName;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    //ToString
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
+    }
+
+    public String getEventCoordinator() {
+        return eventCoordinator;
+    }
+
+    public void setEventCoordinator(String eventCoordinator) {
+        this.eventCoordinator = eventCoordinator;
+    }
+
+    public String getUserVolunteer() {
+        return userVolunteer;
+    }
+
+    public void setUserVolunteer(String userVolunteer) {
+        this.userVolunteer = userVolunteer;
+    }
+
+    public String getChildcareOwner() {
+        return childcareOwner;
+    }
+
+    public void setChildcareOwner(String childcareOwner) {
+        this.childcareOwner = childcareOwner;
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public String getEventCategory() {
+        return eventCategory;
+    }
+
+    public void setEventCategory(String eventCategory) {
+        this.eventCategory = eventCategory;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
-                "EventId=" + EventId +
-                ", EventName='" + EventName + '\'' +
+                "eventId=" + eventId +
+                ", gardenId=" + gardenId +
+                ", userId=" + userId +
+                ", eventDescription='" + eventDescription + '\'' +
+                ", eventCoordinator='" + eventCoordinator + '\'' +
+                ", userVolunteer='" + userVolunteer + '\'' +
+                ", childcareOwner='" + childcareOwner + '\'' +
+                ", eventDate='" + eventDate + '\'' +
+                ", eventCategory='" + eventCategory + '\'' +
                 '}';
     }
 }

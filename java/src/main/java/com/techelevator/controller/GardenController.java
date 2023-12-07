@@ -35,6 +35,17 @@ public class GardenController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/gardens/user/{id}", method = RequestMethod.GET)
+    public Garden getGardenByUserId(@PathVariable int id) {
+        Garden garden = gardenDao.getGardenById(id);
+        if (garden == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "garden Not Found");
+        } else {
+            return gardenDao.getGardenByUserId(id);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/gardens", method = RequestMethod.POST)
     public Garden create(@RequestBody @Valid Garden garden) {
         if (garden == null) {

@@ -17,7 +17,7 @@
         },
         methods: {
             getPlantById(id) {
-                plantService.getPlantById(id).then( (response) => {
+                plantService.getPlantById(this.plant.id).then( (response) => {
                     this.plant = response.data;
                 })
             }

@@ -1,6 +1,6 @@
 <template>
-    <div id="gardenDisplay" v-for="i in 3" v-bind:key="i">
-     <plant-card v-bind:userId="id"/>
+    <div id="gardenDisplay" v-for="plant in this.$store.state.user_garden" v-bind:key="plant.id">
+     <plant-card v-bind:plant="plant"/>
     </div>
 </template>
 

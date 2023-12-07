@@ -13,6 +13,7 @@
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'detailSearch' }">Search</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'gardenView' }">My Garden</router-link>
+      <hr>
 
     </div>
     <div id="view">

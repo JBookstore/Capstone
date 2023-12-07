@@ -1,6 +1,6 @@
 START TRANSACTION;
 
-DROP TABLE IF EXISTS garden, plant, forum, post, garden_plant, garden_event, plant_post CASCADE;
+DROP TABLE IF EXISTS garden, plant, forum, post, garden_plant, garden_event, plant_post, reminder, sunshine, user_messages CASCADE;
 
 CREATE TABLE plant (
     plant_id SERIAL PRIMARY KEY,
@@ -17,14 +17,21 @@ CREATE TABLE plant (
 
 CREATE TABLE garden (
     garden_id SERIAL PRIMARY KEY,
-	garden_name VARCHAR (100)
+	garden_name VARCHAR (100),
+	user_id INT,
+	street_address VARCHAR (200),
+	garden_city VARCHAR (100),
+	garden_state VARCHAR (100),
+	garden_zip INT,
+	phone_number VARCHAR (12),
+	is_public BOOLEAN DEFAULT FALSE,
+	garden_type VARCHAR (255) CHECK (garden_type IN ('Personal', 'Community'))
 );
 
 CREATE TABLE garden_plant (
     plant_id INT,
     garden_id INT,
     PRIMARY KEY (plant_id, garden_id)
-
 );
 
 CREATE TABLE forum (
@@ -64,6 +71,39 @@ CREATE TABLE plant_post (
 	PRIMARY KEY (post_id, plant_id)
 );
 
+CREATE TABLE sunshine (
+	plant_id INT,
+	sunshine_description TEXT,
+	PRIMARY KEY (plant_id, sunshine_description)
+);
+
+CREATE TABLE user_messages (
+	message_id SERIAL PRIMARY KEY,
+	to_user_id INT,
+	from_user_id INT,
+	message_body TEXT,
+	date_and_time TIMESTAMP,
+	is_read BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE reminder (
+	reminder_id SERIAL PRIMARY KEY,
+	user_id INT,
+	reminder_date_and_time TIMESTAMP,
+	reminder_details TEXT,
+	reminder_icon BYTEA,
+	is_active BOOLEAN DEFAULT FALSE
+);
+
+ALTER TABLE reminder ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
+
+ALTER TABLE user_messages ADD FOREIGN KEY (to_user_id) REFERENCES users (user_id);
+ALTER TABLE user_messages ADD FOREIGN KEY (from_user_id) REFERENCES users (user_id);
+
+ALTER TABLE garden ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
+
+ALTER TABLE sunshine ADD FOREIGN KEY (plant_id) REFERENCES plant (plant_id);
+
 ALTER TABLE plant_post ADD FOREIGN KEY (post_id) REFERENCES post (post_id);
 ALTER TABLE plant_post ADD FOREIGN KEY (plant_id) REFERENCES plant (plant_id);
 
@@ -78,10 +118,57 @@ ALTER TABLE forum ADD FOREIGN KEY (post_id) REFERENCES post (post_id);
 ALTER TABLE post ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE post ADD FOREIGN KEY (forum_id) REFERENCES forum (forum_id);
 
+INSERT INTO garden (garden_name, user_id, street_address, garden_city, garden_state, garden_zip, phone_number, is_public, garden_type)
+VALUES ('Potato Garden', 2, '1 Garden Way', 'Cleveland', 'OH', 44130, '216-555-1234', FALSE, 'Community');
+
+INSERT INTO garden (garden_name, user_id, street_address, garden_city, garden_state, garden_zip, phone_number, is_public, garden_type)
+VALUES ('Bill Garden', 1, '1 Yard St', 'Cleveland', 'OH', 44130, '216-555-6789', TRUE, 'Personal');
+
+INSERT INTO plant (common_name, scientific_name, other_name, watering, regular_img_url, plant_description, api_plant_id)
+VALUES ('Mocha Rose Big Leaf Maple', 'Acer macrophyllum "Mocha Rose"', 'Oregon Maple', 'Average', 'https://perenual.com/storage/species_image/24_acer_macrophyllum_mocha_rose/regular/4715169892_220a9d39f6_b.jpg', 
+		'Crown gall is a plant disease caused by the soil-inhibiting bacterium Agrobacterium tumefaciens. It is distributed worldwide and affects a wide range of plants, including fruit trees (e.g., apple, pear),
+		nut trees (e.g., almond, walnut), ornamental plants (e.g., roses, chrysanthemums), vines (e.g., grapevines), and field crops (e.g., cotton, tomatoes). The disease is identified by the presence of galls,
+		and overgrowths, on roots and at the base of woody plants. These galls can also appear on stems and leaves. Crown gall can lead to stunted growth, reduced yield, and weakened plants.', 24);
+
+INSERT INTO plant (common_name, scientific_name, other_name, watering, regular_img_url, plant_description, api_plant_id)
+VALUES ('Shirazz Japanese Maple', 'Acer palmatum "Gwens Rose Delight"', ' ', 'Average', ' ', 'Crown gall occurs when plants become infected with Agrobacterium tumefaciens. 
+		The bacterium enters the plant through wounds or natural openings and transfers its DNA, known as T-DNA, into the plant cells. This DNA becomes integrated into the plants genetic material, 
+		causing the cells to divide uncontrollably and resulting in the formation of galls. The infection can spread within the plant and to other plants through various means such as soil, water, or infected plant parts.', 58);
+
+INSERT INTO sunshine (plant_id, sunshine_description)
+VALUES (1, 'full sun');
+
+INSERT INTO sunshine (plant_id, sunshine_description)
+VALUES (1, 'part shade');
+
+INSERT INTO sunshine (plant_id, sunshine_description)
+VALUES (2, 'full shade');
+
+INSERT INTO sunshine (plant_id, sunshine_description)
+VALUES (2, 'part sun');
+
+INSERT INTO garden_plant (plant_id, garden_id)
+VALUES (1, 1);
+
+INSERT INTO garden_plant (plant_id, garden_id)
+VALUES (1, 2);
+
+INSERT INTO user_messages (to_user_id, from_user_id, message_body, date_and_time, is_read)
+VALUES (1, 2, 'What up?! How bout them plants?', '2023-12-07 12:34:01', FALSE);
+
+INSERT INTO user_messages (to_user_id, from_user_id, message_body, date_and_time, is_read)
+VALUES (2, 1, 'What you selling bro?!', '2023-12-07 12:34:10', TRUE);
+
+INSERT INTO reminder (user_id, reminder_date_and_time, reminder_details, is_active)
+VALUES (1, '2023-12-08 12:34:01', 'Water yo plants!', TRUE);
+
+INSERT INTO reminder (user_id, reminder_date_and_time, reminder_details, is_active)
+VALUES (1, '2023-12-06 12:34:01', 'Water yo trees!', TRUE);
+
+INSERT INTO reminder (user_id, reminder_date_and_time, reminder_details, is_active)
+VALUES (1, '2023-12-06 12:34:01', 'Water yo garden!', FALSE);
 
 COMMIT;
-
-
 
 
 

@@ -1,9 +1,13 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Arrays;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Plant {
     @JsonProperty("plant_id")
     private int id;
@@ -23,9 +27,10 @@ public class Plant {
     private String description;
     @JsonProperty("api_plant_id")
     private int apiPlantId;
+    @JsonProperty("sunshine_description")
+    private String sunshineDescription;
 
     //Setters and Getters
-
     public int getId() {
         return id;
     }
@@ -106,22 +111,50 @@ public class Plant {
         this.apiPlantId = apiPlantId;
     }
 
+    public String getSunshineDescription() {
+        return sunshineDescription;
+    }
+
+    public void setSunshineDescription(String sunshineDescription) {
+        this.sunshineDescription = sunshineDescription;
+    }
+
+    //Constructor
+
+    public Plant() {
+    }
+
+    public Plant(int id, byte[] plantImg, String commonName, String scientificName, String otherName, String watering, List<String> sunlight, String imgUrl, String description, int apiPlantId, String sunshineDescription) {
+        this.id = id;
+        this.plantImg = plantImg;
+        this.commonName = commonName;
+        this.scientificName = scientificName;
+        this.otherName = otherName;
+        this.watering = watering;
+        this.sunlight = sunlight;
+        this.imgUrl = imgUrl;
+        this.description = description;
+        this.apiPlantId = apiPlantId;
+        this.sunshineDescription = sunshineDescription;
+    }
 
     //ToString
+
 
     @Override
     public String toString() {
         return "Plant{" +
                 "id=" + id +
-                ", plantImg='" + plantImg + '\'' +
+                ", plantImg=" + Arrays.toString(plantImg) +
                 ", commonName='" + commonName + '\'' +
-                ", scientificName=" + scientificName +
-                ", otherName=" + otherName +
+                ", scientificName='" + scientificName + '\'' +
+                ", otherName='" + otherName + '\'' +
                 ", watering='" + watering + '\'' +
                 ", sunlight=" + sunlight +
-                ", imgUrl=" + imgUrl +
+                ", imgUrl='" + imgUrl + '\'' +
                 ", description='" + description + '\'' +
                 ", apiPlantId=" + apiPlantId +
+                ", sunshineDescription='" + sunshineDescription + '\'' +
                 '}';
     }
 }

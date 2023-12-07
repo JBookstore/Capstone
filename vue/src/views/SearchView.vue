@@ -7,8 +7,8 @@
             <button class="searchButton" v-on:click="searchPlants(this.searchString)">Search</button>
         </div>
 
-        <div class="searchResults" v-for="i in plants" v-bind:key="i">
-            <plant-card v-bind:plantId="plants[i]"/>
+        <div class="searchResults" v-for="plant in plants" v-bind:key="plant.id">
+            <plant-card v-bind:plant="plant"/>
         </div>
     </div>
 </template>

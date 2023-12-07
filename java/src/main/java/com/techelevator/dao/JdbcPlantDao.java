@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,29 +94,6 @@ public class JdbcPlantDao implements PlantDao {
                     }
                 }
             }
-
-//            else {
-//                int nextPlantId = startingplants.get(0 + 1).getId();
-//                finalPlantsList.add(startingplants.get(0));
-//                for (int i = 0; i < startingplants.size(); i++) {
-//                    if (nextPlantId == startingplants.get(i).getId()) {
-//                        runningSunshineList.add(startingplants.get(i).getSunshineDescription());
-//                        nextPlantId = startingplants.get(i + 1).getId();
-//                    }
-//                    if (previousPlantId < startingplants.get(i).getId() && i < startingplants.size() - 1) {
-//                        //finalPlantsList.get(previousPlantId).setSunlight(runningSunshineList);
-//                        runningSunshineList.clear();
-//                        runningSunshineList.add(startingplants.get(i).getSunshineDescription());
-//                        finalPlantsList.add(startingplants.get(i));
-//                        previousPlantId = startingplants.get(i).getId();
-//                    }
-//                    if (i == startingplants.size() - 1) {
-//                        finalPlantsList.add(startingplants.get(i));
-//                        finalPlantsList.get(previousPlantId).setSunlight(runningSunshineList);
-//                        runningSunshineList.clear();
-//                    }
-//                }
-//            }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }

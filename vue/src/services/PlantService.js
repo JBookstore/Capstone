@@ -15,8 +15,8 @@ export default {
         return axios.get(`/${id}`)
     },
 
-    addPlantToGarden(plant) {
-        return axios.post('/plants', plant)
+    addPlantToGarden(plant, gardenId) {
+        return axios.post('/plants', plant, gardenId)
     },
 
     // We need an end point to add plants directly to gardens, not a general add

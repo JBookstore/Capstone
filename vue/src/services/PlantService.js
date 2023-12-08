@@ -12,7 +12,7 @@ export default {
     },
 
     getPlantById(id) {
-        return axios.get(`/${id}`)
+        return axios.get(`/plants/${id}`)
     },
 
     addPlantToGarden(plant, gardenId) {
@@ -21,8 +21,12 @@ export default {
 
     // We need an end point to add plants directly to gardens, not a general add
 
-    getGardenById(id) {
+    getPlantsByGarden(id) {
         return axios.get(`/plants/garden/${id}`)
+    },
+
+    getGardenById(id) {
+        return axios.get(`/gardens/${id}`)
     },
 
     getGardenByUserId(id) {

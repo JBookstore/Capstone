@@ -1,6 +1,6 @@
 <template>
     <div id="plantDetails">
-        <h2>{{ plant.common_name }}</h2>
+        <h2>{{ this.plant.common_name }}</h2>
 
         <img v-if="plant.default_image === null" v-bind:src="getDefaultImage"/>
         <img v-else v-bind:src="plant.default_image.original_url"  id="displayImage" />
@@ -22,7 +22,14 @@
 </template>
 
 <script>
+        import plantService from '../services/PlantService.js';
     export default {
+        data() {
+            return {
+                plant: {}
+            }
+        },
+
         methods: {
             getDefaultImage() {
                 return 'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png';
@@ -30,15 +37,9 @@
             onAddClick() {
                 this.$store.commit('ADD_PLANT_TO_GARDEN', this.plant);
                 alert('Added ' + this.plant.common_name + ' to your garden!');
-            }
+            },
         },
 
-        computed: {
-            plant() {
-                let plant = this.$store.state.plants[0];
-                return plant;
-            }
-        }
     } 
 
     // TESTING PURPOSES

@@ -2,9 +2,8 @@
     <div class="card">
         <div class="cardTop">
             <h2>{{ plant.common_name }}</h2>
-
-            <button v-on:click="onDeleteClick" v-if="this.$store.state.user_garden.includes(plant)" class="cardButton">DELETE</button>
-            <button v-on:click="onAddClick" v-else class="cardButton">ADD</button>
+            <button v-on:click="onAddClick" class="cardButton">+</button>
+            <button v-on:click="onDeleteClick" class="cardButton">-</button>
             <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
         </div>
 
@@ -25,10 +24,9 @@
 
         methods: {
             onDetailsClick() {
-
                 this.$router.push({ name: 'detailById', params: {id: this.plant.id}});
                 this.$store.commit('STORE_PLANT', this.plant);
-                // alert('Test');
+               
             },
             onAddClick() {
                 this.$store.commit('ADD_PLANT_TO_GARDEN', this.plant);

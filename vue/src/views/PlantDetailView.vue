@@ -16,10 +16,13 @@
             plantDetail,
         },
         methods: {
-            getPlantById(id) {
-                plantService.getPlantById(this.plant.id).then( (response) => {
-                    this.plant = response.data;
-                })
+            // getPlantById(id) {
+            //     plantService.getPlantById(this.plant.id).then( (response) => {
+            //         this.plant = response.data;
+            //     })
+            // }
+            getPlantFromSTore() {
+                this.plant = this.$store.state.plants[0];
             }
         }
     };

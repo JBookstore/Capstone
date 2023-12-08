@@ -8,52 +8,59 @@
         </div>
 
         <div class="home">
-            <p>How does your garden grow?</p>
-            <button v-on:click="createGarden">UP</button>
+            <p>{{ this.$store.state.user.username }}'s Gardens</p>
+            <button v-if="!showForm" v-on:click="createGarden">Add New Garden</button>
         </div>
 
         <form v-on:submit.prevent="submitForm" class="cardForm" v-if="showForm">
             <hr>
             <fieldset class="mandatory">
-                <label for="title">Title:</label>
+                <label for="title">Garden Nickname:</label>
                 <input type="text" v-model="addedGarden.garden_name" />
             </fieldset>
 
             <fieldset class="optional">
                 <label for="address">Address:</label>
-                <input type="text" v-model="addedGarden.street_address" />
+                <input type="text" v-model="addedGarden.street_address" placeholder="Optional" />
             </fieldset>
             <fieldset class="optional">
                 <label for="city">City:</label>
-                <input type="text" v-model="addedGarden.garden_city" />
+                <input type="text" v-model="addedGarden.garden_city" placeholder="Optional" />
             </fieldset>
             <fieldset class="optional">
                 <label for="state">State:</label>
-                <input type="text" v-model="addedGarden.garden_state" />
+                <input type="text" v-model="addedGarden.garden_state" placeholder="Optional" />
             </fieldset>
             <fieldset class="optional">
                 <label for="zip">ZIP:</label>
-                <input type="text" v-model="addedGarden.garden_zip" />
+                <input type="text" v-model="addedGarden.garden_zip" placeholder="Optional" />
             </fieldset>
             <fieldset class="optional">
                 <label for="phoneNumber">Phone Number:</label>
-                <input type="text" v-model="addedGarden.phone_number" />
+                <input type="text" v-model="addedGarden.phone_number" placeholder="Optional"/>
             </fieldset>
 
             <fieldset class="mandatory">
-                <label for="isPublic">Public?</label>
-                <input type="text" v-model="addedGarden.is_public" />
+                <label for="isPublic">Would you like the garden publicly displayed?</label>
+                <select v-model="addedGarden.is_public" id="isPublic">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
             </fieldset>
             <fieldset class="mandatory">
-                <label for="gardenType">Garden Type:</label>
-                <input type="text" v-model="addedGarden.garden_type" />
+                <label for="gardenType">What type of garden?:</label>
+                <select v-model="addedGarden.garden_type" id="gardenType">
+                    <option value="Community">Community</option>
+                    <option value="Personal">Personal</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <p>placeholder enter custom image</p>
             </fieldset>
 
             <button v-on:click="clearForm">CLEAR</button>
             <button v-on:click="submitGarden">SUBMIT</button>
         </form>
-
-        <!-- OPEN ACCOUNT -->
 
         <!-- MY MARKETPLACE -->
 
@@ -82,17 +89,13 @@ export default {
     methods: {
         createGarden() {
             this.showForm = true;
-            alert('This button works!!');
-
-            // this.showForm = false;
         },
         clearForm() {
-            // alert('Cleared');
             this.showForm = false;
             this.garden = {};
         },
         submitGarden() {
-            alert('Submitted');
+            alert(`Thank you! ` + this.addedGarden.garden_name + ' has been added');
             plantService.addGarden(this.addedGarden);
             this.showForm = false;
             this.addedGarden = {};

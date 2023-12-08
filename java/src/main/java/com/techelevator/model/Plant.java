@@ -29,6 +29,8 @@ public class Plant {
     private int apiPlantId;
     @JsonProperty("sunshine_description")
     private String sunshineDescription;
+    @JsonProperty("garden_id")
+    private int gardenId;
 
     //Setters and Getters
     public int getId() {
@@ -119,6 +121,14 @@ public class Plant {
         this.sunshineDescription = sunshineDescription;
     }
 
+    public int getGardenId() {
+        return gardenId;
+    }
+
+    public void setGardenId(int gardenId) {
+        this.gardenId = gardenId;
+    }
+
     //Constructor
 
     public Plant() {
@@ -155,6 +165,7 @@ public class Plant {
                 ", description='" + description + '\'' +
                 ", apiPlantId=" + apiPlantId +
                 ", sunshineDescription='" + sunshineDescription + '\'' +
+                ", gardenId=" + gardenId +
                 '}';
     }
 }

@@ -139,6 +139,8 @@ public class JdbcPlantDao implements PlantDao {
 
         String sqlSunshine = "INSERT INTO sunshine (plant_id, sunshine_description) VALUES (?,?);";
 
+        String sqlGarden = "INSERT INTO garden_plant (plant_id, garden_id) VALUES (?,?);";
+
 
         try {
             plantId = jdbcTemplate.queryForObject(sqlPlant, int.class, plant.getCommonName(), plant.getScientificName(),
@@ -147,6 +149,8 @@ public class JdbcPlantDao implements PlantDao {
             for (int i = 0; i < plant.getSunlight().size(); i++) {
                 jdbcTemplate.update(sqlSunshine,plantId, plant.getSunlight().get(i));
             }
+
+            jdbcTemplate.update(sqlGarden, plantId, plant.getGardenId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {

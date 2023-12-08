@@ -8,4 +8,6 @@ public interface MessageDao {
     List<Message> getMessageByUserId(int id);
 
     Message createMessage(Message message);
+
+    Message getMessageById(int id);
 }

@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.MessageDao;
 import com.techelevator.model.Event;
+import com.techelevator.model.Garden;
 import com.techelevator.model.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,17 @@ public class MessageController {
             throw new ResponseStatusException(HttpStatus.CREATED, "Message Created");
         } else {
             return messageDao.createMessage(message);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/messages/{id}", method = RequestMethod.GET)
+    public Message getMessageById(@PathVariable int id) {
+        Message message = messageDao.getMessageById(id);
+        if (message == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Message Not Found");
+        } else {
+            return messageDao.getMessageById(id);
         }
     }
 }

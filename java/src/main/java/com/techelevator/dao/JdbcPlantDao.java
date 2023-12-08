@@ -143,7 +143,7 @@ public class JdbcPlantDao implements PlantDao {
         try {
             plantId = jdbcTemplate.queryForObject(sqlPlant, int.class, plant.getCommonName(), plant.getScientificName(),
                     plant.getOtherName(), plant.getWatering(), plant.getImgUrl(), plant.getDescription(), plant.getApiPlantId());
-            
+
             for (int i = 0; i < plant.getSunlight().size(); i++) {
                 jdbcTemplate.update(sqlSunshine,plantId, plant.getSunlight().get(i));
             }

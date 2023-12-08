@@ -20,7 +20,16 @@ public class JdbcMessageDao implements MessageDao{
     @Override
     public List<Message> getMessageByUserId(int messageId) {
         List<Message> messages = new ArrayList<>();
-
+        String sql = "SELECT * FROM user_messages WHERE to_user_id = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, messageId);
+            while (results.next()) {
+                Message message = mapRowToMessage(results);
+                messages.add(message);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
         return messages;
     }
 

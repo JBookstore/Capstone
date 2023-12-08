@@ -1,7 +1,6 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.JdbcPlantDao;
-import com.techelevator.model.Event;
 import com.techelevator.model.Plant;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

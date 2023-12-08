@@ -1,8 +1,6 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.MessageDao;
-import com.techelevator.model.Event;
-import com.techelevator.model.Garden;
 import com.techelevator.model.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

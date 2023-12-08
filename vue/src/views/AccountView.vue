@@ -9,53 +9,48 @@
         <hr>
         <fieldset class="mandatory">
             <label for="title">Title:</label>
-            <input type="text" />
+            <input type="text" v-model="garden.garden_name" />
         </fieldset>            
 
         <fieldset class="optional">
             <label for="address">Address:</label>
-            <input type="text" />
+            <input type="text" v-model="garden.street_address"/>
         </fieldset>    
         <fieldset class="optional">
             <label for="city">City:</label>
-            <input type="text" />
+            <input type="text" v-model="garden.garden_city" />
         </fieldset>   
         <fieldset class="optional">
             <label for="state">State:</label>
-            <input type="text" />
+            <input type="text" v-model="garden.garden_state" />
         </fieldset>   
         <fieldset class="optional">
             <label for="zip">ZIP:</label>
-            <input type="text" />
+            <input type="text" v-model="garden.garden_zip" />
         </fieldset>   
         <fieldset class="optional">
-            <label for="description">Description:</label>
-            <input type="text" />
-        </fieldset> 
-        <fieldset class="optional">
             <label for="phoneNumber">Phone Number:</label>
-            <input type="text" />
+            <input type="text" v-model="garden.phone_number" />
         </fieldset> 
 
         <fieldset class="mandatory">
             <label for="isPublic">Public?</label>
-            <input type="text" />
+            <input type="text" v-model="garden.is_public" />
         </fieldset> 
         <fieldset class="mandatory">
             <label for="gardenType">Garden Type:</label>
-            <input type="text" />
+            <input type="text" v-model="garden.garden_type" />
         </fieldset> 
 
         <button v-on:click="clearForm">CLEAR</button>
         <button v-on:click="submitGarden">SUBMIT</button>
     </form>
 
-</div>
-</template>
 
   <!-- OPEN ACCOUNT -->
 
   <!-- MY GARDENS -->
+  <img src="../assets/garden.jpg" v-for="garden in gardens" v-bind:key="garden.garden_id" />
 
   <!-- MY MARKETPLACE -->
 
@@ -64,7 +59,9 @@
   <!-- [SET] EVENTS -->
 
   <!-- VOLUNTEER -->
-  
+ 
+</div>
+</template> 
 <script>
   import plantService from '../services/PlantService.js';
 
@@ -72,7 +69,9 @@
     data() {
         return {
             showForm: false,
-            garden: {}
+            garden: {
+                user_id: this.$store.state.user.id
+            }
         }
     },
 
@@ -89,7 +88,8 @@
             this.garden = {};
         },
         submitForm() {
-            alert('Submitted')
+            alert('Submitted');
+            plantService.addGarden(this.garden);
             this.showForm = false;
             this.garden = {};
         }

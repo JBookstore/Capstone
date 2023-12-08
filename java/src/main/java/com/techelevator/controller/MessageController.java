@@ -21,7 +21,7 @@ public class MessageController {
         this.messageDao = messageDao;
     }
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/messages/{userId}")
+    @RequestMapping(path = "/messages/user/{id}")
     public List<Message> getMessageByUserId(@PathVariable int id) {
         List<Message> message = messageDao.getMessageByUserId(id);
         if (message == null) {

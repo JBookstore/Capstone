@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <p>Hello, potato!</p>
+    <p>Hello, {{ this.$store.state.user.username }}'s homepage</p>
   </div>
 </template>
 

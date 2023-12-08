@@ -9,6 +9,7 @@ import RegisterView from '../views/RegisterView.vue';
 import PlantDetailView from '../views/PlantDetailView.vue';
 import SearchView from '../views/SearchView.vue';
 import GardenView from '../views/GardenView.vue';
+import AccountView from '../views/AccountView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -68,9 +69,17 @@ const routes = [
     }
   },
   {
-    path: "/gardenview",
+    path: "/gardens/:id",
     name: "gardenView",
     component: GardenView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/account",
+    name: "accountView",
+    component: AccountView,
     meta: {
       requiresAuth: true
     }

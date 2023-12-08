@@ -2,10 +2,12 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.EventDao;
 import com.techelevator.model.Event;
+import com.techelevator.model.Garden;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 @CrossOrigin
 @RestController
@@ -30,6 +32,16 @@ public class EventController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "event Not Found");
         } else {
             return eventDao.getEventById(id);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/events", method = RequestMethod.POST)
+    public Event create(@RequestBody @Valid Event event) {
+        if (event == null) {
+            throw new ResponseStatusException(HttpStatus.CREATED, "Event Created");
+        } else {
+            return eventDao.createEvent(event);
         }
     }
 }

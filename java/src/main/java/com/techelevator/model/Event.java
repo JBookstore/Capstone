@@ -2,6 +2,10 @@ package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Event {
     @JsonProperty("event_id")
     private int eventId;
@@ -18,7 +22,7 @@ public class Event {
     @JsonProperty("childcare_owner")
     private String childcareOwner;
     @JsonProperty("event_date")
-    private String eventDate;
+    private Timestamp eventDate;
     @JsonProperty("event_category")
     private String eventCategory;
 
@@ -80,11 +84,11 @@ public class Event {
         this.childcareOwner = childcareOwner;
     }
 
-    public String getEventDate() {
+    public Timestamp getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(String eventDate) {
+    public void setEventDate(Timestamp eventDate) {
         this.eventDate = eventDate;
     }
 

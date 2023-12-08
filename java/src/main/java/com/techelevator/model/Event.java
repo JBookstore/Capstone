@@ -2,9 +2,7 @@ package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 public class Event {
     @JsonProperty("event_id")
@@ -13,21 +11,21 @@ public class Event {
     private int gardenId;
     @JsonProperty("user_id")
     private int userId;
+    @JsonProperty("event_name")
+    private String eventName;
     @JsonProperty("event_description")
     private String eventDescription;
     @JsonProperty("event_coordinator")
     private String eventCoordinator;
-    @JsonProperty("user_volunteer")
-    private String userVolunteer;
     @JsonProperty("childcare_owner")
     private String childcareOwner;
     @JsonProperty("event_date")
-    private Timestamp eventDate;
+    private String eventDate;
     @JsonProperty("event_category")
     private String eventCategory;
+    private List<String> volunteer;
 
     //Setters and Getters
-
     public int getEventId() {
         return eventId;
     }
@@ -52,6 +50,14 @@ public class Event {
         this.userId = userId;
     }
 
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
     public String getEventDescription() {
         return eventDescription;
     }
@@ -68,14 +74,6 @@ public class Event {
         this.eventCoordinator = eventCoordinator;
     }
 
-    public String getUserVolunteer() {
-        return userVolunteer;
-    }
-
-    public void setUserVolunteer(String userVolunteer) {
-        this.userVolunteer = userVolunteer;
-    }
-
     public String getChildcareOwner() {
         return childcareOwner;
     }
@@ -84,11 +82,11 @@ public class Event {
         this.childcareOwner = childcareOwner;
     }
 
-    public Timestamp getEventDate() {
+    public String getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(Timestamp eventDate) {
+    public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
     }
 
@@ -100,15 +98,26 @@ public class Event {
         this.eventCategory = eventCategory;
     }
 
+    public List<String> getVolunteer() {
+        return volunteer;
+    }
+
+    public void setVolunteer(List<String> volunteer) {
+        this.volunteer = volunteer;
+    }
+
+    //ToString
+
+
     @Override
     public String toString() {
         return "Event{" +
                 "eventId=" + eventId +
                 ", gardenId=" + gardenId +
                 ", userId=" + userId +
+                ", eventName='" + eventName + '\'' +
                 ", eventDescription='" + eventDescription + '\'' +
                 ", eventCoordinator='" + eventCoordinator + '\'' +
-                ", userVolunteer='" + userVolunteer + '\'' +
                 ", childcareOwner='" + childcareOwner + '\'' +
                 ", eventDate='" + eventDate + '\'' +
                 ", eventCategory='" + eventCategory + '\'' +

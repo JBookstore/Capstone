@@ -1,6 +1,6 @@
 START TRANSACTION;
 
-DROP TABLE IF EXISTS garden, plant, forum, post, garden_plant, garden_event, plant_post, reminder, sunshine, user_messages CASCADE;
+DROP TABLE IF EXISTS garden, plant, forum, post, garden_plant, garden_event, plant_post, reminder, sunshine, user_messages, plant_user, volunteer CASCADE;
 
 CREATE TABLE plant (
     plant_id SERIAL PRIMARY KEY,
@@ -9,10 +9,21 @@ CREATE TABLE plant (
     scientific_name VARCHAR(50),
     other_name VARCHAR(50),
     watering VARCHAR(30),
-    sunlight VARCHAR (250),
     regular_img_url VARCHAR(150),
     plant_description TEXT,
     api_plant_id INT
+);
+
+CREATE TABLE plant_user (
+	plant_id INT,
+	user_id INT,
+	PRIMARY KEY (plant_id, user_id)
+);
+
+CREATE TABLE volunteer (
+	volunteer_id SERIAL PRIMARY KEY,
+	event_id INT,
+	volunteer_name VARCHAR (150)
 );
 
 CREATE TABLE garden (
@@ -36,19 +47,18 @@ CREATE TABLE garden_plant (
 
 CREATE TABLE forum (
     forum_id SERIAL PRIMARY KEY,
-	forum_name VARCHAR (100),
-	post_id INT
+	forum_name VARCHAR (100)
 );
 
 CREATE TABLE garden_event (
 	event_id SERIAL PRIMARY KEY,
 	garden_id INT,
 	user_id INT,
+	event_name VARCHAR (150),
 	event_description TEXT,
 	event_coordinator VARCHAR (200),
-	user_volunteer VARCHAR (200), -- Make volunteer be a registered user??
 	childcare_owner VARCHAR (200),
-	event_date TIMESTAMP,
+	event_date VARCHAR (19),
 	event_category VARCHAR (255) CHECK (event_category IN ('Garden Event', 'Community Event', 'Marketplace Event'))
 );
 
@@ -82,18 +92,20 @@ CREATE TABLE user_messages (
 	to_user_id INT,
 	from_user_id INT,
 	message_body TEXT,
-	date_and_time TIMESTAMP,
+	date_and_time VARCHAR (19),
 	is_read BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE reminder (
 	reminder_id SERIAL PRIMARY KEY,
 	user_id INT,
-	reminder_date_and_time TIMESTAMP,
+	reminder_date_and_time VARCHAR (19),
 	reminder_details TEXT,
 	reminder_icon BYTEA,
 	is_active BOOLEAN DEFAULT FALSE
 );
+
+ALTER TABLE volunteer ADD FOREIGN KEY (event_id) REFERENCES garden_event (event_id);
 
 ALTER TABLE reminder ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
 
@@ -107,13 +119,14 @@ ALTER TABLE sunshine ADD FOREIGN KEY (plant_id) REFERENCES plant (plant_id);
 ALTER TABLE plant_post ADD FOREIGN KEY (post_id) REFERENCES post (post_id);
 ALTER TABLE plant_post ADD FOREIGN KEY (plant_id) REFERENCES plant (plant_id);
 
+ALTER TABLE plant_user ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
+ALTER TABLE plant_user ADD FOREIGN KEY (plant_id) REFERENCES plant (plant_id);
+
 ALTER TABLE garden_event ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE garden_event ADD FOREIGN KEY (garden_id) REFERENCES garden (garden_id);
 
 ALTER TABLE garden_plant ADD FOREIGN KEY (plant_id) REFERENCES plant(plant_id);
 ALTER TABLE garden_plant ADD FOREIGN KEY (garden_id) REFERENCES garden(garden_id);
-
-ALTER TABLE forum ADD FOREIGN KEY (post_id) REFERENCES post (post_id);
 
 ALTER TABLE post ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE post ADD FOREIGN KEY (forum_id) REFERENCES forum (forum_id);
@@ -167,6 +180,22 @@ VALUES (1, '2023-12-06 12:34:01', 'Water yo trees!', TRUE);
 
 INSERT INTO reminder (user_id, reminder_date_and_time, reminder_details, is_active)
 VALUES (1, '2023-12-06 12:34:01', 'Water yo garden!', FALSE);
+
+INSERT INTO forum (forum_name) VALUES ('Market Place');
+
+INSERT INTO plant_user (plant_id, user_id) VALUES (1, 1);
+INSERT INTO plant_user (plant_id, user_id) VALUES (2, 1);
+
+INSERT INTO garden_event (garden_id, user_id, event_description, event_coordinator, childcare_owner, event_date, event_category)
+VALUES (1, 1, 'Garden Party', 'Steve Austin', 'The Rock', '2023-12-25 12:30:15', 'Community Event');
+
+INSERT INTO garden_event (garden_id, user_id, event_description, event_coordinator, childcare_owner, event_date, event_category)
+VALUES (1, 2, 'Better Garden Party', 'Juan Nunez', 'Jane Doe', '2023-12-25 12:30:15', 'Garden Event');
+
+INSERT INTO volunteer (event_id, volunteer_name) VALUES (1, 'Bob Smith');
+INSERT INTO volunteer (event_id, volunteer_name) VALUES (1, 'Sam Jones');
+
+
 
 COMMIT;
 

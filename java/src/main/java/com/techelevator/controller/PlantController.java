@@ -1,11 +1,13 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.JdbcPlantDao;
+import com.techelevator.model.Event;
 import com.techelevator.model.Plant;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 @CrossOrigin
 @RestController
@@ -24,12 +26,44 @@ public class PlantController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/plants/{id}", method = RequestMethod.GET)
-    public Plant getPlantById(@PathVariable int id) {
-        Plant plant = plantDao.getPlantById(id);
+    public List<Plant> getPlantById(@PathVariable int id) {
+        List<Plant> plant = plantDao.getPlantById(id);
         if (plant == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "plant Not Found");
         } else {
             return plantDao.getPlantById(id);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/plants/garden/{id}", method = RequestMethod.GET)
+    public List<Plant> getPlantByGardenId(@PathVariable int id) {
+        List<Plant> plant = plantDao.getPlantById(id);
+        if (plant == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "plant Not Found");
+        } else {
+            return plantDao.getPlantByGardenId(id);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/plants/user/{id}", method = RequestMethod.GET)
+    public List<Plant> getPlantByUserId(@PathVariable int id) {
+        List<Plant> plant = plantDao.getPlantById(id);
+        if (plant == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "plant Not Found");
+        } else {
+            return plantDao.getPlantByUserId(id);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/plants", method = RequestMethod.POST)
+    public List<Plant> create(@RequestBody @Valid Plant plant) {
+        if (plant == null) {
+            throw new ResponseStatusException(HttpStatus.CREATED, "Event Created");
+        } else {
+            return plantDao.createPlant(plant);
         }
     }
 }

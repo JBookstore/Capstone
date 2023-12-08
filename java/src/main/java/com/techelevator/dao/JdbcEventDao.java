@@ -1,7 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Event;
+import com.techelevator.model.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -53,13 +53,29 @@ public class JdbcEventDao implements EventDao {
     @Override
     public Event createEvent(Event event) {
         Event newEvent = null;
-        String sql = "INSERT INTO garden_event (garden_id, user_id, event_description, event_coordinator," +
-                " user_volunteer, childcare_owner, event_date, event_category)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String sqlEvent = "INSERT INTO" +
+                            " garden_event (" +
+                                " garden_id," +
+                                " user_id," +
+                                " event_name," +
+                                " event_description," +
+                                " event_coordinator," +
+                                " childcare_owner," +
+                                " event_date," +
+                                " event_category)" +
+                            " VALUES (?, ?, ?, ?, ?, ?, ?, ?)" +
+                            " RETURNING event_id;";
+
+        String sqlVolunteer = "INSERT INTO volunteer (event_id, volunteer_name) VALUES (?,?);";
+
         try {
-            int eventId = jdbcTemplate.queryForObject(sql, int.class, event.getGardenId(), event.getUserId(), event.getEventDescription(),
-                    event.getEventCoordinator(), event.getUserVolunteer(), event.getChildcareOwner(), event.getEventDate(), event.getEventCategory());
+            int eventId = jdbcTemplate.queryForObject(sqlEvent, int.class, event.getGardenId(), event.getUserId(), event.getEventName(), event.getEventDescription(),
+                    event.getEventCoordinator(), event.getChildcareOwner(), event.getEventDate(), event.getEventCategory());
             newEvent = getEventById(eventId);
+
+            for (int i = 0; i < event.getVolunteer().size(); i++) {
+                jdbcTemplate.update(sqlVolunteer,eventId, event.getVolunteer().get(i));
+            }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -73,12 +89,20 @@ public class JdbcEventDao implements EventDao {
         event.setEventId(rs.getInt("event_id"));
         event.setGardenId(rs.getInt("garden_id"));
         event.setUserId(rs.getInt("user_id"));
+        event.setEventName(rs.getString("event_name"));
         event.setEventDescription(rs.getString("event_description"));
         event.setEventCoordinator(rs.getString("event_coordinator"));
-        event.setUserVolunteer(rs.getString("user_volunteer"));
         event.setChildcareOwner(rs.getString("childcare_owner"));
-        event.setEventDate(rs.getTimestamp("event_date"));
+        event.setEventDate(rs.getString("event_date"));
         event.setEventCategory(rs.getString("event_category"));
         return event;
+    }
+
+    private Volunteer mapRowToVolunteer(SqlRowSet rs){
+        Volunteer volunteer = new Volunteer();
+        volunteer.setVolunteerId(rs.getInt("volunteer_id"));
+        volunteer.setEventId(rs.getInt("event_id"));
+        volunteer.setVolunteerName(rs.getString("volunteer_name"));
+        return volunteer;
     }
 }

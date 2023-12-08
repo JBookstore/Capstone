@@ -7,6 +7,8 @@ import java.util.List;
 public interface PlantDao {
 
         List<Plant> getPlants();
-
-        Plant getPlantById(int id);
+        List<Plant> getPlantById(int id);
+        List<Plant> getPlantByGardenId(int plantId);
+        List<Plant> getPlantByUserId(int plantId);
+        List<Plant> createPlant(Plant plant);
 }

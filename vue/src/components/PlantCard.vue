@@ -1,13 +1,16 @@
 <template>
     <div class="card">
-        <img v-if="plant.default_image === null" v-bind:src="getDefaultImage"/>
-        <img v-else v-bind:src="plant.default_image.original_url"  id="cardImage" />
+        <div class="cardTop">
+            <h2>{{ plant.common_name }}</h2>
 
-        <h2>{{ plant.common_name }}</h2>
+            <button v-on:click="onDeleteClick" v-if="this.$store.state.user_garden.includes(plant)" class="cardButton">DELETE</button>
+            <button v-on:click="onAddClick" v-else class="cardButton">ADD</button>
+            <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
+        </div>
 
-        <button v-on:click="onDeleteClick" v-if="this.$store.state.user_garden.includes(plant)">DELETE</button>
-        <button v-on:click="onAddClick" v-else>ADD</button>
-        <button v-on:click="onDetailsClick">DETAILS</button>
+
+        <img v-if="plant.default_image === null" v-bind:src="getDefaultImage" class="cardImage"/>
+        <img v-else v-bind:src="plant.default_image.original_url"  class="cardImage" v-on:click="onDetailsClick"/>
     </div>
 </template>
 
@@ -28,11 +31,11 @@
             },
             onAddClick() {
                 this.$store.commit('ADD_PLANT_TO_GARDEN', this.plant);
-                alert('Added ' + this.plant.common_name + ' to your garden!');
+                alert('Added one ' + this.plant.common_name + ' to your garden!');
             },
             onDeleteClick() {
                 this.$store.commit('DELETE_PLANT_FROM_GARDEN', this.plant);
-                alert('Deleted ' + this.plant.common_name + ' from your garden.');
+                alert('Deleted this ' + this.plant.common_name + ' from your garden.');
             }
 
         },
@@ -48,16 +51,44 @@
 <!-- We can fix image ratio by specifying width and leaving height undefined -->
 <style scoped>
 .card {
+  text-align: center;
   border: 2px solid black;
+  background-color: rgb(204, 253, 204);
   border-radius: 10px;
   width: 80vw;
-  height: 60vh;
-  margin: 10px;
-  text-align: center;
+  height: auto;
+  margin: 20px;
 }
 
-#cardImage {
-  width: auto;
-  height: 35vh;
+.cardImage {
+  margin-top: 5px;
+  width: 78vw;
+  height: auto;
+}
+
+.cardTop {
+    height: auto;
+}
+
+.cardButton {
+    width: 40vw;
+}
+
+@media only screen and (min-width: 481px) {
+    .card {
+        width: 33vw;
+        height: auto;
+    }
+    .cardTop {
+        height: auto;
+    }
+    .cardImage {
+        height: auto;
+        width: 33vw;
+    }
+    .cardButton {
+        width: 16.5vw;
+    }
+
 }
 </style>

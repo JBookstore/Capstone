@@ -1,11 +1,12 @@
 <template>
-    <div id="gardenDisplay" v-for="plant in this.$store.state.user_garden" v-bind:key="plant.id">
-     <plant-card v-bind:plant="plant"/>
+    <div id="gardenDisplay" v-for="plant in this.garden" v-bind:key="plant.id">
+      <plant-card v-bind:plant="plant"/>
     </div>
 </template>
 
 <script>
-    import plantCard from '../components/PlantCard.vue';
+    import PlantCard from '../components/PlantCard.vue';
+    import plantService from '../services/PlantService.js';
 
     export default { 
         data() {
@@ -14,7 +15,14 @@
             }
         },
         components: {
-            plantCard
+            PlantCard
+        },
+        methods: {
+            getGardenById(id) {
+                plantService.getGardenById(this.garden.id).then( (response) => {
+                    this.garden = response.data;
+                })
+            }
         }
     };
 </script>

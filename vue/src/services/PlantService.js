@@ -17,5 +17,13 @@ export default {
 
     addPlantToGarden(plant) {
         return axios.post('/plants', plant)
+    },
+
+    getGardenById(id) {
+        return axios.get(`/gardens/${id}`)
+    },
+
+    addGarden(garden) {
+        return axios.post('/gardens', garden)
     }
 }

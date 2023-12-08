@@ -1,5 +1,5 @@
 <template>
-    <div id="gardenDisplay" v-for="plant in this.garden" v-bind:key="plant.id">
+    <div id="gardenDisplay" v-for="plant in this.gardenPlant" v-bind:key="plant.id">
       <plant-card v-bind:plant="plant"/>
     </div>
 </template>
@@ -11,7 +11,7 @@
     export default { 
         data() {
             return { 
-                id: 1
+                gardenPlant: []
             }
         },
         components: {
@@ -19,10 +19,13 @@
         },
         methods: {
             getGardenById(id) {
-                plantService.getGardenById(this.garden.id).then( (response) => {
-                    this.garden = response.data;
+                plantService.getGardenById(id).then( (response) => {
+                    this.gardenPlant = response.data;
                 })
             }
+        },
+        created() {
+            this.getGardenById(this.$route.params.id);
         }
     };
 </script>

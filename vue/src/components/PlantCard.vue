@@ -10,6 +10,7 @@
 
 
         <img v-if="plant.default_image === null" v-bind:src="getDefaultImage" class="cardImage"/>
+        <img v-else-if="plant.plant_img === null" v-bind:src="getDefaultImage" class="cardImage"/>
         <img v-else v-bind:src="plant.default_image.original_url"  class="cardImage" v-on:click="onDetailsClick"/>
     </div>
 </template>
@@ -32,6 +33,8 @@
             onAddClick() {
                 this.$store.commit('ADD_PLANT_TO_GARDEN', this.plant);
                 alert('Added one ' + this.plant.common_name + ' to your garden!');
+
+                
             },
             onDeleteClick() {
                 this.$store.commit('DELETE_PLANT_FROM_GARDEN', this.plant);

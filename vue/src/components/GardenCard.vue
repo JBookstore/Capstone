@@ -6,10 +6,9 @@
             <button v-on:click="onDeleteClick" class="cardButton">-</button>
             <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
         </div>
-
-        <img v-if="plant.default_image === null" v-bind:src="getDefaultImage" class="cardImage"/>
-        <img v-else-if="plant.plant_img === null" v-bind:src="getDefaultImage" class="cardImage"/>
-        <img v-else v-bind:src="plant.default_image.original_url"  class="cardImage" v-on:click="onDetailsClick"/>
+        <img v-if="plant.plant_img != null" v-bind:src="plant.plant_img" class="cardImage" v-on:click="onDetailsClick">
+        <img v-else-if="plant.regular_img_url != null" v-bind:src="plant.regular_img_url"  class="cardImage" v-on:click="onDetailsClick"/>
+        <img v-else v-bind:src="getDefaultImage" class="cardImage" v-on:click="onDetailsClick">
     </div>
 </template>
 
@@ -37,8 +36,6 @@
                 alert('Added one ' + this.plant.common_name + ' to your garden!');
             },
             onDeleteClick() {
-                this.$store.commit('DELETE_PLANT_FROM_GARDEN', this.plant);
-                alert('Deleted this ' + this.plant.common_name + ' from your garden.');
             }
 
         },
@@ -56,7 +53,7 @@
 .card {
   text-align: center;
   border: 2px solid black;
-  background-color: rgb(204, 253, 204);
+  background-color: hotpink;
   border-radius: 10px;
   width: 80vw;
   height: auto;

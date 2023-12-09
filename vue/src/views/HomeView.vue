@@ -24,7 +24,7 @@ export default {
           .then( response => {
           this.$store.commit('SET_USER_PLANTS', response.data);
         });
-      });
+      })
   }
 };
 </script>

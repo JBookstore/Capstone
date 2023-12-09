@@ -9,7 +9,7 @@
         </div>
 
         <div class="home">
-            <button v-if="!showForm" v-on:click="createGarden">Add New Garden</button>
+            <button v-if="!showForm && this.$store.state.userGardens === {}" v-on:click="createGarden" >Add New Garden</button>
         </div>
 
         <form v-on:submit.prevent="submitForm" class="cardForm" v-if="showForm">
@@ -50,8 +50,8 @@
             <fieldset class="mandatory">
                 <label for="gardenType">What type of garden?:</label>
                 <select v-model="addedGarden.garden_type" id="gardenType">
-                    <option value="Community">Community</option>
                     <option value="Personal">Personal</option>
+                    <option v-if="this.$store.state.user.role == 'ROLE_ADMIN'" value="Community">Community</option>
                 </select>
             </fieldset>
             <fieldset>
@@ -110,10 +110,19 @@ export default {
             
         }
     },
-
     created() {
-        this.getUserGardens();
-    }
+    plantService.getGardenByUserId(this.$store.state.user.id)
+      .then( response => {
+        this.gardenArray = response.data;
+        this.$store.commit('SET_USER_GARDEN', this.gardenArray[0]);
+        
+        plantService.getPlantsByGarden(this.$store.state.user_garden.garden_id)
+          .then( response => {
+          this.$store.commit('SET_USER_PLANTS', response.data);
+        });
+      })
+      this.getUserGardens();
+  }
 };
 </script>
 

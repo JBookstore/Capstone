@@ -1,12 +1,12 @@
 <template>
     <button v-if="this.garden.garden_type == 'Community'">Voulnteer To Help Out</button>
     <div id="gardenDisplay" v-for="plant in this.gardenPlant" v-bind:key="plant.id">
-      <plant-card v-bind:plant="plant"/>
+      <garden-card v-bind:plant="plant"/>
     </div>
 </template>
 
 <script>
-    import PlantCard from '../components/PlantCard.vue';
+    import gardenCard from '../components/GardenCard.vue';
     import plantService from '../services/PlantService.js';
 
     export default { 
@@ -18,7 +18,7 @@
         },
         
         components: {
-            PlantCard
+            gardenCard
         },
 
         methods: {

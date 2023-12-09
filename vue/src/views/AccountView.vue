@@ -3,12 +3,12 @@
 
         <!-- MY GARDENS -->
         <div class="gardenCard" v-for="garden in this.userGardens" v-bind:key="garden.garden_id">
-            <h2> {{ garden.garden_name }}</h2>
+            <h2>{{ this.$store.state.user.username }}'s Gardens</h2>
+            <h3 class="gardenName"> {{ garden.garden_name }}</h3>
         <img class="cardImage" src="../assets/garden.jpg"  v-on:click="this.$router.push({ name: 'gardenView', params: {id: garden.garden_id}});"/>
         </div>
 
         <div class="home">
-            <p>{{ this.$store.state.user.username }}'s Gardens</p>
             <button v-if="!showForm" v-on:click="createGarden">Add New Garden</button>
         </div>
 
@@ -16,28 +16,28 @@
             <hr>
             <fieldset class="mandatory">
                 <label for="title">Garden Nickname:</label>
-                <input type="text" v-model="addedGarden.garden_name" />
+                <input type="text" id="title" v-model="addedGarden.garden_name" />
             </fieldset>
 
             <fieldset class="optional">
                 <label for="address">Address:</label>
-                <input type="text" v-model="addedGarden.street_address" placeholder="Optional" />
+                <input type="text" id="address" v-model="addedGarden.street_address" placeholder="Optional" />
             </fieldset>
             <fieldset class="optional">
                 <label for="city">City:</label>
-                <input type="text" v-model="addedGarden.garden_city" placeholder="Optional" />
+                <input type="text" id="city" v-model="addedGarden.garden_city" placeholder="Optional" />
             </fieldset>
             <fieldset class="optional">
                 <label for="state">State:</label>
-                <input type="text" v-model="addedGarden.garden_state" placeholder="Optional" />
+                <input type="text" id="state" v-model="addedGarden.garden_state" placeholder="Optional" />
             </fieldset>
             <fieldset class="optional">
                 <label for="zip">ZIP:</label>
-                <input type="text" v-model="addedGarden.garden_zip" placeholder="Optional" />
+                <input type="text" id="zip" v-model="addedGarden.garden_zip" placeholder="Optional" />
             </fieldset>
             <fieldset class="optional">
                 <label for="phoneNumber">Phone Number:</label>
-                <input type="text" v-model="addedGarden.phone_number" placeholder="Optional"/>
+                <input type="text" id="phoneNumber" v-model="addedGarden.phone_number" placeholder="Optional"/>
             </fieldset>
 
             <fieldset class="mandatory">
@@ -123,11 +123,13 @@ div {
 }
 
 fieldset {
+    margin: auto;
     text-align: center;
+    width: 25vw;
 }
 
 button {
-    width: 20vw;
+    width: 12.5vw;
 }
 
 .cardForm {
@@ -139,9 +141,13 @@ button {
 }
 
 .cardImage {
-    width: 80vw;
-    height: auto;
+    width: auto;
+    height: 50vh;
     margin: 10px;
+}
+
+.gardenName {
+    text-align: center;
 }
 </style>
   

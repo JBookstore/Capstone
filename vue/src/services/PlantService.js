@@ -19,6 +19,10 @@ export default {
         return axios.post('/plants', plant, gardenId)
     },
 
+    getUsersPlants(id) {
+        return axios.get(`/plants/user/${id}`)
+    },
+
     // We need an end point to add plants directly to gardens, not a general add
 
     getPlantsByGarden(id) {

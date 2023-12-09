@@ -2,10 +2,10 @@
     <div>
         <h2>Plant Search</h2>
 
-        <div class="searchForm">
+        <form class="searchForm" v-on:submit.prevent="searchPlants(this.searchString)">
             <input class="searchBar" type="text" v-model="searchString" />
-            <button class="searchButton" v-on:click="searchPlants(this.searchString)">Search</button>
-        </div>
+            <input type="submit" class="searchButton" value="search"/>
+        </form>
 
         <div v-if="isLoading" class="loadingImage">
             <img src="../assets/loading_animation.gif" id="loadingImage" />
@@ -58,6 +58,13 @@ h2 {
     text-align: center;
 }
 
+.searchResults{
+    display: flex;
+    justify-content: center;
+    width: 80vw;
+    
+}
+
 .searchForm {
     text-align: center;
 }
@@ -71,12 +78,18 @@ h2 {
     width: auto;
 }
 
-/* @media only screen and (min-width: 481px) {
+@media screen and (min-width: 600px) {
     .searchResults {
-        width: 80vw;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        background-color: pink;
+        display: inline-flex;
+        width: 32vw;
     }
-} */
+}
+
+@media screen and (min-width: 992px) {
+    .searchResults {
+        display: inline-flex;
+        width: 19vw;
+    }
+}
+
 </style>

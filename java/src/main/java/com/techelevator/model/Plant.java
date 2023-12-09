@@ -27,8 +27,11 @@ public class Plant {
     private int apiPlantId;
     @JsonProperty("sunshine_description")
     private String sunshineDescription;
+    //garden_id is located on bridge table, not in the plant table
     @JsonProperty("garden_id")
     private int gardenId;
+    @JsonProperty("is_active")
+    private boolean isActive;
 
     //Setters and Getters
     public int getId() {
@@ -127,27 +130,13 @@ public class Plant {
         this.gardenId = gardenId;
     }
 
-//    //Constructor
-//
-//    public Plant() {
-//    }
-//
-//    public Plant(int id, byte[] plantImg, String commonName, String scientificName, String otherName, String watering, List<String> sunlight, String imgUrl, String description, int apiPlantId, String sunshineDescription) {
-//        this.id = id;
-//        this.plantImg = plantImg;
-//        this.commonName = commonName;
-//        this.scientificName = scientificName;
-//        this.otherName = otherName;
-//        this.watering = watering;
-//        this.sunlight = sunlight;
-//        this.imgUrl = imgUrl;
-//        this.description = description;
-//        this.apiPlantId = apiPlantId;
-//        this.sunshineDescription = sunshineDescription;
-//    }
+    public boolean getActive() {
+        return isActive;
+    }
 
-    //ToString
-
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
     @Override
     public String toString() {
@@ -164,6 +153,7 @@ public class Plant {
                 ", apiPlantId=" + apiPlantId +
                 ", sunshineDescription='" + sunshineDescription + '\'' +
                 ", gardenId=" + gardenId +
+                ", isActive=" + isActive +
                 '}';
     }
 }

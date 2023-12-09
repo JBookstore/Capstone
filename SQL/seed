@@ -9,7 +9,8 @@ CREATE TABLE plant (
     watering VARCHAR(30),
     regular_img_url VARCHAR(150),
     plant_description TEXT,
-    api_plant_id INT
+    api_plant_id INT,
+	is_active BOOLEAN DEFAULT TRUE
 );
 CREATE TABLE plant_user (
     plant_id INT,

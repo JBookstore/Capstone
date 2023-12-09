@@ -34,6 +34,7 @@ public class JdbcPlantDao implements PlantDao {
                         " p.regular_img_url," +
                         " p.plant_description," +
                         " p.api_plant_id," +
+                        " p.is_active," +
                         " s.sunshine_description" +
                     " FROM" +
                         " sunshine s" +
@@ -60,6 +61,7 @@ public class JdbcPlantDao implements PlantDao {
                         " p.regular_img_url," +
                         " p.plant_description," +
                         " p.api_plant_id," +
+                        " p.is_active," +
                         " s.sunshine_description" +
                     " FROM" +
                         " plant p" +
@@ -86,6 +88,7 @@ public class JdbcPlantDao implements PlantDao {
                         " p.regular_img_url," +
                         " p.plant_description," +
                         " p.api_plant_id," +
+                        " p.is_active," +
                         " s.sunshine_description" +
                     " FROM" +
                         " plant p" +
@@ -113,6 +116,7 @@ public class JdbcPlantDao implements PlantDao {
                         " p.regular_img_url," +
                         " p.plant_description," +
                         " p.api_plant_id," +
+                        " p.is_active," +
                         " s.sunshine_description" +
                     " FROM" +
                         " sunshine s" +
@@ -138,8 +142,9 @@ public class JdbcPlantDao implements PlantDao {
                                 " watering," +
                                 " regular_img_url," +
                                 " plant_description," +
-                                " api_plant_id)" +
-                            " VALUES (?, ?, ?, ?, ?, ?, ?, ?)" +
+                                " api_plant_id," +
+                                " is_active)" +
+                            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)" +
                             " RETURNING plant_id;";
 
         String sqlSunshine = "INSERT INTO sunshine (plant_id, sunshine_description) VALUES (?,?);";
@@ -149,13 +154,15 @@ public class JdbcPlantDao implements PlantDao {
 
         try {
             plantId = jdbcTemplate.queryForObject(sqlPlant, int.class, plant.getCommonName(), plant.getScientificName(),
-                    plant.getOtherName(), plant.getPlantImg(), plant.getWatering(), plant.getImgUrl(), plant.getDescription(), plant.getApiPlantId());
+                    plant.getOtherName(), plant.getPlantImg(), plant.getWatering(), plant.getImgUrl(), plant.getDescription(), plant.getApiPlantId(),
+                    plant.getActive());
 
             for (int i = 0; i < plant.getSunlight().size(); i++) {
                 jdbcTemplate.update(sqlSunshine,plantId, plant.getSunlight().get(i));
             }
 
             jdbcTemplate.update(sqlGarden, plantId, plant.getGardenId());
+
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -198,11 +205,6 @@ public class JdbcPlantDao implements PlantDao {
                         runningSunshineList.add(startingPlants.get(0).getSunshineDescription());
                         nextPlantId = startingPlants.get(i + 1).getId();
                     }
-                    else if (startingPlants.get(i).getSunshineDescription().isEmpty()){
-                        finalPlantsList.add(startingPlants.get(i));
-                        plantListIndex += 1;
-                        finalPlantsList.get(plantListIndex).setSunlight(new ArrayList<>());
-                    }
                     else if (i == startingPlants.size() - 1 && nextPlantId == startingPlants.get(i).getId()){
                         runningSunshineList.add(startingPlants.get(i).getSunshineDescription());
                         finalPlantsList.get(plantListIndex).setSunlight(runningSunshineList);
@@ -238,6 +240,7 @@ public class JdbcPlantDao implements PlantDao {
         plant.setImgUrl(rs.getString("regular_img_url"));
         plant.setDescription(rs.getString("plant_description"));
         plant.setApiPlantId(rs.getInt("api_plant_id"));
+        plant.setActive(rs.getBoolean("is_active"));
 
         return plant;
     }

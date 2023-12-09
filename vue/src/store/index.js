@@ -10,9 +10,7 @@ export function createStore(currentToken, currentUser) {
         
       ],
       // Ultimately this DOES need to be a two way binding
-      user_garden: [
-         
-      ] 
+      user_garden: {}
       },
     mutations: {
       SET_AUTH_TOKEN(state, token) {

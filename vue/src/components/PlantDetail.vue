@@ -1,6 +1,7 @@
 <template>
     <div id="plantDetails">
         <h2>{{ this.plant.common_name }}</h2>
+        <h2>{{ this.plant.scientific_name }}</h2>
 
         <img v-if="plant.default_image === null" v-bind:src="getDefaultImage"/>
         <img v-else v-bind:src="plant.default_image.original_url"  id="displayImage" />
@@ -18,7 +19,9 @@
         <h3>Watering: {{ plant.watering }}</h3>
         <h3>Sunlight: {{ plant.sunlight }}</h3>
     </div>
-    <button v-on:click="onAddClick">ADD TO GARDEN</button>
+    <div>
+        <button v-on:click="onAddClick">ADD TO GARDEN</button>
+    </div>
 </template>
 
 <script>
@@ -40,17 +43,11 @@
             },
         },
 
-    } 
+        created() {
+            this.plant = this.$store.state.plants[0];
+        }
 
-    // TESTING PURPOSES
-    // export default {
-    //     computed: {
-    //         plant() {
-    //             let plant = this.$store.state.plants.find( p => p.id == 1 );
-    //             return plant;
-    //         }
-    //     }
-    // }
+    } 
 </script>
 
 <style scoped>

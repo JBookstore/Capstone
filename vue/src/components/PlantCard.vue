@@ -59,6 +59,7 @@
   width: 80vw;
   height: auto;
   margin: 20px;
+  padding: 10px;
 }
 
 .cardImage {
@@ -75,9 +76,10 @@
     width: 40vw;
 }
 
-@media only screen and (min-width: 481px) {
+@media screen and (min-width: 600px) {
     .card {
         width: 33vw;
+        margin: 2px;
         height: auto;
     }
     .cardTop {
@@ -85,11 +87,32 @@
     }
     .cardImage {
         height: auto;
-        width: 33vw;
+        width: 28vw;
     }
     .cardButton {
-        width: 16.5vw;
+        width: 15vw;
     }
 
+}
+
+@media screen and (min-width: 992px) {
+    
+    .card {
+        width: 18vw;
+        margin: 2px;
+        height: auto;
+    }
+    .cardTop {
+        height: auto;
+    }
+
+    .cardImage {
+        height: auto;
+        width: 17vw;
+    }
+
+    .cardButton {
+        width: 8vw;
+    }
 }
 </style>

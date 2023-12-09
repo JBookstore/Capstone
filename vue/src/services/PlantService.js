@@ -15,8 +15,8 @@ export default {
         return axios.get(`/plants/${id}`)
     },
 
-    addPlantToGarden(plant, gardenId) {
-        return axios.post('/plants', plant, gardenId)
+    addPlantToGarden(plant) {
+        return axios.post(`/plants/`, plant)
     },
 
     getUsersPlants(id) {

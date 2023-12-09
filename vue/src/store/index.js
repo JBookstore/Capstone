@@ -9,9 +9,16 @@ export function createStore(currentToken, currentUser) {
       plants: [ // Plant object array for testing
         
       ],
+      userPlants: [
+
+      ],
       // Ultimately this DOES need to be a two way binding
-      user_garden: {}
+      user_garden: {},
+      transferPlantJSON: {
+        garden_id: 0
+      }
       },
+      
     mutations: {
       SET_AUTH_TOKEN(state, token) {
         state.token = token;
@@ -29,6 +36,7 @@ export function createStore(currentToken, currentUser) {
         state.user = {};
         axios.defaults.headers.common = {};
       },
+
       STORE_PLANT(state, plant) {
         state.plants.unshift(plant);
       },
@@ -38,6 +46,15 @@ export function createStore(currentToken, currentUser) {
       DELETE_PLANT_FROM_GARDEN(state, plant) {
         let index = state.user_garden.indexOf(plant);
         state.user_garden.splice(index, 1);
+      },
+      SET_USER_GARDEN(state, garden) {
+        state.user_garden = garden;
+      },
+      SET_USER_PLANTS(state, plantsArray) {
+        state.userPlants = plantsArray;
+      },
+      MODIFY_PLANT_FOR_ADDITION(state, plant) {
+        state.transferPlantJSON = plant;
       }
     },
   });

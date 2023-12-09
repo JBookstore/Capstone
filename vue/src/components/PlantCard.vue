@@ -7,7 +7,6 @@
             <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
         </div>
 
-
         <img v-if="plant.default_image === null" v-bind:src="getDefaultImage" class="cardImage"/>
         <img v-else-if="plant.plant_img === null" v-bind:src="getDefaultImage" class="cardImage"/>
         <img v-else v-bind:src="plant.default_image.original_url"  class="cardImage" v-on:click="onDetailsClick"/>
@@ -26,13 +25,16 @@
             onDetailsClick() {
                 this.$router.push({ name: 'detailById', params: {id: this.plant.id}});
                 this.$store.commit('STORE_PLANT', this.plant);
-               
             },
             onAddClick() {
-                this.$store.commit('ADD_PLANT_TO_GARDEN', this.plant);
-                alert('Added one ' + this.plant.common_name + ' to your garden!');
+                // We have to assign the garden Id TO the plant before we pass it
+                this.$store.state.transferPlantJSON.garden_id = this.$store.state.user_garden.garden_id;
+            
+                this.$store.commit('MODIFY_PLANT_FOR_ADDITION', this.plant);
 
-                
+                plantService.addPlantToGarden(this.$store.state.transferPlantJSON);
+
+                alert('Added one ' + this.plant.common_name + ' to your garden!');
             },
             onDeleteClick() {
                 this.$store.commit('DELETE_PLANT_FROM_GARDEN', this.plant);

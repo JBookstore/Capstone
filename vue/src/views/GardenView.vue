@@ -16,9 +16,11 @@
                 gardenPlant: []
             }
         },
+        
         components: {
             PlantCard
         },
+
         methods: {
             getGardenById(id) {
                 plantService.getPlantsByGarden(id).then( (response) => {
@@ -31,9 +33,21 @@
                 })
             }
         },
+
         created() {
-            this.getGardenById(this.$route.params.id),
-            this.getGarden(this.$route.params.id)
+            this.getGardenById(this.$route.params.id);
+            this.getGarden(this.$route.params.id);
+
+            plantService.getGardenByUserId(this.$store.state.user.id)
+            .then( response => {
+                this.gardenArray = response.data;
+                this.$store.commit('SET_USER_GARDEN', this.gardenArray[0]);
+        
+                plantService.getPlantsByGarden(this.$store.state.user_garden.garden_id)
+                    .then( response => {
+                    this.$store.commit('SET_USER_PLANTS', response.data);
+                });
+            });
         }
     };
 </script>

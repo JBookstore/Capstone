@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS garden, plant, forum, post, garden_plant, garden_event, pla
 
 CREATE TABLE plant (
     plant_id SERIAL PRIMARY KEY,
-    plant_img BYTEA,
+    plant_img TEXT,
     common_name VARCHAR(50),
     scientific_name VARCHAR(50),
     other_name VARCHAR(50),
@@ -71,7 +71,7 @@ CREATE TABLE post (
     price NUMERIC,
     quantity INT,
     title VARCHAR (200),
-    post_img BYTEA,
+    post_img TEXT,
     post_category VARCHAR (255) CHECK (post_category IN ('Marketplace', 'Community Help', 'Share'))
 );
 
@@ -101,7 +101,7 @@ CREATE TABLE reminder (
 	user_id INT,
 	reminder_date_and_time VARCHAR (19),
 	reminder_details TEXT,
-	reminder_icon BYTEA,
+	reminder_icon TEXT,
 	is_active BOOLEAN DEFAULT FALSE
 );
 
@@ -131,6 +131,8 @@ ALTER TABLE garden_plant ADD FOREIGN KEY (garden_id) REFERENCES garden(garden_id
 ALTER TABLE post ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE post ADD FOREIGN KEY (forum_id) REFERENCES forum (forum_id);
 
+INSERT INTO forum (forum_name) VALUES ('Market Place');
+
 INSERT INTO garden (garden_name, user_id, street_address, garden_city, garden_state, garden_zip, phone_number, is_public, garden_type)
 VALUES ('Potato Garden', 2, '1 Garden Way', 'Cleveland', 'OH', 44130, '216-555-1234', FALSE, 'Community');
 
@@ -147,6 +149,9 @@ INSERT INTO plant (common_name, scientific_name, other_name, watering, regular_i
 VALUES ('Shirazz Japanese Maple', 'Acer palmatum "Gwens Rose Delight"', ' ', 'Average', ' ', 'Crown gall occurs when plants become infected with Agrobacterium tumefaciens. 
 		The bacterium enters the plant through wounds or natural openings and transfers its DNA, known as T-DNA, into the plant cells. This DNA becomes integrated into the plants genetic material, 
 		causing the cells to divide uncontrollably and resulting in the formation of galls. The infection can spread within the plant and to other plants through various means such as soil, water, or infected plant parts.', 58);
+
+INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category)
+VALUES (1, 1, 1, 'Mature rose plant in great shape.', 15.00, 1, 'Rose Plant for Sale', 'Base64 encoded img string here', 'Marketplace' );
 
 INSERT INTO sunshine (plant_id, sunshine_description)
 VALUES (1, 'full sun');
@@ -181,21 +186,19 @@ VALUES (1, '2023-12-06 12:34:01', 'Water yo trees!', TRUE);
 INSERT INTO reminder (user_id, reminder_date_and_time, reminder_details, is_active)
 VALUES (1, '2023-12-06 12:34:01', 'Water yo garden!', FALSE);
 
-INSERT INTO forum (forum_name) VALUES ('Market Place');
-
 INSERT INTO plant_user (plant_id, user_id) VALUES (1, 1);
 INSERT INTO plant_user (plant_id, user_id) VALUES (2, 1);
 
-INSERT INTO garden_event (garden_id, user_id, event_description, event_coordinator, childcare_owner, event_date, event_category)
-VALUES (1, 1, 'Garden Party', 'Steve Austin', 'The Rock', '2023-12-25 12:30:15', 'Community Event');
+INSERT INTO garden_event (garden_id, user_id, event_name, event_description, event_coordinator, childcare_owner, event_date, event_category)
+VALUES (1, 1, 'WrestleMania', 'Garden Party', 'Steve Austin', 'The Rock', '2023-12-25 12:30:15', 'Community Event');
 
-INSERT INTO garden_event (garden_id, user_id, event_description, event_coordinator, childcare_owner, event_date, event_category)
-VALUES (1, 2, 'Better Garden Party', 'Juan Nunez', 'Jane Doe', '2023-12-25 12:30:15', 'Garden Event');
+INSERT INTO garden_event (garden_id, user_id, event_name, event_description, event_coordinator, childcare_owner, event_date, event_category)
+VALUES (1, 2, 'Golden Years', 'Better Garden Party', 'Juan Nunez', 'Jane Doe', '2023-12-25 12:30:15', 'Garden Event');
 
 INSERT INTO volunteer (event_id, volunteer_name) VALUES (1, 'Bob Smith');
 INSERT INTO volunteer (event_id, volunteer_name) VALUES (1, 'Sam Jones');
-
-
+INSERT INTO volunteer (event_id, volunteer_name) VALUES (2, 'Steve Ross');
+INSERT INTO volunteer (event_id, volunteer_name) VALUES (2, 'John Nunez');
 
 COMMIT;
 

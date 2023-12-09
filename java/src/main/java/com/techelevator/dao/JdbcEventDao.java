@@ -14,45 +14,91 @@ import java.util.List;
 @Component
 public class JdbcEventDao implements EventDao {
     private final JdbcTemplate jdbcTemplate;
+    private String sql;
+    private int lookUpId;
+    private boolean isIdNeeded = false;
 
     public JdbcEventDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public Event getEventById(int eventId) {
-        Event event = null;
-        String sql = "SELECT * FROM garden_event WHERE event_id = ?;";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
-            if (results.next()) {
-                event = mapRowToEvent(results);
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        }
-        return event;
+    public List<Event> getEventById(int eventId) {
+        String sql = "SELECT" +
+                        " ge.event_id," +
+                        " ge.garden_id," +
+                        " ge.user_id," +
+                        " ge.event_name," +
+                        " ge.event_description," +
+                        " ge.event_coordinator," +
+                        " ge.childcare_owner," +
+                        " ge.event_date," +
+                        " ge.event_category," +
+                        " v.volunteer_name" +
+                            " FROM" +
+                                " garden_event ge" +
+                            " JOIN" +
+                                " volunteer v" +
+                            " ON" +
+                                " ge.event_id = v.event_id" +
+                            " WHERE" +
+                                " ge.event_id = ?;";
+        isIdNeeded = true;
+        lookUpId = eventId;
+        return getEventArray(sql, isIdNeeded);
+    }
+
+    @Override
+    public List<Event> getEventByUserId(int userID) {
+        String sql = "SELECT" +
+                        " ge.event_id," +
+                        " ge.garden_id," +
+                        " ge.user_id," +
+                        " ge.event_name," +
+                        " ge.event_description," +
+                        " ge.event_coordinator," +
+                        " ge.childcare_owner," +
+                        " ge.event_date," +
+                        " ge.event_category," +
+                        " v.volunteer_name" +
+                    " FROM" +
+                        " garden_event ge" +
+                    " JOIN" +
+                        " volunteer v" +
+                    " ON" +
+                        " ge.event_id = v.event_id" +
+                    " WHERE" +
+                        " ge.user_id = ?;";
+        isIdNeeded = true;
+        return getEventArray(sql, isIdNeeded);
     }
 
     @Override
     public List<Event> getEvent() {
-        List<Event> events = new ArrayList<>();
-        String sql = "SELECT * FROM garden_event;";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-            while (results.next()) {
-                Event event = mapRowToEvent(results);
-                events.add(event);
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        }
-        return events;
+        String sql = "SELECT" +
+                        " ge.event_id," +
+                        " ge.garden_id," +
+                        " ge.user_id," +
+                        " ge.event_name," +
+                        " ge.event_description," +
+                        " ge.event_coordinator," +
+                        " ge.childcare_owner," +
+                        " ge.event_date," +
+                        " ge.event_category," +
+                        " v.volunteer_name" +
+                            " FROM" +
+                                " garden_event ge" +
+                            " LEFT JOIN" +
+                                " volunteer v" +
+                            " ON" +
+                                " ge.event_id = v.event_id;";
+        isIdNeeded = false;
+        return getEventArray(sql, isIdNeeded);
     }
 
     @Override
-    public Event createEvent(Event event) {
-        Event newEvent = null;
+    public List<Event> createEvent(Event event) {
+        int eventId;
         String sqlEvent = "INSERT INTO" +
                             " garden_event (" +
                                 " garden_id," +
@@ -69,9 +115,9 @@ public class JdbcEventDao implements EventDao {
         String sqlVolunteer = "INSERT INTO volunteer (event_id, volunteer_name) VALUES (?,?);";
 
         try {
-            int eventId = jdbcTemplate.queryForObject(sqlEvent, int.class, event.getGardenId(), event.getUserId(), event.getEventName(), event.getEventDescription(),
+            eventId = jdbcTemplate.queryForObject(sqlEvent, int.class, event.getGardenId(), event.getUserId(), event.getEventName(), event.getEventDescription(),
                     event.getEventCoordinator(), event.getChildcareOwner(), event.getEventDate(), event.getEventCategory());
-            newEvent = getEventById(eventId);
+
 
             for (int i = 0; i < event.getVolunteer().size(); i++) {
                 jdbcTemplate.update(sqlVolunteer,eventId, event.getVolunteer().get(i));
@@ -81,7 +127,64 @@ public class JdbcEventDao implements EventDao {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation");
         }
+        List<Event> newEvent = new ArrayList<>(getEventById(eventId));
         return newEvent;
+    }
+
+    private List<Event> getEventArray (String sql, Boolean isIdNeeded){
+        List<Event> startingEventList = new ArrayList<>();
+        List<Event> finalEventList = new ArrayList<>();
+        List<String> runningVolunteerList = new ArrayList<>();
+        SqlRowSet results;
+        this.sql = sql;
+        try {
+            if(!isIdNeeded) {
+                results = jdbcTemplate.queryForRowSet(sql);
+            }
+            else {
+                results = jdbcTemplate.queryForRowSet(sql, lookUpId);
+            }
+            while (results.next()) {
+                Event event = mapRowToEvent(results);
+                startingEventList.add(event);
+            }
+            if (startingEventList.isEmpty()) {
+                return startingEventList;
+            }
+            else if (startingEventList.size() == 1) {
+                runningVolunteerList.add(startingEventList.get(0).getVolunteerName());
+                startingEventList.get(0).setVolunteer(runningVolunteerList);
+                return startingEventList;
+            } else {
+                int nextPlantId = startingEventList.get(0 + 1).getEventId();
+                int plantListIndex = 0;
+                for (int i = 0; i < startingEventList.size(); i++) {
+                    if (i == 0){
+                        finalEventList.add(startingEventList.get(0));
+                        runningVolunteerList.add(startingEventList.get(0).getVolunteerName());
+                        nextPlantId = startingEventList.get(i + 1).getEventId();
+                    }
+                    else if (i == startingEventList.size() - 1 && nextPlantId == startingEventList.get(i).getEventId()){
+                        runningVolunteerList.add(startingEventList.get(i).getVolunteerName());
+                        finalEventList.get(plantListIndex).setVolunteer(runningVolunteerList);
+                        return finalEventList;
+                    }
+                    else if (nextPlantId == startingEventList.get(i).getEventId()){
+                        runningVolunteerList.add(startingEventList.get(i).getVolunteerName());
+                        nextPlantId = startingEventList.get(i + 1).getEventId();
+                        if(nextPlantId != startingEventList.get(i).getEventId()){
+                            finalEventList.get(plantListIndex).setVolunteer(new ArrayList<>(runningVolunteerList));
+                            finalEventList.add(startingEventList.get(i + 1));
+                            plantListIndex += 1;
+                            runningVolunteerList.clear();
+                        }
+                    }
+                }
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return finalEventList;
     }
 
     private Event mapRowToEvent(SqlRowSet rs) {
@@ -95,14 +198,7 @@ public class JdbcEventDao implements EventDao {
         event.setChildcareOwner(rs.getString("childcare_owner"));
         event.setEventDate(rs.getString("event_date"));
         event.setEventCategory(rs.getString("event_category"));
+        event.setVolunteerName(rs.getString("volunteer_name"));
         return event;
-    }
-
-    private Volunteer mapRowToVolunteer(SqlRowSet rs){
-        Volunteer volunteer = new Volunteer();
-        volunteer.setVolunteerId(rs.getInt("volunteer_id"));
-        volunteer.setEventId(rs.getInt("event_id"));
-        volunteer.setVolunteerName(rs.getString("volunteer_name"));
-        return volunteer;
     }
 }

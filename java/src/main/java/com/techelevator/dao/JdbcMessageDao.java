@@ -18,11 +18,11 @@ public class JdbcMessageDao implements MessageDao{
         this.jdbcTemplate = jdbcTemplate;
     }
     @Override
-    public List<Message> getMessageByUserId(int messageId) {
+    public List<Message> getMessageByUserId(int userId) {
         List<Message> messages = new ArrayList<>();
         String sql = "SELECT * FROM user_messages WHERE to_user_id = ?;";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, messageId);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
                 Message message = mapRowToMessage(results);
                 messages.add(message);

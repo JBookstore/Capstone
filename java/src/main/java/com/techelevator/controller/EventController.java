@@ -2,7 +2,6 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.EventDao;
 import com.techelevator.model.Event;
-import com.techelevator.model.Garden;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,8 +25,8 @@ public class EventController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/events/{id}", method = RequestMethod.GET)
-    public Event getEventById(@PathVariable int id) {
-        Event event = eventDao.getEventById(id);
+    public List<Event> getEventById(@PathVariable int id) {
+        List<Event> event = eventDao.getEventById(id);
         if (event == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "event Not Found");
         } else {
@@ -36,10 +35,21 @@ public class EventController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/events", method = RequestMethod.POST)
-    public Event create(@RequestBody @Valid Event event) {
+    @RequestMapping(path = "/events/user/{id}", method = RequestMethod.GET)
+    public List<Event> getPlantByUserId(@PathVariable int id) {
+        List<Event> event = eventDao.getEventById(id);
         if (event == null) {
-            throw new ResponseStatusException(HttpStatus.CREATED, "Event Created");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "plant Not Found");
+        } else {
+            return eventDao.getEventByUserId(id);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/events", method = RequestMethod.POST)
+    public List<Event> create(@RequestBody @Valid Event event) {
+        if (event == null) {
+            throw new ResponseStatusException(HttpStatus.CREATED, "Event Not Created");
         } else {
             return eventDao.createEvent(event);
         }

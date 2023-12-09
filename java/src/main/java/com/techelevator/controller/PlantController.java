@@ -60,7 +60,7 @@ public class PlantController {
     @RequestMapping(path = "/plants", method = RequestMethod.POST)
     public List<Plant> create(@RequestBody @Valid Plant plant) {
         if (plant == null) {
-            throw new ResponseStatusException(HttpStatus.CREATED, "Event Created");
+            throw new ResponseStatusException(HttpStatus.CREATED, "Event Not Created");
         } else {
             return plantDao.createPlant(plant);
         }

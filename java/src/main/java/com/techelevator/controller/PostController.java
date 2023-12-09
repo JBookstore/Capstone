@@ -32,7 +32,7 @@ public class PostController {
     @RequestMapping(path = "/posts", method = RequestMethod.POST)
     public Post create(@RequestBody @Valid Post post) {
         if (post == null) {
-            throw new ResponseStatusException(HttpStatus.CREATED, "Post Created");
+            throw new ResponseStatusException(HttpStatus.CREATED, "Post Not Created");
         } else {
             return postDao.createPost(post);
         }

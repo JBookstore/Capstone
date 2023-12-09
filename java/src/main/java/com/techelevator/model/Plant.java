@@ -3,7 +3,6 @@ package com.techelevator.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Arrays;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -11,7 +10,7 @@ public class Plant {
     @JsonProperty("plant_id")
     private int id;
     @JsonProperty("plant_img")
-    private byte[] plantImg;
+    private String plantImg;
     @JsonProperty("common_name")
     private String commonName;
     @JsonProperty("scientific_name")
@@ -40,11 +39,11 @@ public class Plant {
         this.id = id;
     }
 
-    public byte[] getPlantImg() {
+    public String getPlantImg() {
         return plantImg;
     }
 
-    public void setPlantImg(byte[] plantImg) {
+    public void setPlantImg(String plantImg) {
         this.plantImg = plantImg;
     }
 
@@ -128,24 +127,24 @@ public class Plant {
         this.gardenId = gardenId;
     }
 
-    //Constructor
-
-    public Plant() {
-    }
-
-    public Plant(int id, byte[] plantImg, String commonName, String scientificName, String otherName, String watering, List<String> sunlight, String imgUrl, String description, int apiPlantId, String sunshineDescription) {
-        this.id = id;
-        this.plantImg = plantImg;
-        this.commonName = commonName;
-        this.scientificName = scientificName;
-        this.otherName = otherName;
-        this.watering = watering;
-        this.sunlight = sunlight;
-        this.imgUrl = imgUrl;
-        this.description = description;
-        this.apiPlantId = apiPlantId;
-        this.sunshineDescription = sunshineDescription;
-    }
+//    //Constructor
+//
+//    public Plant() {
+//    }
+//
+//    public Plant(int id, byte[] plantImg, String commonName, String scientificName, String otherName, String watering, List<String> sunlight, String imgUrl, String description, int apiPlantId, String sunshineDescription) {
+//        this.id = id;
+//        this.plantImg = plantImg;
+//        this.commonName = commonName;
+//        this.scientificName = scientificName;
+//        this.otherName = otherName;
+//        this.watering = watering;
+//        this.sunlight = sunlight;
+//        this.imgUrl = imgUrl;
+//        this.description = description;
+//        this.apiPlantId = apiPlantId;
+//        this.sunshineDescription = sunshineDescription;
+//    }
 
     //ToString
 
@@ -154,7 +153,7 @@ public class Plant {
     public String toString() {
         return "Plant{" +
                 "id=" + id +
-                ", plantImg=" + Arrays.toString(plantImg) +
+                ", plantImg='" + plantImg + '\'' +
                 ", commonName='" + commonName + '\'' +
                 ", scientificName='" + scientificName + '\'' +
                 ", otherName='" + otherName + '\'' +

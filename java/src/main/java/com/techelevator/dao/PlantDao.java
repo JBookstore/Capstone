@@ -5,7 +5,6 @@ import com.techelevator.model.Plant;
 import java.util.List;
 
 public interface PlantDao {
-
         List<Plant> getPlants();
         List<Plant> getPlantById(int id);
         List<Plant> getPlantByGardenId(int plantId);

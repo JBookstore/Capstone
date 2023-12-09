@@ -49,7 +49,7 @@ public class GardenController {
     @RequestMapping(path = "/gardens", method = RequestMethod.POST)
     public Garden create(@RequestBody @Valid Garden garden) {
         if (garden == null) {
-            throw new ResponseStatusException(HttpStatus.CREATED, "Garden Created");
+            throw new ResponseStatusException(HttpStatus.CREATED, "Garden Not Created");
         } else {
             return gardenDao.createGarden(garden);
         }

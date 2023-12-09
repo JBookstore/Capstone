@@ -24,6 +24,8 @@ public class Event {
     @JsonProperty("event_category")
     private String eventCategory;
     private List<String> volunteer;
+    @JsonProperty("volunteer_name")
+    private String volunteerName;
 
     //Setters and Getters
     public int getEventId() {
@@ -106,9 +108,15 @@ public class Event {
         this.volunteer = volunteer;
     }
 
+    public String getVolunteerName() {
+        return volunteerName;
+    }
+
+    public void setVolunteerName(String volunteerName) {
+        this.volunteerName = volunteerName;
+    }
+
     //ToString
-
-
     @Override
     public String toString() {
         return "Event{" +
@@ -121,6 +129,8 @@ public class Event {
                 ", childcareOwner='" + childcareOwner + '\'' +
                 ", eventDate='" + eventDate + '\'' +
                 ", eventCategory='" + eventCategory + '\'' +
+                ", volunteer=" + volunteer +
+                ", volunteerName='" + volunteerName + '\'' +
                 '}';
     }
 }

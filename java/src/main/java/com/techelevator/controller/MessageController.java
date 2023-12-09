@@ -32,7 +32,7 @@ public class MessageController {
     @RequestMapping(path = "/messages", method = RequestMethod.POST)
     public Message create(@RequestBody @Valid Message message) {
         if (message == null) {
-            throw new ResponseStatusException(HttpStatus.CREATED, "Message Created");
+            throw new ResponseStatusException(HttpStatus.CREATED, "Message Not Created");
         } else {
             return messageDao.createMessage(message);
         }

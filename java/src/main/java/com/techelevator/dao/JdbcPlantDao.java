@@ -29,6 +29,7 @@ public class JdbcPlantDao implements PlantDao {
                         " p.common_name," +
                         " p.scientific_name," +
                         " p.other_name," +
+                        " p.plant_img," +
                         " p.watering," +
                         " p.regular_img_url," +
                         " p.plant_description," +
@@ -54,6 +55,7 @@ public class JdbcPlantDao implements PlantDao {
                         " p.common_name," +
                         " p.scientific_name," +
                         " p.other_name," +
+                        " p.plant_img," +
                         " p.watering," +
                         " p.regular_img_url," +
                         " p.plant_description," +
@@ -79,6 +81,7 @@ public class JdbcPlantDao implements PlantDao {
                         " p.common_name," +
                         " p.scientific_name," +
                         " p.other_name," +
+                        " p.plant_img," +
                         " p.watering," +
                         " p.regular_img_url," +
                         " p.plant_description," +
@@ -105,6 +108,7 @@ public class JdbcPlantDao implements PlantDao {
                         " p.common_name," +
                         " p.scientific_name," +
                         " p.other_name," +
+                        " p.plant_img," +
                         " p.watering," +
                         " p.regular_img_url," +
                         " p.plant_description," +
@@ -130,11 +134,12 @@ public class JdbcPlantDao implements PlantDao {
                                 " common_name," +
                                 " scientific_name," +
                                 " other_name," +
+                                " plant_img," +
                                 " watering," +
                                 " regular_img_url," +
                                 " plant_description," +
                                 " api_plant_id)" +
-                            " VALUES (?, ?, ?, ?, ?, ?, ?)" +
+                            " VALUES (?, ?, ?, ?, ?, ?, ?, ?)" +
                             " RETURNING plant_id;";
 
         String sqlSunshine = "INSERT INTO sunshine (plant_id, sunshine_description) VALUES (?,?);";
@@ -144,7 +149,7 @@ public class JdbcPlantDao implements PlantDao {
 
         try {
             plantId = jdbcTemplate.queryForObject(sqlPlant, int.class, plant.getCommonName(), plant.getScientificName(),
-                    plant.getOtherName(), plant.getWatering(), plant.getImgUrl(), plant.getDescription(), plant.getApiPlantId());
+                    plant.getOtherName(), plant.getPlantImg(), plant.getWatering(), plant.getImgUrl(), plant.getDescription(), plant.getApiPlantId());
 
             for (int i = 0; i < plant.getSunlight().size(); i++) {
                 jdbcTemplate.update(sqlSunshine,plantId, plant.getSunlight().get(i));
@@ -227,6 +232,7 @@ public class JdbcPlantDao implements PlantDao {
         plant.setCommonName(rs.getString("common_name"));
         plant.setScientificName(rs.getString("scientific_name"));
         plant.setOtherName(rs.getString("other_name"));
+        plant.setPlantImg(rs.getString("plant_img"));
         plant.setWatering(rs.getString("watering"));
         plant.setSunshineDescription(rs.getString("sunshine_description"));
         plant.setImgUrl(rs.getString("regular_img_url"));

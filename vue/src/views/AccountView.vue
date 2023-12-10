@@ -150,8 +150,8 @@ button {
 }
 
 .cardImage {
-    width: auto;
-    height: 50vh;
+    width: 80vw;
+    height: auto;
     margin: 10px;
 }
 

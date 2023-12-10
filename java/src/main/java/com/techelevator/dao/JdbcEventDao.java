@@ -139,6 +139,31 @@ public class JdbcEventDao implements EventDao {
         return newEvent;
     }
 
+    @Override
+    public List<Event> updateEvent(Event event) {
+        int numberOfRows = 0;
+        String sql = "UPDATE garden_event SET is_active = ?" +
+                "WHERE event_id = ?;";
+
+        try {
+            numberOfRows = jdbcTemplate.update(sql, event.getActive(), event.getEventId());
+
+            if (numberOfRows == 0) {
+                throw new DaoException("Match not found");
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database or server", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Cannot execute. Possible data integrity violation");
+        }catch (DaoException e) {
+            throw new DaoException("createEmployee() not implemented");
+        }
+
+        List<Event> updatedEvent = new ArrayList<>(getEventById(event.getEventId()));
+        return updatedEvent;
+    }
+
     private List<Event> getEventArray (String sql, Boolean isIdNeeded){
         List<Event> startingEventList = new ArrayList<>();
         List<Event> finalEventList = new ArrayList<>();
@@ -193,31 +218,6 @@ public class JdbcEventDao implements EventDao {
             throw new DaoException("Unable to connect to server or database", e);
         }
         return finalEventList;
-    }
-
-    @Override
-    public List<Event> updateEvent(Event event) {
-        int numberOfRows = 0;
-        String sql = "UPDATE garden_event SET is_active = ?" +
-                "WHERE event_id = ?;";
-
-        try {
-            numberOfRows = jdbcTemplate.update(sql, event.getActive(), event.getEventId());
-
-            if (numberOfRows == 0) {
-                throw new DaoException("Match not found");
-            }
-
-        }catch (CannotGetJdbcConnectionException e){
-            throw new DaoException("Cannot connect to database or server", e);
-        }catch (DataIntegrityViolationException e){
-            throw new DaoException("Cannot execute. Possible data integrity violation");
-        }catch (DaoException e) {
-            throw new DaoException("createEmployee() not implemented");
-        }
-
-        List<Event> updatedEvent = new ArrayList<>(getEventById(event.getEventId()));
-        return updatedEvent;
     }
 
     private Event mapRowToEvent(SqlRowSet rs) {

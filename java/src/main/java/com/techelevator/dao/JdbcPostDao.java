@@ -38,11 +38,11 @@ public class JdbcPostDao implements PostDao{
     @Override
     public Post createPost(Post post) {
         Post newPost = null;
-        String sql = "INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category, is_active)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING post_id;";
+        String sql = "INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category, is_active, reply_to_post_id)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING post_id;";
         try {
             int postId = jdbcTemplate.queryForObject(sql, int.class, post.getPlantId(), post.getUserId(), post.getForumId(), post.getPostDescription(),
-                    post.getPrice(), post.getQuantity(), post.getTitle(), post.getPostImg(), post.getPostCategory(), post.getActive());
+                    post.getPrice(), post.getQuantity(), post.getTitle(), post.getPostImg(), post.getPostCategory(), post.getActive(), post.getReplyPostId());
             newPost = getPostById(postId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -107,6 +107,7 @@ public class JdbcPostDao implements PostDao{
         post.setPostImg(rs.getString("post_img"));
         post.setPostCategory(rs.getString("post_category"));
         post.setActive((rs.getBoolean("is_active")));
+        post.setReplyPostId(rs.getInt("reply_to_post_id"));
         return post;
     }
 }

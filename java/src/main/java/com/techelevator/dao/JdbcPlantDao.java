@@ -175,11 +175,11 @@ public class JdbcPlantDao implements PlantDao {
     @Override
     public List<Plant> updatePlant(Plant plant) {
         int numberOfRows = 0;
-        String sql = "UPDATE plant SET is_active = ?" +
-                "WHERE plant_id = ?;";
+        String sql = "UPDATE plant SET is_active = ?, plant_img = ?" +
+                " WHERE plant_id = ?;";
 
         try {
-            numberOfRows = jdbcTemplate.update(sql, plant.getActive(), plant.getId());
+            numberOfRows = jdbcTemplate.update(sql, plant.getActive(), plant.getPlantImg(), plant.getId());
 
             if (numberOfRows == 0) {
                 throw new DaoException("Match not found");

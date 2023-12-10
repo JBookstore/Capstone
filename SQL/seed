@@ -41,7 +41,7 @@ CREATE TABLE garden_plant (
 );
 CREATE TABLE forum (
     forum_id SERIAL PRIMARY KEY,
-    forum_name VARCHAR (100)
+    forum_name VARCHAR (100) CHECK (forum_name IN ('Marketplace', 'Seasonal Plants', 'Disease Help'))
 );
 CREATE TABLE garden_event (
     event_id SERIAL PRIMARY KEY,
@@ -109,7 +109,11 @@ ALTER TABLE garden_plant ADD FOREIGN KEY (plant_id) REFERENCES plant(plant_id);
 ALTER TABLE garden_plant ADD FOREIGN KEY (garden_id) REFERENCES garden(garden_id);
 ALTER TABLE post ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE post ADD FOREIGN KEY (forum_id) REFERENCES forum (forum_id);
+
 INSERT INTO forum (forum_name) VALUES ('Market Place');
+INSERT INTO forum (forum_name) VALUES ('Seasonal Plants');
+INSERT INTO forum (forum_name) VALUES ('Disease Help');
+
 INSERT INTO garden (garden_name, user_id, street_address, garden_city, garden_state, garden_zip, phone_number, is_public, garden_type)
 VALUES ('Potato Garden', 2, '1 Garden Way', 'Cleveland', 'OH', 44130, '216-555-1234', FALSE, 'Community');
 INSERT INTO garden (garden_name, user_id, street_address, garden_city, garden_state, garden_zip, phone_number, is_public, garden_type)

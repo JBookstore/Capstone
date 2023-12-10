@@ -65,6 +65,7 @@ CREATE TABLE post (
     title VARCHAR (200),
     post_img TEXT,
 	is_active BOOLEAN DEFAULT TRUE,
+	reply_to_post_id INT,
     post_category VARCHAR (255) CHECK (post_category IN ('Marketplace', 'Community Help', 'Share'))
 );
 CREATE TABLE plant_post (
@@ -110,7 +111,7 @@ ALTER TABLE garden_plant ADD FOREIGN KEY (garden_id) REFERENCES garden(garden_id
 ALTER TABLE post ADD FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE post ADD FOREIGN KEY (forum_id) REFERENCES forum (forum_id);
 
-INSERT INTO forum (forum_name) VALUES ('Market Place');
+INSERT INTO forum (forum_name) VALUES ('Marketplace');
 INSERT INTO forum (forum_name) VALUES ('Seasonal Plants');
 INSERT INTO forum (forum_name) VALUES ('Disease Help');
 
@@ -162,3 +163,5 @@ INSERT INTO volunteer (event_id, volunteer_name) VALUES (1, 'Sam Jones');
 INSERT INTO volunteer (event_id, volunteer_name) VALUES (2, 'Steve Ross');
 INSERT INTO volunteer (event_id, volunteer_name) VALUES (2, 'John Nunez');
 COMMIT;
+
+

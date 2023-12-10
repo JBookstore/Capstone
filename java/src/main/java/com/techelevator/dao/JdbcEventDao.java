@@ -32,7 +32,9 @@ public class JdbcEventDao implements EventDao {
                         " ge.event_description," +
                         " ge.event_coordinator," +
                         " ge.childcare_owner," +
-                        " ge.event_date," +
+                        " event_start_date," +
+                        " event_end," +
+                        " is_active," +
                         " ge.event_category," +
                         " v.volunteer_name" +
                             " FROM" +
@@ -58,7 +60,9 @@ public class JdbcEventDao implements EventDao {
                         " ge.event_description," +
                         " ge.event_coordinator," +
                         " ge.childcare_owner," +
-                        " ge.event_date," +
+                        " event_start_date," +
+                        " event_end," +
+                        " is_active," +
                         " ge.event_category," +
                         " v.volunteer_name" +
                     " FROM" +
@@ -83,7 +87,9 @@ public class JdbcEventDao implements EventDao {
                         " ge.event_description," +
                         " ge.event_coordinator," +
                         " ge.childcare_owner," +
-                        " ge.event_date," +
+                        " event_start_date," +
+                        " event_end," +
+                        " is_active," +
                         " ge.event_category," +
                         " v.volunteer_name" +
                             " FROM" +
@@ -107,16 +113,18 @@ public class JdbcEventDao implements EventDao {
                                 " event_description," +
                                 " event_coordinator," +
                                 " childcare_owner," +
-                                " event_date," +
+                                " event_start_date," +
+                                " event_end," +
+                                " is_active," +
                                 " event_category)" +
-                            " VALUES (?, ?, ?, ?, ?, ?, ?, ?)" +
+                            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
                             " RETURNING event_id;";
 
         String sqlVolunteer = "INSERT INTO volunteer (event_id, volunteer_name) VALUES (?,?);";
 
         try {
             eventId = jdbcTemplate.queryForObject(sqlEvent, int.class, event.getGardenId(), event.getUserId(), event.getEventName(), event.getEventDescription(),
-                    event.getEventCoordinator(), event.getChildcareOwner(), event.getEventDate(), event.getEventCategory());
+                    event.getEventCoordinator(), event.getChildcareOwner(), event.getEventStartDate(), event.getEventEnd(), event.getActive(), event.getEventCategory());
 
 
             for (int i = 0; i < event.getVolunteer().size(); i++) {
@@ -196,7 +204,9 @@ public class JdbcEventDao implements EventDao {
         event.setEventDescription(rs.getString("event_description"));
         event.setEventCoordinator(rs.getString("event_coordinator"));
         event.setChildcareOwner(rs.getString("childcare_owner"));
-        event.setEventDate(rs.getString("event_date"));
+        event.setEventStartDate(rs.getString("event_start_date"));
+        event.setEventEnd(rs.getString("event_end"));
+        event.setActive(rs.getBoolean("is_active"));
         event.setEventCategory(rs.getString("event_category"));
         event.setVolunteerName(rs.getString("volunteer_name"));
         return event;

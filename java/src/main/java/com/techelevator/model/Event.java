@@ -19,8 +19,12 @@ public class Event {
     private String eventCoordinator;
     @JsonProperty("childcare_owner")
     private String childcareOwner;
-    @JsonProperty("event_date")
-    private String eventDate;
+    @JsonProperty("event_start_date")
+    private String eventStartDate;
+    @JsonProperty("event_end")
+    private String eventEnd;
+    @JsonProperty("is_active")
+    private Boolean isActive;
     @JsonProperty("event_category")
     private String eventCategory;
     private List<String> volunteer;
@@ -84,12 +88,28 @@ public class Event {
         this.childcareOwner = childcareOwner;
     }
 
-    public String getEventDate() {
-        return eventDate;
+    public String getEventStartDate() {
+        return eventStartDate;
     }
 
-    public void setEventDate(String eventDate) {
-        this.eventDate = eventDate;
+    public void setEventStartDate(String eventDate) {
+        this.eventStartDate = eventStartDate;
+    }
+
+    public String getEventEnd() {
+        return eventEnd;
+    }
+
+    public void setEventEnd(String eventEnd) {
+        this.eventEnd = eventEnd;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public String getEventCategory() {
@@ -117,6 +137,7 @@ public class Event {
     }
 
     //ToString
+
     @Override
     public String toString() {
         return "Event{" +
@@ -127,7 +148,9 @@ public class Event {
                 ", eventDescription='" + eventDescription + '\'' +
                 ", eventCoordinator='" + eventCoordinator + '\'' +
                 ", childcareOwner='" + childcareOwner + '\'' +
-                ", eventDate='" + eventDate + '\'' +
+                ", eventStartDate='" + eventStartDate + '\'' +
+                ", eventEnd='" + eventEnd + '\'' +
+                ", isActive=" + isActive +
                 ", eventCategory='" + eventCategory + '\'' +
                 ", volunteer=" + volunteer +
                 ", volunteerName='" + volunteerName + '\'' +

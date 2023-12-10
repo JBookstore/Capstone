@@ -39,5 +39,9 @@ export default {
 
     addGarden(garden) {
         return axios.post('/gardens', garden)
+    },
+
+    updatePlant(plant) {
+        return axios.put(`/plants/${plant.plant_id}`, plant)
     }
 }

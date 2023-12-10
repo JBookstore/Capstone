@@ -9,6 +9,7 @@
         <img v-if="plant.plant_img != null" v-bind:src="plant.plant_img" class="cardImage" v-on:click="onDetailsClick">
         <img v-else-if="plant.regular_img_url != null" v-bind:src="plant.regular_img_url"  class="cardImage" v-on:click="onDetailsClick"/>
         <img v-else v-bind:src="getDefaultImage" class="cardImage" v-on:click="onDetailsClick">
+        <input type="file" ref="fileInput" @change="uploadImage">
     </div>
 </template>
 
@@ -16,6 +17,13 @@
     import plantService from '../services/PlantService.js';
 
     export default {
+        data() {
+            return {
+                customImage: '',
+                userPlant: {}
+            }
+        },
+
         props: {
             plant: { type: Object, required: true }
         },
@@ -36,14 +44,41 @@
                 alert('Added one ' + this.plant.common_name + ' to your garden!');
             },
             onDeleteClick() {
-            }
+            },
 
+            convertImageToBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                });
+            },
+            async uploadImage() {
+                try {
+                    const file = this.$refs.fileInput.files[0];
+                    const base64 = await this.convertImageToBase64(file);
+                    
+                    alert(base64);
+                    
+                    this.userPlant.plant_img = base64;
+                    this.userPlant.garden_id = this.$store.state.user_garden.garden_id;
+
+                    await plantService.updatePlant(this.userPlant);
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                }
+            }
         },
 
         computed: {
             getDefaultImage() {
                 return 'https://developers.google.com/static/maps/documentation/streetview/images/error-image-generic.png';
             }
+        },
+
+        created() {
+            this.userPlant = this.plant;
         }
     }
 </script>

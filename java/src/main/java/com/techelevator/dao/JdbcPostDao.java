@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Garden;
 import com.techelevator.model.Post;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -37,11 +38,11 @@ public class JdbcPostDao implements PostDao{
     @Override
     public Post createPost(Post post) {
         Post newPost = null;
-        String sql = "INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING post_id;";
+        String sql = "INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category, is_active)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING post_id;";
         try {
             int postId = jdbcTemplate.queryForObject(sql, int.class, post.getPlantId(), post.getUserId(), post.getForumId(), post.getPostDescription(),
-                    post.getPrice(), post.getQuantity(), post.getTitle(), post.getPostImg(), post.getPostCategory());
+                    post.getPrice(), post.getQuantity(), post.getTitle(), post.getPostImg(), post.getPostCategory(), post.getActive());
             newPost = getPostById(postId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -66,6 +67,33 @@ public class JdbcPostDao implements PostDao{
         return post;
     }
 
+    @Override
+    public Post updatePost(Post post) {
+        int numberOfRows = 0;
+        Post updatedPost;
+        String sql = "UPDATE post SET is_active = ?" +
+                "WHERE post_id = ?;";
+
+        try {
+            numberOfRows = jdbcTemplate.update(sql, post.getActive(), post.getPostId());
+
+            if (numberOfRows == 0) {
+                throw new DaoException("Match not found");
+            } else {
+                updatedPost = getPostById(post.getPostId());
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database or server", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Cannot execute. Possible data integrity violation");
+        }catch (DaoException e) {
+            throw new DaoException("createEmployee() not implemented");
+        }
+
+        return updatedPost;
+    }
+
     private Post mapRowToPost(SqlRowSet rs) {
         Post post = new Post();
         post.setPostId(rs.getInt("post_id"));
@@ -78,6 +106,7 @@ public class JdbcPostDao implements PostDao{
         post.setTitle(rs.getString("title"));
         post.setPostImg(rs.getString("post_img"));
         post.setPostCategory(rs.getString("post_category"));
+        post.setActive((rs.getBoolean("is_active")));
         return post;
     }
 }

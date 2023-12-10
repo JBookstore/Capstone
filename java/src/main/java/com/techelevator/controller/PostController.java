@@ -2,6 +2,8 @@ package com.techelevator.controller;
 
 
 import com.techelevator.dao.PostDao;
+import com.techelevator.exception.DaoException;
+import com.techelevator.model.Garden;
 import com.techelevator.model.Post;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +48,18 @@ public class PostController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post Not Found");
         } else {
             return postDao.getPostById(id);
+        }
+    }
+
+    @RequestMapping(path = "/posts/{id}", method = RequestMethod.PUT)
+    public Post update(@Valid @RequestBody Post post, @PathVariable int id){
+        post.setPostId(id);
+
+        try{
+            Post updatedPost = postDao.updatePost(post);
+            return updatedPost;
+        }catch (DaoException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to update");
         }
     }
 }

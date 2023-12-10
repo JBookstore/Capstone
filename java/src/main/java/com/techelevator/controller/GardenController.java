@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Garden;
 import com.techelevator.dao.GardenDao;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,18 @@ public class GardenController {
             throw new ResponseStatusException(HttpStatus.CREATED, "Garden Not Created");
         } else {
             return gardenDao.createGarden(garden);
+        }
+    }
+
+    @RequestMapping(path = "/gardens/{id}", method = RequestMethod.PUT)
+    public Garden update(@Valid @RequestBody Garden garden, @PathVariable int id){
+        garden.setGardenId(id);
+
+        try{
+            Garden updatedGarden = gardenDao.updateGarden(garden);
+            return updatedGarden;
+        }catch (DaoException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to update");
         }
     }
 }

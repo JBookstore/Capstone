@@ -74,6 +74,33 @@ public class JdbcReminderDao implements ReminderDao {
         return newReminder;
     }
 
+    @Override
+    public Reminder updateReminder(Reminder reminder) {
+        int numberOfRows = 0;
+        Reminder updatedReminder;
+        String sql = "UPDATE reminder SET is_active = ?" +
+                "WHERE reminder_id = ?;";
+
+        try {
+            numberOfRows = jdbcTemplate.update(sql, reminder.getActive(), reminder.getReminderId());
+
+            if (numberOfRows == 0) {
+                throw new DaoException("Match not found");
+            } else {
+                updatedReminder = getReminderById(reminder.getReminderId());
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database or server", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Cannot execute. Possible data integrity violation");
+        }catch (DaoException e) {
+            throw new DaoException("createEmployee() not implemented");
+        }
+
+        return updatedReminder;
+    }
+
     private Reminder mapRowToReminder(SqlRowSet rs) {
         Reminder reminder = new Reminder();
         reminder.setUserId (rs.getInt("user_id"));

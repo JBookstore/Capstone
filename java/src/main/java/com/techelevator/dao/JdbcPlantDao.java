@@ -172,6 +172,31 @@ public class JdbcPlantDao implements PlantDao {
         return newPlant;
     }
 
+    @Override
+    public List<Plant> updatePlant(Plant plant) {
+        int numberOfRows = 0;
+        String sql = "UPDATE plant SET is_active = ?" +
+                "WHERE plant_id = ?;";
+
+        try {
+            numberOfRows = jdbcTemplate.update(sql, plant.getActive(), plant.getId());
+
+            if (numberOfRows == 0) {
+                throw new DaoException("Match not found");
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database or server", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Cannot execute. Possible data integrity violation");
+        }catch (DaoException e) {
+            throw new DaoException("createEmployee() not implemented");
+        }
+
+        List<Plant> updatedPlant = new ArrayList<>(getPlantById(plant.getId()));
+        return updatedPlant;
+    }
+
     private List<Plant> getSunLightArray (String sql, Boolean isIdNeeded){
         List<Plant> startingPlants = new ArrayList<>();
         List<Plant> finalPlantsList = new ArrayList<>();

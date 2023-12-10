@@ -1,6 +1,8 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.ReminderDao;
+import com.techelevator.exception.DaoException;
+import com.techelevator.model.Message;
 import com.techelevator.model.Reminder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +49,18 @@ public class ReminderController {
             throw new ResponseStatusException(HttpStatus.CREATED, "Reminder Not Created");
         } else {
             return reminderDao.createReminder(reminder);
+        }
+    }
+
+    @RequestMapping(path = "/reminders/{id}", method = RequestMethod.PUT)
+    public Reminder update(@Valid @RequestBody Reminder reminder, @PathVariable int id){
+        reminder.setReminderId(id);
+
+        try{
+            Reminder updatedReminder = reminderDao.updateReminder(reminder);
+            return updatedReminder;
+        }catch (DaoException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to update");
         }
     }
 }

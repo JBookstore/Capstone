@@ -1,6 +1,8 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.JdbcPlantDao;
+import com.techelevator.dao.PlantDao;
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Plant;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +65,18 @@ public class PlantController {
             throw new ResponseStatusException(HttpStatus.CREATED, "Event Not Created");
         } else {
             return plantDao.createPlant(plant);
+        }
+    }
+
+    @RequestMapping(path = "/plants/{id}", method = RequestMethod.PUT)
+    public List<Plant> update(@Valid @RequestBody Plant plant, @PathVariable int id){
+        plant.setId(id);
+
+        try{
+            List<Plant> updatedPlant = plantDao.updatePlant(plant);
+            return updatedPlant;
+        }catch (DaoException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to update");
         }
     }
 }

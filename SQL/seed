@@ -64,6 +64,7 @@ CREATE TABLE post (
     quantity INT,
     title VARCHAR (200),
     post_img TEXT,
+	is_active BOOLEAN DEFAULT TRUE,
     post_category VARCHAR (255) CHECK (post_category IN ('Marketplace', 'Community Help', 'Share'))
 );
 CREATE TABLE plant_post (
@@ -122,8 +123,8 @@ INSERT INTO plant (common_name, scientific_name, other_name, watering, regular_i
 VALUES ('Shirazz Japanese Maple', 'Acer palmatum "Gwens Rose Delight"', ' ', 'Average', ' ', 'Crown gall occurs when plants become infected with Agrobacterium tumefaciens. 
         The bacterium enters the plant through wounds or natural openings and transfers its DNA, known as T-DNA, into the plant cells. This DNA becomes integrated into the plants genetic material, 
         causing the cells to divide uncontrollably and resulting in the formation of galls. The infection can spread within the plant and to other plants through various means such as soil, water, or infected plant parts.', 58);
-INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category)
-VALUES (1, 1, 1, 'Mature rose plant in great shape.', 15.00, 1, 'Rose Plant for Sale', 'Base64 encoded img string here', 'Marketplace' );
+INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category, is_active)
+VALUES (1, 1, 1, 'Mature rose plant in great shape.', 15.00, 1, 'Rose Plant for Sale', 'Base64 encoded img string here', 'Marketplace', 'true' );
 INSERT INTO sunshine (plant_id, sunshine_description)
 VALUES (1, 'full sun');
 INSERT INTO sunshine (plant_id, sunshine_description)

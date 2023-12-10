@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Message;
+import com.techelevator.model.Post;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -63,6 +64,33 @@ public class JdbcMessageDao implements MessageDao{
             throw new DaoException("Data integrity violation");
         }
         return newMessage;
+    }
+
+    @Override
+    public Message updateMessage(Message message) {
+        int numberOfRows = 0;
+        Message updatedMessage;
+        String sql = "UPDATE user_messages SET is_read = ?" +
+                "WHERE message_id = ?;";
+
+        try {
+            numberOfRows = jdbcTemplate.update(sql, message.getRead(), message.getMessageId());
+
+            if (numberOfRows == 0) {
+                throw new DaoException("Match not found");
+            } else {
+                updatedMessage = getMessageById(message.getMessageId());
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database or server", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Cannot execute. Possible data integrity violation");
+        }catch (DaoException e) {
+            throw new DaoException("createEmployee() not implemented");
+        }
+
+        return updatedMessage;
     }
 
     private Message mapRowToMessage(SqlRowSet rs) {

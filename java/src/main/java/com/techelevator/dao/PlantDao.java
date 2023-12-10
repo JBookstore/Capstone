@@ -10,4 +10,5 @@ public interface PlantDao {
         List<Plant> getPlantByGardenId(int plantId);
         List<Plant> getPlantByUserId(int plantId);
         List<Plant> createPlant(Plant plant);
+        List<Plant> updatePlant(Plant plant);
 }

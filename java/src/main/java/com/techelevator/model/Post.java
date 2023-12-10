@@ -22,6 +22,8 @@ public class Post {
     private String postImg;
     @JsonProperty("post_category")
     private String postCategory;
+    @JsonProperty("is_active")
+    private boolean isActive;
 
     public int getPostId() {
         return postId;
@@ -103,6 +105,14 @@ public class Post {
         this.postCategory = postCategory;
     }
 
+    public boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -116,6 +126,7 @@ public class Post {
                 ", title='" + title + '\'' +
                 ", postImg='" + postImg + '\'' +
                 ", postCategory='" + postCategory + '\'' +
+                ", isActive=" + isActive +
                 '}';
     }
 }

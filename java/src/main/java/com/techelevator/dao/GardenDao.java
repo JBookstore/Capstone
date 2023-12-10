@@ -9,4 +9,5 @@ public interface GardenDao {
     Garden getGardenById(int GardenId);
     Garden createGarden(Garden garden);
     List<Garden> getGardenByUserId(int userId);
+    Garden updateGarden(Garden garden);
 }

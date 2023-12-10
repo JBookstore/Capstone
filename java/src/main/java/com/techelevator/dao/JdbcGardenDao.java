@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Garden;
+import com.techelevator.model.Plant;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -86,6 +87,33 @@ public class JdbcGardenDao implements GardenDao {
             throw new DaoException("Unable to connect to server or database", e);
         }
         return gardens;
+    }
+
+    @Override
+    public Garden updateGarden(Garden garden) {
+        int numberOfRows = 0;
+        Garden updatedGarden;
+        String sql = "UPDATE garden SET is_public = ?" +
+                "WHERE garden_id = ?;";
+
+        try {
+            numberOfRows = jdbcTemplate.update(sql, garden.getPublicGarden(), garden.getGardenId());
+
+            if (numberOfRows == 0) {
+                throw new DaoException("Match not found");
+            } else {
+                updatedGarden = getGardenById(garden.getGardenId());
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database or server", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Cannot execute. Possible data integrity violation");
+        }catch (DaoException e) {
+            throw new DaoException("createEmployee() not implemented");
+        }
+
+        return updatedGarden;
     }
 
 

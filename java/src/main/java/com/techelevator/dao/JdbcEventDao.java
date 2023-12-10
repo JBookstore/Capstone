@@ -195,6 +195,31 @@ public class JdbcEventDao implements EventDao {
         return finalEventList;
     }
 
+    @Override
+    public List<Event> updateEvent(Event event) {
+        int numberOfRows = 0;
+        String sql = "UPDATE garden_event SET is_active = ?" +
+                "WHERE event_id = ?;";
+
+        try {
+            numberOfRows = jdbcTemplate.update(sql, event.getActive(), event.getEventId());
+
+            if (numberOfRows == 0) {
+                throw new DaoException("Match not found");
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Cannot connect to database or server", e);
+        }catch (DataIntegrityViolationException e){
+            throw new DaoException("Cannot execute. Possible data integrity violation");
+        }catch (DaoException e) {
+            throw new DaoException("createEmployee() not implemented");
+        }
+
+        List<Event> updatedEvent = new ArrayList<>(getEventById(event.getEventId()));
+        return updatedEvent;
+    }
+
     private Event mapRowToEvent(SqlRowSet rs) {
         Event event = new Event();
         event.setEventId(rs.getInt("event_id"));

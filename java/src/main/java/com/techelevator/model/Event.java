@@ -92,7 +92,7 @@ public class Event {
         return eventStartDate;
     }
 
-    public void setEventStartDate(String eventDate) {
+    public void setEventStartDate(String eventStartDate) {
         this.eventStartDate = eventStartDate;
     }
 

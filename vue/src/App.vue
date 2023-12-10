@@ -10,8 +10,10 @@
     
     <!-- SECOND NAV BAR -->
     <div id="siteNav" v-if="$store.state.token != ''">
-      <router-link class="link" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link class="link" v-bind:to="{ name: 'detailSearch' }">Search</router-link>
+      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'detailSearch' }">Search</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{name: 'forum'}" >Forum</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{name: 'home'}" >Events</router-link>
       <hr>
 
     </div>
@@ -22,6 +24,8 @@
 </template>
 
 <script>
+import router from './router';
+
 
 </script>
 

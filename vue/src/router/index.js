@@ -12,6 +12,7 @@ import GardenView from '../views/GardenView.vue';
 import AccountView from '../views/AccountView.vue';
 import InboxView from '../views/InboxView.vue';
 import MessageView from '../views/MessageView.vue';
+import ForumView from '../views/ForumView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -98,6 +99,14 @@ const routes = [
     path: "/inbox/:id",
     name: "message",
     component: MessageView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/forum/",
+    name: "forum",
+    component: ForumView,
     meta: {
       requiresAuth: true
     }

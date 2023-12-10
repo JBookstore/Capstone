@@ -3,7 +3,7 @@
     <div id="userNav" v-if="$store.state.token != ''">
       <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'home' }">Alerts</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'home' }">Messages</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'inbox' }">Messages</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'accountView' }">Account</router-link>
     </div>
     <h1>JAVA GREEN PLANTS</h1>

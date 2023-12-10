@@ -16,7 +16,9 @@ export function createStore(currentToken, currentUser) {
       user_garden: {},
       transferPlantJSON: {
         garden_id: 0
-      }
+      },
+      userMessages: [],
+      activeMessage: {}
       },
       
     mutations: {
@@ -59,8 +61,15 @@ export function createStore(currentToken, currentUser) {
         plant.regular_img_url = plant.default_image.original_url;
         plant.api_plant_id = plant.id;
         plant.plant_description = plant.description;
+        plant.is_active = true;
         state.transferPlantJSON = plant;
       },
+      SET_USER_MESSAGES(state, messages) {
+        state.userMessages = messages;
+      },
+      SET_ACTIVE_MESSAGE(state, message) {
+        state.activeMessage = message;
+      }
     },
   });
   return store;

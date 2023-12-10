@@ -1,7 +1,9 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.EventDao;
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Event;
+import com.techelevator.model.Post;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -52,6 +54,18 @@ public class EventController {
             throw new ResponseStatusException(HttpStatus.CREATED, "Event Not Created");
         } else {
             return eventDao.createEvent(event);
+        }
+    }
+
+    @RequestMapping(path = "/events/{id}", method = RequestMethod.PUT)
+    public List<Event> update(@Valid @RequestBody Event event, @PathVariable int id){
+        event.setEventId(id);
+
+        try{
+            List<Event> updatedEvent = eventDao.updateEvent(event);
+            return updatedEvent;
+        }catch (DaoException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to update");
         }
     }
 }

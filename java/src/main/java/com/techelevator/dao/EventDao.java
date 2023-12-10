@@ -9,4 +9,5 @@ public interface EventDao {
     List<Event> getEventById(int eventid);
     List<Event> createEvent(Event event);
     List<Event> getEventByUserId(int userid);
+    List<Event> updateEvent(Event event);
 }

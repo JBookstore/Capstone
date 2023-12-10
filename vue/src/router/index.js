@@ -56,8 +56,8 @@ const routes = [
     }
   },
   {
-    path: "/plantdetail/:search",
-    name: "detailSearch",
+    path: "/plantdetail/:id",
+    name: "detailById",
     component: PlantDetailView,
     meta: {
       requiresAuth: true

@@ -30,7 +30,7 @@
 
         methods: {
             onDetailsClick() {
-                this.$router.push({ name: 'detailById', params: {id: this.plant.id}});
+                this.$router.push({ name: 'detailById', params: {id: this.plant.plant_id}});
                 this.$store.commit('STORE_PLANT', this.plant);
             },
             onAddClick() {
@@ -62,7 +62,6 @@
                     alert(base64);
                     
                     this.userPlant.plant_img = base64;
-                    this.userPlant.garden_id = this.$store.state.user_garden.garden_id;
 
                     await plantService.updatePlant(this.userPlant);
                 } catch (error) {

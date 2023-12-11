@@ -2,14 +2,16 @@
     <div class="card">
         <div class="cardTop">
             <h2>{{ plant.common_name }}</h2>
-            <button v-on:click="onAddClick" class="cardButton">+</button>
-            <button v-on:click="onDeleteClick" class="cardButton">-</button>
-            <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
+
         </div>
 
         <img v-if="plant.default_image === null" v-bind:src="getDefaultImage" class="cardImage"/>
         <img v-else-if="plant.plant_img === null" v-bind:src="getDefaultImage" class="cardImage"/>
         <img v-else v-bind:src="plant.default_image.original_url"  class="cardImage" v-on:click="onDetailsClick"/>
+        <div class="cardBottom">
+            <button v-on:click="onAddClick" class="cardButton">ADD TO GARDEN</button>
+            <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
+        </div>
     </div>
 </template>
 
@@ -24,7 +26,7 @@
         methods: {
             onDetailsClick() {
                 this.$router.push({ name: 'detailById', params: {id: this.plant.id}});
-                this.$store.commit('STORE_PLANT', this.plant);
+                this.$store.commit('STORE_PLANT', this.plant); 
             },
             onAddClick() {
                 // We have to assign the garden Id TO the plant before we pass it
@@ -75,8 +77,15 @@
 }
 
 .cardButton {
+    font-size: 1.2em;
+    font-weight: bold;
     width: 40vw;
+    height: 60px;
 }
+
+.cardBottom {
+        display: flex;
+    }
 
 @media screen and (min-width: 600px) {
     .card {
@@ -116,5 +125,7 @@
     .cardButton {
         width: 8vw;
     }
+
+
 }
 </style>

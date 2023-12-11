@@ -42,9 +42,7 @@ export function createStore(currentToken, currentUser) {
       STORE_PLANT(state, plant) {
         state.plants.unshift(plant);
       },
-      ADD_PLANT_TO_GARDEN(state, plant) {
-        state.user_garden.push(plant);
-      },
+
       DELETE_PLANT_FROM_GARDEN(state, plant) {
         let index = state.user_garden.indexOf(plant);
         state.user_garden.splice(index, 1);
@@ -56,14 +54,24 @@ export function createStore(currentToken, currentUser) {
         state.userPlants = plantsArray;
       },
       MODIFY_PLANT_FOR_ADDITION(state, plant) {
-        plant.scientific_name = plant.scientific_name[0];
-        plant.other_name = plant.other_name[0];
-        plant.regular_img_url = plant.default_image.original_url;
+        if( plant.scientific_name != null) {
+          plant.scientific_name = plant.scientific_name[0];
+        }
+
+        if( plant.other_name != null) {
+          plant.other_name = plant.other_name[0];
+        }
+
+        if( plant.default_image != null) {
+          plant.regular_img_url = plant.default_image.original_url;
+        }
+
         plant.api_plant_id = plant.id;
         plant.plant_description = plant.description;
         plant.is_active = true;
         state.transferPlantJSON = plant;
       },
+
       SET_USER_MESSAGES(state, messages) {
         state.userMessages = messages;
       },

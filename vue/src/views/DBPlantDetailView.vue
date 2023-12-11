@@ -1,10 +1,10 @@
 <template>
-    <plant-detail v-bind:plant="plant" />
+    <data-base-plant-detail v-bind:plant="plant" />
 
 </template>
 
 <script>
-    import plantDetail from "../components/PlantDetail.vue";
+    import DataBasePlantDetail from "../components/DataBasePlantDetail.vue";
     import plantService from "../services/PlantService.js";
 
     export default { 
@@ -14,7 +14,7 @@
             }
         },
         components: {
-            plantDetail,
+            DataBasePlantDetail,
         },
         methods: {
             getPlantById() {

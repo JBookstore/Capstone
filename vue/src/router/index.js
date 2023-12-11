@@ -13,6 +13,7 @@ import AccountView from '../views/AccountView.vue';
 import InboxView from '../views/InboxView.vue';
 import MessageView from '../views/MessageView.vue';
 import ForumView from '../views/ForumView.vue';
+import DBPlantDetailView from '../views/DBPlantDetailView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -107,6 +108,15 @@ const routes = [
     path: "/forum/",
     name: "forum",
     component: ForumView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
+    path: "/userplantdetail/:id",
+    name: "dbPlantDetail",
+    component: DBPlantDetailView,
     meta: {
       requiresAuth: true
     }

@@ -11,9 +11,8 @@
             <hr>
         </div>
 
-
-        <div class="winterPlants">
-            <h2>Winter Plants</h2>
+        <div class="seasonalPlants">
+            <h2>Seasonal Plants</h2>
             <!-- image here, on click push -->
             <img class="cardImage" src="../assets/garden.jpg" />
 

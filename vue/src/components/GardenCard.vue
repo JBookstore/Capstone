@@ -2,23 +2,34 @@
     <div class="card">
         <div class="cardTop">
             <h2>{{ plant.common_name }}</h2>
-            <button v-on:click="onAddClick" class="cardButton">+</button>
-            <button v-on:click="onDeleteClick" class="cardButton">-</button>
-            <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
         </div>
+
         <img v-if="plant.plant_img != null" v-bind:src="plant.plant_img" class="cardImage" v-on:click="onDetailsClick">
         <img v-else-if="plant.regular_img_url != null" v-bind:src="plant.regular_img_url"  class="cardImage" v-on:click="onDetailsClick"/>
         <img v-else v-bind:src="getDefaultImage" class="cardImage" v-on:click="onDetailsClick">
-        <input type="file" ref="fileInput" @change="uploadImage">
+
+        <div class="cardBottom">
+            <button v-on:click="onAddClick" class="cardButton">ADD</button>
+            <button v-on:click="onDeleteClick" class="cardButton">REMOVE</button>
+            <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
+            <button class="cardButton" v-on:click="showFileSelect = !showFileSelect">CHANGE IMAGE</button>
+            
+            <input class="imageSelect" v-if="showFileSelect" type="file" ref="fileInput" @change="uploadImage">
+
+        </div>
+
+
     </div>
 </template>
 
 <script>
-    import plantService from '../services/PlantService.js';
+    import router from '../router';
+import plantService from '../services/PlantService.js';
 
     export default {
         data() {
             return {
+                showFileSelect: false,
                 customImage: '',
                 userPlant: {}
             }
@@ -30,8 +41,8 @@
 
         methods: {
             onDetailsClick() {
-                this.$router.push({ name: 'detailById', params: {id: this.plant.plant_id}});
                 this.$store.commit('STORE_PLANT', this.plant);
+                this.$router.push({ name: 'dbPlantDetail', params: {id: this.plant.plant_id}});
             },
             onAddClick() {
                 // We have to assign the garden Id TO the plant before we pass it
@@ -40,10 +51,14 @@
                 this.$store.state.transferPlantJSON.garden_id = this.$store.state.user_garden.garden_id;
 
                 plantService.addPlantToGarden(this.$store.state.transferPlantJSON);
-
+                router.go();
                 alert('Added one ' + this.plant.common_name + ' to your garden!');
             },
             onDeleteClick() {
+                this.userPlant = this.plant;
+                this.userPlant.is_active = false;
+
+                plantService.updatePlant(this.userPlant);
             },
 
             convertImageToBase64(file) {
@@ -59,7 +74,7 @@
                     const file = this.$refs.fileInput.files[0];
                     const base64 = await this.convertImageToBase64(file);
                     
-                    alert(base64);
+                    // alert(base64);
                     
                     this.userPlant.plant_img = base64;
 
@@ -77,6 +92,7 @@
         },
 
         created() {
+            
             this.userPlant = this.plant;
         }
     }
@@ -107,7 +123,16 @@
 
 .cardButton {
     width: 40vw;
+    height: 60px;
+    font-weight: bold;
+    font-size: 1.2em;
 }
+
+.imageSelect {
+    padding: 20px;
+}
+
+
 
 @media screen and (min-width: 600px) {
     .card {

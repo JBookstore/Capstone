@@ -30,6 +30,17 @@ public class PostController {
             return postDao.getPostByUserId(id);
         }
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/posts/forum/{id}")
+    public List<Post> getPostByForumId(@PathVariable int id) {
+        List<Post> post = postDao.getPostByForumId(id);
+        if (post == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post Not Found");
+        } else {
+            return postDao.getPostByForumId(id);
+        }
+    }
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/posts", method = RequestMethod.POST)
     public Post create(@RequestBody @Valid Post post) {

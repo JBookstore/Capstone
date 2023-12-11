@@ -10,4 +10,5 @@ public interface PostDao {
     Post createPost(Post post);
     Post getPostById(int id);
     Post updatePost(Post post);
+    List<Post> getPostByForumId(int forumId);
 }

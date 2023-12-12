@@ -102,7 +102,7 @@ import plantService from '../services/PlantService.js';
 .card {
   text-align: center;
   border: 2px solid black;
-  background-color: hotpink;
+  background-color: rgb(212, 255, 212);
   border-radius: 10px;
   width: 80vw;
   height: auto;

@@ -3,9 +3,9 @@
         <h2>{{ this.plant.common_name }}</h2>
         <h2>{{ this.plant.scientific_name }}</h2>
 
-        <img v-if="plant.plant_img === null && plant.regular_img_url === null" v-bind:src="getDefaultImage"/>
-        <img v-else-if="plant.plant_img != null" v-bind:src="plant.plant_img" />
-        <img v-else v-bind:src="plant.regular_img_url"  id="displayImage" />
+        <img v-if="plant.plant_img === null && plant.regular_img_url === null" v-bind:src="getDefaultImage" class="displayImage"/>
+        <img v-else-if="plant.plant_img != null" v-bind:src="plant.plant_img" class="displayImage"/>
+        <img v-else v-bind:src="plant.regular_img_url"  class="displayImage" />
 
         <h3>{{ plant.scientific_name }}</h3>
 
@@ -65,7 +65,7 @@
 </script>
 
 <style scoped>
-#displayImage {
+.displayImage {
     width: 80vw;
     height: auto;
 }

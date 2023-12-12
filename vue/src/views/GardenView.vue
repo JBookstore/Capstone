@@ -54,5 +54,17 @@
 </script>
 
 <style scoped>
+@media screen and (min-width: 600px) {
+    #gardenDisplay {
+        display: inline-flex;
+        width: 32vw;
+    }
+}
 
+@media screen and (min-width: 992px) {
+    #gardenDisplay {
+        display: inline-flex;
+        width: 19vw;
+    }
+}
 </style>

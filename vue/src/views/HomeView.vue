@@ -17,15 +17,6 @@ export default {
   },
 
   created() {
-    if (plantService.getGardenByUserId(this.$store.state.user.id).status == 404) {
-      this.defaultGarden.user_id = this.$store.state.user.id;
-      this.defaultGarden.is_public = true;
-
-      alert('sup');
-
-      plantService.addGarden(this.defaultGarden);
-
-    } else {
 
       plantService.getGardenByUserId(this.$store.state.user.id)
         .then(response => {
@@ -43,6 +34,5 @@ export default {
           this.$store.commit('SET_USER_MESSAGES', response.data)
         })
     }
-  }
 };
 </script>

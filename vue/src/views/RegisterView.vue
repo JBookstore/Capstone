@@ -24,8 +24,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 import authService from '../services/AuthService';
-
+import PlantService from '../services/PlantService';
 export default {
   data() {
     return {
@@ -37,6 +38,7 @@ export default {
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
+      garden: {},
     };
   },
   methods: {
@@ -49,6 +51,8 @@ export default {
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
+              this.garden.user_id = axios.get('http://localhost:9000/users').length + 1
+              PlantService.addGarden(this.garden)
               this.$router.push({
                 path: '/login',
                 query: { registration: 'success' },

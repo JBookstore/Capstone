@@ -18,7 +18,11 @@ export function createStore(currentToken, currentUser) {
         garden_id: 0
       },
       userMessages: [],
-      activeMessage: {}
+      activeMessage: {},
+      marketplacePreview: {},
+      seasonalPreview: {},
+      diseasePreview: {},
+      activePlant: {}
       },
       
     mutations: {
@@ -77,6 +81,18 @@ export function createStore(currentToken, currentUser) {
       },
       SET_ACTIVE_MESSAGE(state, message) {
         state.activeMessage = message;
+      },
+      SET_MARKETPLACEPREVIEW(state, post) {
+        state.marketplacePreview = post;
+      },
+      SET_SEASONALPREVIEW(state, post) {
+        state.seasonalPreview = post;
+      },
+      SET_DISEASEPREVIEW(state, post) {
+        state.diseasePreview = post;
+      },
+      SET_ACTIVE_PLANT(state, plant) {
+        state.activePlant = plant;
       }
     },
   });

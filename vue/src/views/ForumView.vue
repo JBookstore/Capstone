@@ -2,43 +2,74 @@
     <div class="forumDisplay">
         <div class="marketPlace">
             <h2>Market Place</h2>
-            <!-- image here, on click push -->
-            <img class="cardImage" src="../assets/garden.jpg" />
-
-            <!-- forum card most recent post -->
-            <forum-card />
+            <img class="cardImage" src="../assets/garden.jpg" v-on:click="marketForum"/>
+            <forum-card v-bind:post="market"/>
 
             <hr>
         </div>
 
         <div class="seasonalPlants">
             <h2>Seasonal Plants</h2>
-            <!-- image here, on click push -->
-            <img class="cardImage" src="../assets/garden.jpg" />
-
-            <!-- forum card most recent post -->
-            <forum-card />
+            <img class="cardImage" src="../assets/garden.jpg" v-on:click="seasonalForum" />
+            <forum-card v-bind:post="seasonal" />
 
             <hr>
         </div>
 
         <div class="plantHealthCare">
             <h2>Plant Healthcare</h2>
-            <!-- image here, on click push -->
-            <img class="cardImage" src="../assets/garden.jpg" />
-
-            <!-- forum card most recent post -->
-            <forum-card />
+            <img class="cardImage" src="../assets/garden.jpg" v-on:click="diseaseForum" />
+            <forum-card v-bind:post="disease" />
         </div>
     </div>
 </template>
 
 <script>
 import ForumCard from '../components/ForumCard.vue';
+import ForumService from '../services/ForumService';
 
 export default {
+    data() {
+        return {
+            market: {},
+            seasonal: {},
+            disease: {}
+        }
+    },
+
     components: {
         ForumCard
+    },
+    created() {
+        ForumService.getPostByForums(1)
+        .then(response => {
+            let lastIndex = response.data.length - 1;
+            this.$store.state.marketplacePreview = response.data[lastIndex];
+        });
+        ForumService.getPostByForums(2)
+        .then(response => {
+            let lastIndex = response.data.length - 1;
+            this.$store.state.seasonalPreview = response.data[lastIndex];
+        });
+        ForumService.getPostByForums(3)
+        .then(response => {
+            let lastIndex = response.data.length - 1;
+            this.$store.state.diseasePreview = response.data[lastIndex];
+            this.market = this.$store.state.marketplacePreview;
+            this.seasonal = this.$store.state.seasonalPreview;
+            this.disease = this.$store.state.diseasePreview;
+        });
+    },
+    methods: {
+        marketForum() {
+            this.$router.push({name: 'forumById', params: {id: 1}})
+        },
+        seasonalForum() {
+            this.$router.push({name: 'forumById', params: {id: 2}})
+        },
+        diseaseForum() {
+            this.$router.push({name: 'forumById', params: {id: 3}})
+        }
     }
 }
 </script>
@@ -54,5 +85,8 @@ export default {
 
 .cardImage {
     width: 75vw;
+}
+.marketPlace{
+    background-color: hotpink;
 }
 </style>

@@ -1,30 +1,40 @@
 <template>
         <div class="forumCard">
         <div class="cardTop">
-            <h1>12/10/23 9:00PM</h1>
 
-            <h2>user says -</h2>
-
-            <p>
-                We'll be limiting these posts to 300 characters or whatever, so it probably wouldn't be too tall and ask to just
-                list the entire content of the post here, and bind all the relevant data to this object at the time it's created.
-            </p>
+            <h2>{{post.post_id}}</h2>
+            <h2 v-if="length < 200">{{ post.post_description }} </h2>
+            <h2 v-else> {{ preview }}</h2>
 
             <img class="cardImage" src="../assets/garden.jpg" />
 
-            <h3>No. of Replies: X</h3>
             
             <div class="buttons">
-                <button v-on:click="onAddClick" class="cardButton">VIEW THREAD</button>
-                <button v-on:click="onDeleteClick" class="cardButton">REPLY</button>
+                <button v-on:click="toPost" class="cardButton">VIEW THREAD</button>
+                <button v-on:click="reply" class="cardButton">REPLY</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+
 export default {
-    
+    data() {
+        return {
+            length: this.post.post_description.length,
+            preview: this.post.post_description.substring(0, 200)
+        }
+    },
+    props: {
+        post: {type: Object, required: true}
+    },
+    methods: {
+        toPost() {
+            this.$router.push({name: 'post', params: {id: this.post.forum_id, postid: this.post.post_id}})
+        }
+    }
+
 }
 </script>
 

@@ -14,6 +14,8 @@ import InboxView from '../views/InboxView.vue';
 import MessageView from '../views/MessageView.vue';
 import ForumView from '../views/ForumView.vue';
 import DBPlantDetailView from '../views/DBPlantDetailView.vue';
+import ForumDetailView from '../views/ForumDetailView.vue';
+import PostView from '../views/PostView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -112,7 +114,22 @@ const routes = [
       requiresAuth: true
     }
   },
-
+  {
+    path:'/forum/:id',
+    name: 'forumById',
+    component: ForumDetailView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path:'/forum/:id/:postid',
+    name: 'post',
+    component: PostView,
+    meta: {
+      requiresAuth: true
+    }
+  },
   {
     path: "/userplantdetail/:id",
     name: "dbPlantDetail",

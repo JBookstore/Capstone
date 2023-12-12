@@ -3,8 +3,9 @@
         <div class="cardTop">
 
             <h2>{{post.post_id}}</h2>
-            <h2 v-if="length < 200">{{ post.post_description }} </h2>
-            <h2 v-else> {{ preview }}</h2>
+            <p>{{ post.post_description }}</p>
+            <!-- <h2 v-if="length < 200">{{ post.post_description }} </h2>
+            <h2 v-else> {{ preview }}</h2> -->
 
             <img class="cardImage" src="../assets/garden.jpg" />
 
@@ -22,8 +23,8 @@
 export default {
     data() {
         return {
-            length: this.post.post_description.length,
-            preview: this.post.post_description.substring(0, 200)
+        //    length: this.post.post_description.length,
+        //    preview: this.post.post_description.substring(0, 200)
         }
     },
     props: {

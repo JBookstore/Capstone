@@ -237,6 +237,7 @@ h1 {
   }
 
   #siteNav {
+    position: fixed;
     background-color: pink;
     width: 200px; /* Constant side bar, matching button sizes */
     height: 87vh;

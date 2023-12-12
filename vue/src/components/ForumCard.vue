@@ -5,6 +5,7 @@
             <h2>{{post.title}}</h2>
             <h3>${{ post.price }}</h3>
             <p>{{ post.post_description }}</p>
+            <h2>{{ plant }}</h2>
             <!-- <h2 v-if="length < 200">{{ post.post_description }} </h2>
             <h2 v-else> {{ preview }}</h2> -->
 
@@ -29,7 +30,7 @@ export default {
     },
     props: {
         post: {type: Object, required: true},
-        plant: {}
+        plant: {type: Object, required: false}
     },
     methods: {
         pushToMessages() {

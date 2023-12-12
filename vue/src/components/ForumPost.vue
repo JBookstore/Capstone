@@ -16,11 +16,6 @@ export default {
     props: {
         post: {type: Object, required: true},
     },
-    // created() {
-    //     plantService.getPlantById(this.post.plant_id)
-    //        .then( response => {
-    //        this.$store.commit('SET_ACTIVE_PLANT', response.data)
-    //     });
-    // }
+
 }
 </script>

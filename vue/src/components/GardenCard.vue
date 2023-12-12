@@ -12,7 +12,7 @@
             <button v-on:click="onAddClick" class="cardButton">ADD</button>
             <button v-on:click="onDeleteClick" class="cardButton">REMOVE</button>
             <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
-            <button class="cardButton" v-on:click="showFileSelect = !showFileSelect">CHANGE IMAGE</button>
+            <button class="cardButton" v-on:click="showFileSelect = !showFileSelect">IMAGE</button>
             
             <input class="imageSelect" v-if="showFileSelect" type="file" ref="fileInput" @change="uploadImage">
 
@@ -92,7 +92,6 @@ import plantService from '../services/PlantService.js';
         },
 
         created() {
-            
             this.userPlant = this.plant;
         }
     }

@@ -58,7 +58,7 @@
 .card {
   text-align: center;
   border: 2px solid black;
-  background-color: rgb(204, 253, 204);
+  background-color: rgb(212, 255, 212);
   border-radius: 10px;
   width: 80vw;
   height: auto;
@@ -81,6 +81,7 @@
     font-weight: bold;
     width: 40vw;
     height: 60px;
+
 }
 
 .cardBottom {
@@ -124,6 +125,11 @@
 
     .cardButton {
         width: 8vw;
+    }
+
+    .cardBottom {
+        display: flex;
+        text-align: center;
     }
 
 

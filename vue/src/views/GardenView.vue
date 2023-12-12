@@ -1,5 +1,5 @@
 <template>
-    <button v-if="this.garden.garden_type == 'Community'">Voulnteer To Help Out</button>
+    <button v-if="this.garden.garden_type == 'Community'">Volunteer To Help Out</button>
     <div id="gardenDisplay" v-for="plant in this.gardenPlant" v-bind:key="plant.id">
       <garden-card v-bind:plant="plant" v-if="plant.is_active"/>
     </div>

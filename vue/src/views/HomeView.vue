@@ -12,24 +12,37 @@ export default {
   data() {
     return {
       gardenArray: [],
+      defaultGarden: {}
     }
   },
 
   created() {
-    plantService.getGardenByUserId(this.$store.state.user.id)
-      .then( response => {
-        this.gardenArray = response.data;
-        this.$store.commit('SET_USER_GARDEN', this.gardenArray[0]);
-        
-        plantService.getPlantsByGarden(this.$store.state.user_garden.garden_id)
-          .then( response => {
-          this.$store.commit('SET_USER_PLANTS', response.data);
+    if (plantService.getGardenByUserId(this.$store.state.user.id).status == 404) {
+      this.defaultGarden.user_id = this.$store.state.user.id;
+      this.defaultGarden.is_public = true;
+
+      alert('sup');
+
+      plantService.addGarden(this.defaultGarden);
+
+    } else {
+
+      plantService.getGardenByUserId(this.$store.state.user.id)
+        .then(response => {
+          this.gardenArray = response.data;
+          this.$store.commit('SET_USER_GARDEN', this.gardenArray[0]);
+
+          plantService.getPlantsByGarden(this.$store.state.user_garden.garden_id)
+            .then(response => {
+              this.$store.commit('SET_USER_PLANTS', response.data);
+            });
         });
-      });
-    messageService.getUserMessages(this.$store.state.user.id)
-      .then ( response => {
-        this.$store.commit('SET_USER_MESSAGES', response.data)
-      })
+
+      messageService.getUserMessages(this.$store.state.user.id)
+        .then(response => {
+          this.$store.commit('SET_USER_MESSAGES', response.data)
+        })
+    }
   }
 };
 </script>

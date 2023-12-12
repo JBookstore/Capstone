@@ -86,7 +86,7 @@ export default {
 .cardImage {
     width: 75vw;
 }
-.marketPlace{
+/* .marketPlace{
     background-color: hotpink;
-}
+} */
 </style>

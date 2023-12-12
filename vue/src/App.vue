@@ -79,7 +79,7 @@ export default {
 /* MOBILE FIRST DESIGN */
 @media only screen and (max-width: 600px) {
   .topBar {
-    background-color: pink;
+    background-color: rgb(255, 213, 220);
     position: fixed;
     top: 0px;
     left: 0px;

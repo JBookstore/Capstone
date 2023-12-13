@@ -1,8 +1,8 @@
 <template>
-        <div class="forumCard">
+    <div class="forumCard">
         <div class="cardTop">
 
-            <h2>{{post.title}}</h2>
+            <h2>{{ post.title }}</h2>
             <h3>${{ post.price }}</h3>
             <p>{{ post.post_description }}</p>
             <!-- <h2 v-if="length < 200">{{ post.post_description }} </h2>
@@ -27,45 +27,45 @@ import MessageService from '../services/MessageService'
 export default {
     data() {
         return {
-            showReply : false,
-            replyMessage : {
+            showReply: false,
+            replyMessage: {
                 to_user_id: this.post.user_id,
                 from_user_id: this.$store.state.user.id
             }
-        //    length: this.post.post_description.length,
-        //    preview: this.post.post_description.substring(0, 200)
+            //    length: this.post.post_description.length,
+            //    preview: this.post.post_description.substring(0, 200)
         }
     },
     props: {
-        post: {type: Object, required: true},
+        post: { type: Object, required: true },
     },
     methods: {
         pushToMessages() {
 
         },
         pushToDetails() {
-            this.$router.push({name: 'post', params: {postid: this.post.post_id}})
+            this.$router.push({ name: 'post', params: { postid: this.post.post_id } })
         },
 
-        showReplyForm(){
+        showReplyForm() {
             this.showReply = true
         },
 
-        submitReply(){
+        submitReply() {
             MessageService.postMessage(this.replyMessage)
             this.showReply = false,
-            this.replyMessage = {
-                to_user_id: this.post.user_id,
-                from_user_id: this.$store.state.user.id
-            }
+                this.replyMessage = {
+                    to_user_id: this.post.user_id,
+                    from_user_id: this.$store.state.user.id
+                }
         },
 
-        cancelReply(){
+        cancelReply() {
             this.showReply = false,
-            this.replyMessage = {
-                to_user_id: this.post.user_id,
-                from_user_id: this.$store.state.user.id 
-            }
+                this.replyMessage = {
+                    to_user_id: this.post.user_id,
+                    from_user_id: this.$store.state.user.id
+                }
         }
     }
 }
@@ -73,30 +73,31 @@ export default {
 
 <style scoped>
 .forumCard {
-  text-align: left;
-  border: 2px solid black;
-  background-color: rgb(245, 237, 237);
-  border-radius: 10px;
-  width: 70vw;
-  height: auto;
-  margin: 20px;
-  padding: 10px;
+    text-align: left;
+    border: 2px solid black;
+    background-color: rgb(245, 237, 237);
+    border-radius: 10px;
+    width: 70vw;
+    height: auto;
+    margin: 20px;
+    padding: 10px;
 }
 
 .cardImage {
-  margin-top: 5px;
-  width: 70vw;
-  height: auto;
+    margin-top: 5px;
+    width: 70vw;
+    height: auto;
 }
 
 .cardTop {
     height: auto;
 }
 
-.cardTop > h1 {
+.cardTop>h1 {
     font-size: 70%;
     color: darkgreen;
 }
+
 .cardButton {
     width: 40vw;
 }
@@ -105,4 +106,40 @@ export default {
     display: flex;
 }
 
+@media screen and (min-width: 600px) {
+
+    .forumCard {
+        text-align: left;
+        border: 2px solid rgb(0, 0, 0);
+        background-color: rgb(245, 237, 237);
+        border-radius: 10px;
+        width: 20vw;
+        height: auto;
+        margin: 20px;
+        padding: 10px;
+    }
+
+    .cardImage {
+        margin-top: 5px;
+        width: 20vw;
+        height: auto;
+    }
+
+    .cardTop {
+        height: auto;
+    }
+
+    .cardTop>h1 {
+        font-size: 70%;
+        color: darkgreen;
+    }
+
+    .cardButton {
+        width: 40vw;
+    }
+
+    .buttons {
+        display: flex;
+    }
+}
 </style>

@@ -2,12 +2,12 @@
     <div class="card">
         <div class="cardTop">
             <h2>{{ plant.common_name }}</h2>
-
         </div>
 
         <img v-if="plant.default_image === null" v-bind:src="getDefaultImage" class="cardImage"/>
         <img v-else-if="plant.plant_img === null" v-bind:src="getDefaultImage" class="cardImage"/>
         <img v-else v-bind:src="plant.default_image.original_url"  class="cardImage" v-on:click="onDetailsClick"/>
+        
         <div class="cardBottom">
             <button v-on:click="onAddClick" class="cardButton">ADD TO GARDEN</button>
             <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
@@ -85,7 +85,7 @@
 }
 
 .cardBottom {
-        display: flex;
+    display: flex;
     }
 
 @media screen and (min-width: 600px) {
@@ -93,6 +93,7 @@
         width: 33vw;
         margin: 2px;
         height: auto;
+        background-color: rgb(212, 255, 212);
     }
     .cardTop {
         height: auto;
@@ -110,9 +111,11 @@
 @media screen and (min-width: 992px) {
     
     .card {
-        width: 18vw;
-        margin: 2px;
+        width: 16vw;
+        margin: 10px;
+
         height: auto;
+        background-color: rgb(228, 255, 228);
     }
     .cardTop {
         height: auto;
@@ -120,16 +123,18 @@
 
     .cardImage {
         height: auto;
-        width: 17vw;
+        width: 15vw;
     }
 
     .cardButton {
-        width: 8vw;
+        width: 7.5vw;
     }
 
     .cardBottom {
+        padding-top: 5px;
+
         display: flex;
-        text-align: center;
+        justify-content: center;
     }
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="searchView">
         <h2>Plant Search</h2>
 
         <form class="searchForm" v-on:submit.prevent="searchPlants(this.searchString)">
@@ -89,6 +89,12 @@ h2 {
     .searchResults {
         display: inline-flex;
         width: 19vw;
+
+        padding-top: 5vh;
+    }
+
+    #searchView {
+        width: 80vw;
     }
 }
 

@@ -6,7 +6,7 @@
       <div id="userNav" v-if="$store.state.token != ''">
         <div class="userNavButton">
           <img class="navIconUser" />
-          <router-link class="routerLinkClassUser" v-bind:to="{ name: 'accountView' }">My Garden</router-link>
+          <router-link class="routerLinkClassUser" v-bind:to="{ name: 'accountView' }">MyGarden</router-link>
         </div>
         <div class="userNavButton">
           <img class="navIconUser" />
@@ -85,10 +85,7 @@ export default {
 }
 #userNav {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  text-align: center;
-}
-#siteNav {
+  grid-template-columns: 1fr 1fr 1fr;
   text-align: center;
 }
 h1 {
@@ -114,14 +111,17 @@ h1 {
   left: 0px;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 
   background-color: pink;
   border-top: 2px solid rgb(194, 101, 116);
 
   font-weight: bold;
   color:white;
+
+  text-align: center;
 }
+
 
 .routerLinkClassSite {
   visibility: hidden;
@@ -138,14 +138,16 @@ h1 {
   visibility: hidden;
 }
 
+.siteNavButton {
+  display: flex;
+  padding-top: 2vh;
+}
+
 .navIconSite {
     height: 5.5vh;
     width: 5.5vh;
-    background-color: rgb(238, 143, 190);
 
-    margin-bottom: 1vh;
-    margin-right: 1vh;
-    margin-left: 1vh;
+    background-color: rgb(238, 143, 190);
   }
 }
 
@@ -205,7 +207,7 @@ h1 {
   }
 
   #userNav {
-    display: flex;
+    display: inline-flex;
   }
 
   #header {
@@ -216,6 +218,7 @@ h1 {
 
     text-align: left;
     padding-left: 1vw;
+    padding-top: 1vh;
 
     text-decoration: underline;
     font-size: 2.5em;
@@ -236,7 +239,7 @@ h1 {
     position: fixed;
     left: 0px;
     background-color: pink;
-    width: 200px; /* Constant side bar, matching button sizes */
+    width: 10vw;
     height: 87vh;
     margin-top: 1px;
   }
@@ -256,7 +259,7 @@ h1 {
   .siteNavButton {
 
     height: 6vh;
-    width: 200px;
+    width: 10vw;
     text-align: right;
 
     display: grid;
@@ -284,12 +287,11 @@ h1 {
 
   .userNavButton {
     left: 0px;
-    padding-top: 1vh;
-    padding-left: 5vw;
+    padding-top: 2.5vh;
     text-decoration: none;
 
-    width: 3vw;
-    text-align: start;
+    width: 5vw;
+    text-align: center;
   }
 
   .userNavButton:hover {
@@ -307,7 +309,8 @@ h1 {
   }
 
   #view {
-    padding-left: 200px;
+    text-align: center;
+    padding-left: 10vw;
     padding-top: 5vh;
   }
 }

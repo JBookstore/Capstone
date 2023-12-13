@@ -84,8 +84,6 @@ export default {
 
 .forumBar {
     margin-top: 10px;
-
-    width: 80vw;
     text-align: center;
 }
 

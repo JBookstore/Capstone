@@ -1,26 +1,29 @@
 <template>
     <div class="forumDisplay">
-        <div class="marketPlace">
-            <h2>Market Place</h2>
+        <div class="topTextDiv">
+        <h2 class="title">Market Place</h2>
+        <h3 class="description">Insert market tagline and/or description!</h3>
+        </div>
             <img class="cardImage" src="../assets/garden.jpg" v-on:click="marketForum" />
-            <forum-card v-bind:post="market"/>
+            <forum-card class="postCard" v-bind:post="market" />
+    </div>
 
-            <hr>
+    <div class="forumDisplay">
+        <div class="topTextDiv">
+        <h2 class="title">Seasonal Plants</h2>
+        <h3 class="description">Insert market tagline and/or description!</h3>
         </div>
+        <img class="cardImage" src="../assets/garden.jpg" v-on:click="seasonalForum" />
+        <forum-card class="postCard" v-bind:post="seasonal" />
+    </div>
 
-        <div class="seasonalPlants">
-            <h2>Seasonal Plants</h2>
-            <img class="cardImage" src="../assets/garden.jpg" v-on:click="seasonalForum" />
-            <forum-card v-bind:post="seasonal"/>
-
-            <hr>
+    <div class="forumDisplay">
+        <div class="topTextDiv">
+        <h2 class="title">Plant Healthcare</h2>
+        <h3 class="description">Insert market tagline and/or description!</h3>
         </div>
-
-        <div class="plantHealthCare">
-            <h2>Plant Healthcare</h2>
-            <img class="cardImage" src="../assets/garden.jpg" v-on:click="diseaseForum" />
-            <forum-card v-bind:post="disease"/>
-        </div>
+        <img class="cardImage" src="../assets/garden.jpg" v-on:click="diseaseForum" />
+            <forum-card class="postCard" v-bind:post="disease" />
     </div>
 </template>
 
@@ -67,7 +70,6 @@ export default {
     methods: {
         marketForum() {
             this.$router.push({ name: 'forumById', params: { id: 1 } })
-
         },
         seasonalForum() {
             this.$router.push({ name: 'forumById', params: { id: 2 } })
@@ -86,13 +88,68 @@ export default {
     width: 80vw;
     justify-content: center;
     flex-wrap: wrap;
+
+    border-bottom: 2px solid darkgray;
 }
 
 .cardImage {
-    width: 75vw;
+    width: 80vw;
 }
 
+.description {
+    color:rgb(96, 112, 112);
+}
 /* .marketPlace{
     background-color: hotpink;
 } */
+
+@media screen and (min-width: 600px) {
+    .forumDisplay {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "title desc"
+            "image post";
+
+        text-align: left;
+    
+        width: 80vw;
+
+        padding-left: 1vw;
+        padding-bottom: 3vh;
+
+        border-bottom: 2px solid darkgray;
+    }
+
+    .topTextDiv {
+        display: inline-flex;
+    }
+
+    .title {
+        grid-area: title;
+        padding-left: 5px;
+    }
+
+    .description {
+        grid-area: desc;
+        font-size: 1em;
+
+        padding-top: 1vh;
+        padding-left: 1vw;
+
+        color:rgb(96, 112, 112);
+    }
+
+    .postCard {
+        grid-area: post;
+        margin-left: 2vw;
+    }
+
+    .cardImage {
+        grid-area: image;
+
+        width: 50vw;
+    }
+
+}
 </style>

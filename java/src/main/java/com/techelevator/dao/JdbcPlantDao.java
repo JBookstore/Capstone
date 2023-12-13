@@ -70,7 +70,7 @@ public class JdbcPlantDao implements PlantDao {
                     " JOIN" +
                         " sunshine s ON p.plant_id = s.plant_id" +
                     " WHERE" +
-                        " gp.garden_id = ?;";
+                        " gp.garden_id = ? AND p.is_active = true;";
         isIdNeeded = true;
         lookUpId = gardenId;
         return getSunLightArray(sql, isIdNeeded);

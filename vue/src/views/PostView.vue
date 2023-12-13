@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import forumService from '../services/ForumService';
+import ForumService from '../services/ForumService';
 import ForumPost from '../components/ForumPost.vue';
 
 export default {
@@ -18,7 +18,7 @@ export default {
         ForumPost
     },
     created() {
-        forumService.getPostById(this.$route.params.postid)
+        ForumService.getPostById(this.$route.params.postid)
         .then( response => {
             this.post = response.data;
         })

@@ -19,13 +19,13 @@ public class UserController {
         this.userDao = userDao;
     }
 
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path ="/users", method = RequestMethod.GET)
     public List<User> getAllUsers() {
         return userDao.getUsers();
     }
 
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path ="/users/{id}", method = RequestMethod.GET)
     public User getUserById(@PathVariable int id) {
         User user = userDao.getUserById(id);
@@ -36,8 +36,8 @@ public class UserController {
         }
     }
 
-    @ResponseStatus(HttpStatus.FOUND)
-    @RequestMapping(path ="/users/{name}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path ="/user/{name}", method = RequestMethod.GET)
     public User getUserById(@PathVariable String username) {
         User user = userDao.getUserByUsername(username);
         if (user == null) {

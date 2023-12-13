@@ -1,16 +1,12 @@
 <template>
   <div id="capstone-app">
     <div class="topBar">
-      <h1 id="header">JAVA GREEN PLANTS</h1>
+      <h1 id="header">The Green Thumb</h1>
 
       <div id="userNav" v-if="$store.state.token != ''">
         <div class="userNavButton">
           <img class="navIconUser" />
-          <router-link class="routerLinkClassUser" v-bind:to="{ name: 'logout' }">Logout</router-link>
-        </div>
-        <div class="userNavButton">
-          <img class="navIconUser" />
-          <router-link class="routerLinkClassUser" v-bind:to="{ name: 'home' }">Alerts</router-link>
+          <router-link class="routerLinkClassUser" v-bind:to="{ name: 'accountView' }">My Garden</router-link>
         </div>
         <div class="userNavButton">
           <img class="navIconUser" />
@@ -18,7 +14,7 @@
         </div>
         <div class="userNavButton">
           <img class="navIconUser" />
-          <router-link class="routerLinkClassUser" v-bind:to="{ name: 'accountView' }">Account</router-link>
+          <router-link class="routerLinkClassUser" v-bind:to="{ name: 'logout' }">Logout</router-link>
         </div>
       </div>
     </div>
@@ -38,10 +34,10 @@
           <router-link class="routerLinkClassSite" v-bind:to="{ name: 'forum' }">Forum</router-link>
           <img class="navIconSite" />
         </div>
-        <div class="siteNavButton" v-on:click="eventsPush">
+        <!-- <div class="siteNavButton" v-on:click="eventsPush">
           <router-link class="routerLinkClassSite" v-bind:to="{ name: 'home' }">Events</router-link>
           <img class="navIconSite" />
-        </div>
+        </div> -->
       </div>
 
       <div id="view">
@@ -241,6 +237,7 @@ h1 {
     background-color: pink;
     width: 200px; /* Constant side bar, matching button sizes */
     height: 87vh;
+    margin-top: 1px;
   }
 
   .routerLinkClassUser {
@@ -308,7 +305,7 @@ h1 {
   }
 
   #view {
-    padding-left: 2vw;
+    padding-left: 200px;
     padding-top: 5vh;
   }
 }

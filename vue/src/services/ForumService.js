@@ -6,5 +6,9 @@ export default {
     },
     getPostById(postid) {
         return axios.get(`/posts/${postid}`)
+    },
+    submitPost(newPost){
+        return axios.post('/posts', newPost)
     }
+    
 }

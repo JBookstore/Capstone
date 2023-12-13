@@ -5,14 +5,13 @@
             <h2>{{post.title}}</h2>
             <h3>${{ post.price }}</h3>
             <p>{{ post.post_description }}</p>
-            <h2>{{ plant }}</h2>
             <!-- <h2 v-if="length < 200">{{ post.post_description }} </h2>
             <h2 v-else> {{ preview }}</h2> -->
 
             <img class="cardImage" src="../assets/garden.jpg" />
 
             <div class="buttons">
-                <button v-on:click="toPost" class="cardButton">VIEW DETAILS</button>
+                <button v-on:click="pushToDetails" class="cardButton">VIEW DETAILS</button>
                 <button v-on:click="reply" class="cardButton">MESSAGE</button>
             </div>
         </div>
@@ -30,14 +29,13 @@ export default {
     },
     props: {
         post: {type: Object, required: true},
-        plant: {type: Object, required: false}
     },
     methods: {
         pushToMessages() {
 
         },
         pushToDetails() {
-            this.$router.push({name: 'post'})
+            this.$router.push({name: 'post', params: {postid: this.post.post_id}})
         }
     }
 }

@@ -57,6 +57,7 @@ import plantService from '../services/PlantService.js';
             onDeleteClick() {
                 this.userPlant = this.plant;
                 this.userPlant.is_active = false;
+                router.go();
 
                 plantService.updatePlant(this.userPlant);
             },

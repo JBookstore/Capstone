@@ -59,7 +59,7 @@ CREATE TABLE post (
     plant_id INT,
     user_id INT,
     forum_id INT,
-    post_description TEXT,
+    post_description VARCHAR (1000),
     price NUMERIC,
     quantity INT,
     title VARCHAR (200),
@@ -130,6 +130,10 @@ VALUES ('Shirazz Japanese Maple', 'Acer palmatum "Gwens Rose Delight"', ' ', 'Av
         causing the cells to divide uncontrollably and resulting in the formation of galls. The infection can spread within the plant and to other plants through various means such as soil, water, or infected plant parts.', 58);
 INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category, is_active)
 VALUES (1, 1, 1, 'Mature rose plant in great shape.', 15.00, 1, 'Rose Plant for Sale', 'Base64 encoded img string here', 'Marketplace', 'true' );
+INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category, is_active)
+VALUES (1, 2, 1, 'Mature rose plant in great shape.', 15.00, 1, 'Rose Plant for Sale', 'Base64 encoded img string here', 'Community Help', 'true' );
+INSERT INTO post (plant_id, user_id, forum_id, post_description, price, quantity, title, post_img, post_category, is_active)
+VALUES (1, 3, 1, 'Mature rose plant in great shape.', 15.00, 1, 'Rose Plant for Sale', 'Base64 encoded img string here', 'Share', 'true' );
 INSERT INTO sunshine (plant_id, sunshine_description)
 VALUES (1, 'full sun');
 INSERT INTO sunshine (plant_id, sunshine_description)

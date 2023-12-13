@@ -38,7 +38,12 @@ export default {
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
-      garden: {},
+      garden: {
+        user_id : 0
+      },
+      last_index : 0,
+      new_user_id : 0,
+      users: [],
     };
   },
   methods: {
@@ -51,7 +56,9 @@ export default {
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
-              this.garden.user_id = axios.get('http://localhost:9000/users').length + 1
+              this.garden.user_id = this.new_user_id
+              this.garden.is_public = true
+              this.garden.garden_type = 'Personal'
               PlantService.addGarden(this.garden)
               this.$router.push({
                 path: '/login',
@@ -73,6 +80,20 @@ export default {
       this.registrationErrorMsg = 'There were problems registering this user.';
     },
   },
+
+  computed:{
+
+  },
+
+  created(){
+    authService.get_users()
+      .then(response => {
+        this.users = response.data
+        this.last_index = this.users.length - 1, 
+        this.new_user_id = this.users[this.last_index].id + 1
+      })
+  }
+
 };
 </script>
 

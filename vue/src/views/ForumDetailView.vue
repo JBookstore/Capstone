@@ -4,10 +4,14 @@
     <button id="makePostButton" v-on:click="toggleShowForm">SAY SOMETHING</button>
 
         <div class="postForm" v-if="showForm">
-            <input type="text" />
-            <input type="text" />
-            <input type="text" />
-            <input type="text" />
+            <input type="text" placeholder="Title" v-model="this.new_post.title"/>
+            <input type="Number" placeholder="Price (If Applicable)" v-model="this.new_post.price"/>
+            <textarea id="post_description" placeholder="Description" rows="10" cols="45" v-model="this.new_post.post_description">  </textarea>
+            <button v-on:click="submitNewPost">Submit</button>
+            <button v-on:click="cancelPost">Cancel</button>
+
+
+            <input class="imageSelect" v-if="showFileSelect" type="file" ref="fileInput" @change="uploadImage">
         </div>
 
     <hr>
@@ -21,14 +25,20 @@
 
 <script>
 import forumCard from '../components/ForumCard.vue';
-import forumService from '../services/ForumService';
+import router from '../router';
+import ForumService from '../services/ForumService.js';
+
 
 export default {
 
     data() {
         return {
             posts: [],
-            showForm: false
+            showForm: false,
+            new_post: {
+                user_id : this.$store.state.user.id,
+                forum_id : Number(this.$route.params.id),
+            }
         }
     },
 
@@ -37,7 +47,7 @@ export default {
     },
     
     created() {
-        forumService.getPostByForums(this.$route.params.id)
+        ForumService.getPostByForums(this.$route.params.id)
         .then (response => {
             this.posts = response.data;
         })
@@ -49,7 +59,23 @@ export default {
         },
         toggleShowForm() {
             this.showForm = !this.showForm;
+        },
+
+        cancelPost(){
+            this.new_post = {
+                user_id : this.$store.state.user.id,
+                forum_id : Number(this.$route.params.id)
+            };
+            this.showForm = false;
+        },
+
+        submitNewPost(){
+            console.warn(this.new_post)
+            ForumService.submitPost(this.new_post)
+            this.cancelPost()
+            router.go()
         }
+
     }
 }
 </script>
@@ -65,6 +91,12 @@ export default {
 
 #makePostButton {
     margin-bottom: 10px;
+}
+
+#post_description{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 </style>

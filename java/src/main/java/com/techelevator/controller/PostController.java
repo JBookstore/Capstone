@@ -62,6 +62,7 @@ public class PostController {
         }
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/posts/{id}", method = RequestMethod.PUT)
     public Post update(@Valid @RequestBody Post post, @PathVariable int id){
         post.setPostId(id);

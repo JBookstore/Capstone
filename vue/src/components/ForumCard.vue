@@ -11,8 +11,10 @@
             <img class="cardImage" src="../assets/garden.jpg" />
 
             <div class="buttons">
-                <button v-on:click="pushToDetails" class="cardButton">VIEW DETAILS</button>
-                <button v-on:click="reply" class="cardButton">MESSAGE</button>
+                <button v-on:click="showReplyForm" class="cardButton">MESSAGE</button>
+                <textarea rows="10" cols="40" v-if="showReply" v-model="replyMessage.message_body"></textarea>
+                <button v-if="showReply" @click="submitReply">Submit</button>
+                <button @click="cancelReply" v-if="showReply">Cancel</button>
             </div>
         </div>
     </div>
@@ -20,9 +22,16 @@
 
 <script>
 
+import MessageService from '../services/MessageService'
+
 export default {
     data() {
         return {
+            showReply : false,
+            replyMessage : {
+                to_user_id: this.post.user_id,
+                from_user_id: this.$store.state.user.id
+            }
         //    length: this.post.post_description.length,
         //    preview: this.post.post_description.substring(0, 200)
         }
@@ -36,6 +45,27 @@ export default {
         },
         pushToDetails() {
             this.$router.push({name: 'post', params: {postid: this.post.post_id}})
+        },
+
+        showReplyForm(){
+            this.showReply = true
+        },
+
+        submitReply(){
+            MessageService.postMessage(this.replyMessage)
+            this.showReply = false,
+            this.replyMessage = {
+                to_user_id: this.post.user_id,
+                from_user_id: this.$store.state.user.id
+            }
+        },
+
+        cancelReply(){
+            this.showReply = false,
+            this.replyMessage = {
+                to_user_id: this.post.user_id,
+                from_user_id: this.$store.state.user.id 
+            }
         }
     }
 }

@@ -212,7 +212,7 @@ h1 {
     flex-basis: 33%;
 
     display: inline-block;
-    align-self: flex-end;
+    align-self: flex-start;
 
     text-align: left;
     padding-left: 1vw;
@@ -226,7 +226,7 @@ h1 {
   }
 
   .pageBody {
-    padding-top: 11vh;
+    padding-top: 11.3vh;
     top: 0px;
     left: 0px;
     display: flex;
@@ -234,6 +234,7 @@ h1 {
 
   #siteNav {
     position: fixed;
+    left: 0px;
     background-color: pink;
     width: 200px; /* Constant side bar, matching button sizes */
     height: 87vh;
@@ -283,11 +284,12 @@ h1 {
 
   .userNavButton {
     left: 0px;
-    padding-top: 3vh;
+    padding-top: 1vh;
+    padding-left: 5vw;
     text-decoration: none;
 
-    width: 4vw;
-    text-align: center;
+    width: 3vw;
+    text-align: start;
   }
 
   .userNavButton:hover {

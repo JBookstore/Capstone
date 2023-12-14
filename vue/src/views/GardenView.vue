@@ -1,4 +1,5 @@
 <template>
+    <h2>My Garden:</h2>
     <button v-if="this.garden.garden_type == 'Community'">Volunteer To Help Out</button>
     <div id="gardenDisplay" v-for="plant in this.gardenPlant" v-bind:key="plant.id">
       <garden-card v-bind:plant="plant" v-if="plant.is_active"/>
@@ -54,6 +55,11 @@
 </script>
 
 <style scoped>
+#gardenDisplay {
+    display: flex;
+}
+
+
 @media screen and (min-width: 600px) {
     #gardenDisplay {
         display: inline-flex;

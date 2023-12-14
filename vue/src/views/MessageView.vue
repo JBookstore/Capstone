@@ -5,13 +5,15 @@
         <div id="messageBody">
             <p>{{ message.message_body }}</p>
         </div>
-        
+
     </div>
 </template>
 
 <script>
+import plantService from '../services/PlantService.js';
+import messageService from '../services/MessageService';
 export default {
-   
+
     data() {
         return {
             message: {}
@@ -22,8 +24,25 @@ export default {
 
     created() {
         this.message = this.$store.state.activeMessage;
+
+        plantService.getGardenByUserId(this.$store.state.user.id)
+            .then(response => {
+                this.gardenArray = response.data;
+                this.$store.commit('SET_USER_GARDEN', this.gardenArray[0]);
+
+                plantService.getPlantsByGarden(this.$store.state.user_garden.garden_id)
+                    .then(response => {
+                        this.$store.commit('SET_USER_PLANTS', response.data);
+                    });
+            });
+
+        messageService.getUserMessages(this.$store.state.user.id)
+            .then(response => {
+                this.$store.commit('SET_USER_MESSAGES', response.data)
+            })
     }
 }
+
 </script>
 
 <style scoped>
@@ -36,7 +55,7 @@ export default {
     text-align: center;
 }
 
-#sender{
+#sender {
     text-align: start;
     width: 50vw;
     height: 20px;
@@ -57,7 +76,7 @@ export default {
     background-color: gold;
 }
 
-#messageBody > p {
+#messageBody>p {
     text-align: start;
 }
 </style>

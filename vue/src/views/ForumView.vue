@@ -1,17 +1,17 @@
 <template>
     <div class="forumDisplay">
         <div class="topTextDiv">
-        <h2 class="title">Market Place</h2>
-        <h3 class="description">Insert market tagline and/or description!</h3>
+            <h2 class="title">Market Place</h2>
+            <h3 class="description">Buy, sell, trade, or chat with friends in our Market.</h3>
         </div>
-            <img class="cardImage" src="../assets/garden.jpg" v-on:click="marketForum" />
-            <forum-card class="postCard" v-bind:post="market" />
+        <img class="cardImage" src="../assets/garden.jpg" v-on:click="marketForum" />
+        <forum-card class="postCard" v-bind:post="market" />
     </div>
 
     <div class="forumDisplay">
         <div class="topTextDiv">
-        <h2 class="title">Seasonal Plants</h2>
-        <h3 class="description">Insert market tagline and/or description!</h3>
+            <h2 class="title">Seasonal Plants</h2>
+            <h3 class="description">Find hot Winter picks and show off your seasonal favorites!</h3>
         </div>
         <img class="cardImage" src="../assets/garden.jpg" v-on:click="seasonalForum" />
         <forum-card class="postCard" v-bind:post="seasonal" />
@@ -19,11 +19,11 @@
 
     <div class="forumDisplay">
         <div class="topTextDiv">
-        <h2 class="title">Plant Healthcare</h2>
-        <h3 class="description">Insert market tagline and/or description!</h3>
+            <h2 class="title">Plant Healthcare</h2>
+            <h3 class="description">Dedicated disease discussion and diagnostic assistance.</h3>
         </div>
         <img class="cardImage" src="../assets/garden.jpg" v-on:click="diseaseForum" />
-            <forum-card class="postCard" v-bind:post="disease" />
+        <forum-card class="postCard" v-bind:post="disease" />
     </div>
 </template>
 
@@ -85,7 +85,7 @@ export default {
 .forumDisplay {
     display: flex;
     text-align: center;
-    width: 80vw;
+    width: 90vw;
     justify-content: center;
     flex-wrap: wrap;
 
@@ -93,12 +93,19 @@ export default {
 }
 
 .cardImage {
-    width: 80vw;
+    width: 98vw;
+
+    border-top: 2px solid rgb(23, 63, 22);
+    border-right: 2px solid rgb(23, 63, 22);
+    border-left: 2px solid rgb(72, 128, 71);
+    border-bottom: 2px solid rgb(72, 128, 71);
+    border-radius: 4px;
 }
 
 .description {
-    color:rgb(96, 112, 112);
+    color: rgb(96, 112, 112);
 }
+
 /* .marketPlace{
     background-color: hotpink;
 } */
@@ -112,7 +119,7 @@ export default {
             "image post";
 
         text-align: left;
-    
+
         width: 80vw;
 
         padding-left: 1vw;
@@ -137,7 +144,7 @@ export default {
         padding-top: 1vh;
         padding-left: 1vw;
 
-        color:rgb(96, 112, 112);
+        color: rgb(96, 112, 112);
     }
 
     .postCard {
@@ -147,7 +154,6 @@ export default {
 
     .cardImage {
         grid-area: image;
-
         width: 50vw;
     }
 

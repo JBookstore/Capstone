@@ -9,10 +9,15 @@
         <img v-else v-bind:src="getDefaultImage" class="cardImage" v-on:click="onDetailsClick">
 
         <div class="cardBottom">
+            <div>
             <button v-on:click="onAddClick" class="cardButton">ADD</button>
             <button v-on:click="onDeleteClick" class="cardButton">REMOVE</button>
+            </div>
+
+            <div>
             <button v-on:click="onDetailsClick" class="cardButton">DETAILS</button>
             <button class="cardButton" v-on:click="showFileSelect = !showFileSelect">IMAGE</button>
+            </div>
             
             <input class="imageSelect" v-if="showFileSelect" type="file" ref="fileInput" @change="uploadImage">
 
@@ -156,9 +161,11 @@ import plantService from '../services/PlantService.js';
 @media screen and (min-width: 992px) {
     
     .card {
-        width: 18vw;
-        margin: 2px;
+        width: 16vw;
+        margin: 10px;
+
         height: auto;
+        background-color: rgb(228, 255, 228);
     }
     .cardTop {
         height: auto;
@@ -166,11 +173,15 @@ import plantService from '../services/PlantService.js';
 
     .cardImage {
         height: auto;
-        width: 17vw;
+        width: 15vw;
     }
 
     .cardButton {
-        width: 8vw;
+        width: 7vw;
+    }
+
+    .cardBottom {
+        padding-top: 5px;
     }
 }
 </style>

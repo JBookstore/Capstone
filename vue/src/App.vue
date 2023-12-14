@@ -4,16 +4,16 @@
       <h1 id="header">The Green Thumb</h1>
 
       <div id="userNav" v-if="$store.state.token != ''">
-        <div class="userNavButton">
-          <img class="navIconUser" />
-          <router-link class="routerLinkClassUser" v-bind:to="{ name: 'accountView' }">MyGarden</router-link>
+        <div class="userNavButton" v-on:click="gardenPush">
+          <img class="navIconUser" src="./assets/garden_icon.png"/>
+          <router-link class="routerLinkClassUser" v-bind:to="{ name: 'accountView'}">MyGarden</router-link>
         </div>
-        <div class="userNavButton">
-          <img class="navIconUser" />
+        <div class="userNavButton" v-on:click="messagesPush">
+          <img class="navIconUser" src="./assets/messages_icon.png"/>
           <router-link class="routerLinkClassUser" v-bind:to="{ name: 'inbox' }">Messages</router-link>
         </div>
-        <div class="userNavButton">
-          <img class="navIconUser" />
+        <div class="userNavButton" v-on:click="logoutPush">
+          <img class="navIconUser" src="./assets/logout_icon.png"/>
           <router-link class="routerLinkClassUser" v-bind:to="{ name: 'logout' }">Logout</router-link>
         </div>
       </div>
@@ -24,15 +24,15 @@
       <div id="siteNav" v-if="$store.state.token != ''">
         <div class="siteNavButton" v-on:click="homePush">
           <router-link class="routerLinkClassSite" v-bind:to="{ name: 'home' }">Home</router-link>
-          <img class="navIconSite" />
+          <img class="navIconSite" src="./assets/home_icon.png"/>
         </div>
         <div class="siteNavButton" v-on:click="searchPush">
           <router-link class="routerLinkClassSite" v-bind:to="{ name: 'detailSearch' }">Search</router-link>
-          <img class="navIconSite" />
+          <img class="navIconSite" src="./assets/search_icon.png"/>
         </div>
         <div class="siteNavButton" v-on:click="forumPush">
           <router-link class="routerLinkClassSite" v-bind:to="{ name: 'forum' }">Forum</router-link>
-          <img class="navIconSite" />
+          <img class="navIconSite" src="./assets/forum_icon.png"/>
         </div>
         <!-- <div class="siteNavButton" v-on:click="eventsPush">
           <router-link class="routerLinkClassSite" v-bind:to="{ name: 'home' }">Events</router-link>
@@ -62,8 +62,14 @@ export default {
     forumPush() {
       router.push({ name: 'forum'});
     },
-    eventsPush() {
-      router.push({ name: 'home'}); // Sends HOME for the time being
+    gardenPush() {
+      router.push({ name: 'gardenView', params: { id: this.$store.state.user_garden.garden_id } });
+    },
+    messagesPush() {
+      router.push({name: 'inbox'});
+    },
+    logoutPush() {
+      router.push({name: 'logout'});
     }
   }
 }
@@ -84,6 +90,9 @@ export default {
     border-bottom: 2px solid rgb(209, 149, 159);
 }
 #userNav {
+  position: fixed;
+  top: 9vh;
+
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   text-align: center;
@@ -101,6 +110,7 @@ h1 {
   padding-top: 15vh;
   padding-bottom: 12vh;
 }
+
 #siteNav {
   position: fixed;
 
@@ -118,8 +128,6 @@ h1 {
 
   font-weight: bold;
   color:white;
-
-  text-align: center;
 }
 
 
@@ -136,19 +144,21 @@ h1 {
 
 .navIconUser {
   visibility: hidden;
-}
-
-.siteNavButton {
-  display: flex;
-  padding-top: 2vh;
+  height: 0px;
+  width: 33vw;
 }
 
 .navIconSite {
-    height: 5.5vh;
-    width: 5.5vh;
-
-    background-color: rgb(238, 143, 190);
+    height: 7vh;
+    width: 15vw;
   }
+
+  .siteNavButton {
+    padding-top: 1vh;
+    display: flex;
+    justify-items: center;
+  }
+
 }
 
 /* TABLET AND ABOVE */
@@ -200,9 +210,8 @@ h1 {
     top: 0px;
     left: 0px;
     width: 100vw;
-    height: 12vh;
+    height: 12.1vh;
 
-    
     border-bottom: 2px solid rgb(100, 29, 29);
   }
 
@@ -241,7 +250,9 @@ h1 {
     background-color: pink;
     width: 10vw;
     height: 87vh;
-    margin-top: 1px;
+
+    border-top: 1px solid rgb(100, 29, 29);
+    border-right: 1px solid rgb(100, 29, 29);
   }
 
   .routerLinkClassUser {
@@ -273,12 +284,12 @@ h1 {
 
   .siteNavButton:hover {
     background-color: rgb(238, 142, 158);
+    cursor: pointer;
   }
 
   .navIconSite {
     height: 5vh;
     width: 5vh;
-    background-color: rgb(238, 143, 190);
 
     margin-bottom: 1vh;
     margin-right: 1vh;
@@ -287,7 +298,7 @@ h1 {
 
   .userNavButton {
     left: 0px;
-    padding-top: 2.5vh;
+    padding-top: 2.4vh;
     text-decoration: none;
 
     width: 5vw;
@@ -296,12 +307,12 @@ h1 {
 
   .userNavButton:hover {
     background-color: rgb(238, 142, 158);
+    cursor: pointer;
   }
 
   .navIconUser {
     height: 5vh;
     width: 5vh;
-    background-color: rgb(238, 143, 190);
 
     margin-bottom: 1vh;
     margin-right: 1vh;
@@ -309,9 +320,9 @@ h1 {
   }
 
   #view {
-    text-align: center;
+    /* text-align: center; */
     padding-left: 10vw;
-    padding-top: 5vh;
+    padding-top: 2.5vh;
   }
 }
 </style>

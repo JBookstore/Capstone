@@ -1,13 +1,17 @@
 <template>
-    <div class="card" v-bind:class="[message.is_read ? 'read' : 'unread']">
-        <div class="preview"> {{ message.message_body }}</div>
-        <button @click="showReply = true">Reply</button>
-        <button @click="toggleRead">{{message.is_read ? 'Mark Unread' : 'Mark Read'}}</button>
-    </div>
-    <div v-if="showReply">
-        <textarea cols="60" rows="10" v-model="this.replyMessage.message_body"></textarea>
-        <button @click="submitReply">Submit</button>
-        <button @click="cancelReply">Cancel</button>
+    <div id="wholeView">
+        <div class="card" v-bind:class="[message.is_read ? 'read' : 'unread']">
+            <div class="preview"> {{ message.message_body }}</div>
+            <button @click="showReply = true">Reply</button>
+            <button @click="toggleRead">{{ message.is_read ? 'Mark Unread' : 'Mark Read' }}</button>
+        </div>
+        <div v-if="showReply" id="replyForm">
+            <textarea cols="60" rows="10" v-model="this.replyMessage.message_body"></textarea>
+            <div>
+                <button @click="submitReply" class="bottomButton">Submit</button>
+                <button @click="cancelReply" class="bottomButton">Cancel</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -43,21 +47,21 @@ export default {
         submitReply() {
             MessageService.postMessage(this.replyMessage)
             this.showReply = false,
-            this.replyMessage= {
-                to_user_id : this.message.from_user_id,
-                from_user_id : this.message.to_user_id
-            }
+                this.replyMessage = {
+                    to_user_id: this.message.from_user_id,
+                    from_user_id: this.message.to_user_id
+                }
         },
 
         cancelReply() {
             this.showReply = false,
-            this.replyMessage= {
-                to_user_id : this.message.from_user_id,
-                from_user_id : this.message.to_user_id
-            }
+                this.replyMessage = {
+                    to_user_id: this.message.from_user_id,
+                    from_user_id: this.message.to_user_id
+                }
         },
 
-        toggleRead(){
+        toggleRead() {
             this.$store.commit('SET_ACTIVE_MESSAGE', this.message)
             this.$store.state.activeMessage.is_read = !this.message.is_read
             MessageService.updateMessage(this.$store.state.activeMessage)
@@ -68,6 +72,7 @@ export default {
 </script>
 
 <style scoped>
+
 .card {
     text-align: center;
     border: 2px solid black;
@@ -76,6 +81,22 @@ export default {
     height: auto;
     margin: 20px;
     padding: 10px;
+}
+
+#replyForm {
+    width: 40vw;
+    display: grid;
+
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bottomButton {
+    width: 15vw;
+    height: 5vh;
+
+    margin: 5px;
 }
 
 .card.read {

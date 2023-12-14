@@ -11,8 +11,8 @@
             <img class="cardImage" src="../assets/garden.jpg" />
 
             <div class="buttons">
-                <button v-on:click="showReplyForm" class="cardButton">MESSAGE</button>
-                <textarea rows="10" cols="40" v-if="showReply" v-model="replyMessage.message_body"></textarea>
+                <button v-on:click="showReplyForm" class="cardButton" v-if="!showReply">MESSAGE</button>
+                <textarea rows="4" cols="40" v-if="showReply" v-model="replyMessage.message_body"></textarea>
                 <button v-if="showReply" @click="submitReply">Submit</button>
                 <button @click="cancelReply" v-if="showReply">Cancel</button>
             </div>
@@ -72,10 +72,22 @@ export default {
 </script>
 
 <style scoped>
+h2 {
+    color: rgb(23, 63, 22);
+}
+
+h3 {
+    color: rgb(23, 63, 22);
+}
+
+p {
+    color: rgb(14, 39, 14);
+}
+
 .forumCard {
     text-align: left;
-    border: 2px solid black;
-    background-color: rgb(245, 237, 237);
+    border: 2px solid rgb(23, 63, 22);
+    background-color: rgb(228, 255, 228);
     border-radius: 10px;
     width: 70vw;
     height: auto;
@@ -100,6 +112,12 @@ export default {
 
 .cardButton {
     width: 40vw;
+    height: 4vh;
+
+    margin: auto;
+    margin-top: 5px;
+
+    background-color: rgb(255, 232, 236);
 }
 
 .buttons {
@@ -110,8 +128,8 @@ export default {
 
     .forumCard {
         text-align: left;
-        border: 2px solid rgb(0, 0, 0);
-        background-color: rgb(245, 237, 237);
+        border: 2px solid rgb(23, 63, 22);
+        background-color: rgb(228, 255, 228);
         border-radius: 10px;
         width: 20vw;
         height: auto;
@@ -135,11 +153,20 @@ export default {
     }
 
     .cardButton {
-        width: 40vw;
+        width: 15vw;
+        margin: auto;
+        margin-top: 5px;
+
+        background-color: rgb(255, 232, 236);
+    }
+
+    .cardButton:hover {
+        background-color: pink;
     }
 
     .buttons {
-        display: flex;
+        margin-top: 5px;
     }
+
 }
 </style>

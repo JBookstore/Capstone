@@ -1,5 +1,5 @@
 <template>
-
+<div class="wholeView">
     <div class="forumBar">
     <button id="makePostButton" v-on:click="toggleShowForm">SAY SOMETHING</button>
 
@@ -7,8 +7,8 @@
             <input type="text" placeholder="Title" v-model="this.new_post.title"/>
             <input type="Number" placeholder="Price (If Applicable)" v-model="this.new_post.price"/>
             <textarea id="post_description" placeholder="Description" rows="10" cols="45" v-model="this.new_post.post_description">  </textarea>
-            <button v-on:click="submitNewPost">Submit</button>
-            <button v-on:click="cancelPost">Cancel</button>
+            <button class="button" v-on:click="submitNewPost">Submit</button>
+            <button class="button" v-on:click="cancelPost">Cancel</button>
 
 
             <input class="imageSelect" v-if="showFileSelect" type="file" ref="fileInput" @change="uploadImage">
@@ -16,11 +16,12 @@
 
     <hr>
     </div>
-    
+</div>
+<div class="wholePreview">
     <div class="preview" v-for="post in posts" v-bind:key="post.post_id">
         <forum-card v-bind:post="post"/>
     </div>
-
+</div>
 </template>
 
 <script>
@@ -95,6 +96,22 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.wholeView{
+    width: 70vw;
+}
+
+.wholePreview{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.button{
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 </style>

@@ -3,7 +3,7 @@
         <div class="cardTop">
 
             <h2>{{ post.title }}</h2>
-            <h3>${{ post.price }}</h3>
+            <h3 v-if="post.price != null">${{ post.price }}</h3>
             <p>{{ post.post_description }}</p>
             <!-- <h2 v-if="length < 200">{{ post.post_description }} </h2>
             <h2 v-else> {{ preview }}</h2> -->
